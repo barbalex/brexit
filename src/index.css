@@ -1,0 +1,129 @@
+@import '../node_modules/react-bootstrap-daterangepicker/css/daterangepicker.css';
+@import '../node_modules/gemini-scrollbar/gemini-scrollbar.css';
+
+body {
+  margin-top: 52px;
+  hyphens: auto;
+}
+
+p,
+div {
+  font-size: medium;
+}
+
+a,
+a:link {
+  cursor: pointer;
+}
+
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+  background-color: rgba(0, 109, 255, 0.05) !important;
+}
+
+.col400,
+.col500 {
+  column-count: 1;
+  column-gap: 20px;
+}
+
+/*--------------------------------*\
+    3. #Events
+\*--------------------------------*/
+/**
+ * unfortunately content does not seem to
+ * come over correctly in object literal
+ * so need to keep this here
+ */
+.events p.event-weather:before {
+  font-family: 'Glyphicons Halflings';
+  content: '\2601';
+  font-size: 1.4em;
+  position: absolute;
+  top: -3px;
+  left: -26px;
+}
+.events p.event-statistics:before,
+.events p.event-monthlyStatistics:before {
+  font-family: 'Glyphicons Halflings';
+  content: '\e185';
+  font-size: 1em;
+  position: absolute;
+  top: -2px;
+  left: -23px;
+}
+.events p.event-victims:before {
+  font-family: 'Glyphicons Halflings';
+  content: '\e101';
+  font-size: 1.3em;
+  position: absolute;
+  top: -4px;
+  left: -26px;
+}
+.events p.event-highlighted:before {
+  font-family: 'Glyphicons Halflings';
+  content: '\e006';
+  font-size: 1.3em;
+  position: absolute;
+  top: -5px;
+  left: -23px;
+}
+
+h4.modal-title {
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
+/*--------------------------------*\
+       #tinymce code editor
+\*--------------------------------*/
+
+.mce-container.mce-panel.mce-floatpanel.mce-window.mce-in {
+  left: 2vw !important;
+  top: 2vh !important;
+  height: 95vh !important;
+}
+
+.mce-container.mce-panel.mce-floatpanel.mce-window.mce-in .mce-container-body {
+  height: calc(95vh - 89px) !important;
+}
+
+.mce-container.mce-panel.mce-floatpanel.mce-window.mce-in,
+.mce-container.mce-panel.mce-floatpanel.mce-window.mce-in .mce-container-body,
+.mce-container.mce-panel.mce-floatpanel.mce-window.mce-in .mce-foot {
+  width: 96vw !important;
+}
+
+@media (min-width 786px) {
+  .col400 {
+    column-count: 2;
+  }
+  .modal-lg.modal-dialog {
+    width: 700px;
+  }
+}
+
+@media (min-width 992px) {
+  .col400 {
+    column-count: 3;
+  }
+  .col500 {
+    column-count: 2;
+  }
+  .modal-lg.modal-dialog {
+    width: 950px;
+  }
+}
+
+@media (min-width 1100px) {
+  .modal-lg.modal-dialog {
+    width: 1000px;
+  }
+}
+
+@media (min-width 1300px) {
+  .modal-lg.modal-dialog {
+    width: 1100px;
+  }
+}

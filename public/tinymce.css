@@ -1,0 +1,47 @@
+.monthlyEvent table.new {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+.monthlyEvent .new thead {
+  background-color: rgb(250, 191, 143);
+}
+.monthlyEvent .new tr,
+.monthlyEvent .new th,
+.monthlyEvent .new td {
+  border: 1px solid black;
+  padding: 5px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.monthlyEvent .new h1,
+.monthlyEvent .new h2,
+.monthlyEvent .new p {
+  text-align: center;
+}
+.monthlyEvent .new h1 {
+  font-size: 1em;
+  font-weight: bold;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+}
+.monthlyEvent .new h1+h1 {
+  margin-top: -15px;
+}
+.monthlyEvent .new h2 {
+  font-size: 0.8em;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-top: 10px;
+}
+.monthlyEvent .new p {
+  font-size: 0.8em;
+  font-weight: normal;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.monthlyEvent .new p.bold {
+  font-weight: bold;
+}
