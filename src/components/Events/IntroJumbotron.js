@@ -31,11 +31,13 @@ class IntroJumbotron extends Component {
     return (
       <StyledJumbotron className="eventsIntro">
         <P>
-          Most mi­grants and re­fu­gees ar­ri­ving in Eu­ro­pe cross the blue
-          bor­­ders of the Eas­­tern and Cen­­tral Me­diterrane­an. The flow is
-          massive and high­ly com­plex. This web­­si­te provides a rough
-          over­­view by co­ve­­ring chro­­no­­lo­­gi­­cal­­ly both ma­ri­­ti­me
-          and political events.
+          Brexit is a topic of historical proportions, bound to be of interest
+          for many years. And because so important and rich it is also difficult
+          to gain overview. The purpose of this website is to help. A mere
+          chronology focusing on the most relevant information and limited to a
+          handful of publicly available sources. And focus on actual EXIT
+          negotiations, on both sides…, on a process that is bound to go on for
+          years.
         </P>
       </StyledJumbotron>
     )

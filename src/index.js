@@ -25,7 +25,7 @@ registerServiceWorker()
 // give the users an explanation instead of an empty page
 if (!window.ArrayBuffer) {
   window.alert(
-    `blue-borders.ch nutzt moderne Technologien, welche von Ihrem Browser nicht unterstützt werden.
+    `brexit-chronology.ch nutzt moderne Technologien, welche von Ihrem Browser nicht unterstützt werden.
 
 Bitte versuchen Sie es mit einer aktuellen Version von (zum Beispiel):
 - Chrome
