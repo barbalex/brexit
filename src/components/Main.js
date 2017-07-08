@@ -29,8 +29,8 @@ const Main = ({ store, login }: { store: Object, login: boolean }) => {
   return (
     <Router>
       <div className="container">
-        <Header />
         <Navbar />
+        <Header />
         <Switch>
           <Redirect from="/" exact to="/events" />
           <Route
