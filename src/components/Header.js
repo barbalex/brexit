@@ -12,13 +12,13 @@ import ukImage from '../images/uk.svg'
 const enhance = compose(withState('flagHeight', 'changeFlagHeight', 150))
 
 const Container = styled.div`
-  margin-top: 36px;
-  height: 150px;
+  margin-top: 50px;
   display: flex;
   flex-direction: column;
   min-height: ${props => props['data-height']}px;
   height: ${props => props['data-height']}px;
-  .flag {
+  div,
+  img {
     min-height: ${props => props['data-height']}px;
     height: ${props => props['data-height']}px;
   }
@@ -34,14 +34,15 @@ const FlagContainer = styled.div`
 const TitleContainer = styled.div`position: relative;`
 const Title = styled.div`
   position: absolute;
-  margin-top: 125px;
+  margin-top: ${props => props['data-titleMargintop']}px;
   width: 100%;
   text-align: center;
-  font-size: 58px;
+  font-size: ${props => props['data-titleSize']}px;
   font-weight: 800;
   line-height: 46px;
   text-align: center;
-  color: #fff;
+  color: rgba(255, 255, 255, 1);
+  opacity: 0.9;
   text-shadow: 2px 2px 3px black, -2px -2px 3px black, 2px -2px 3px black,
     -2px 2px 3px black;
   hyphens: manual;
@@ -81,25 +82,32 @@ class Header extends Component {
 
   render = () => {
     const { flagHeight } = this.props
+    const titleSize = flagHeight / 5
+    const titleMarginTop = -(flagHeight / 2 + 25)
+
     return (
       <Container
-        className="flag"
         data-height={flagHeight}
         ref={j => {
           // $FlowIssue
           this.container = j
         }}
       >
-        <FlagRow className="flag">
+        <FlagRow>
           <FlagContainer className="flag">
-            <img src={ukImage} className="flag" alt="uk" />
+            <img src={ukImage} alt="uk" />
           </FlagContainer>
-          <FlagContainer className="flag">
-            <img src={euImage} className="flag" alt="eu" />
+          <FlagContainer>
+            <img src={euImage} alt="eu" />
           </FlagContainer>
         </FlagRow>
         <TitleContainer>
-          <Title>brexit chronology</Title>
+          <Title
+            data-titleSize={titleSize}
+            data-titleMargintop={titleMarginTop}
+          >
+            brexit chronology
+          </Title>
         </TitleContainer>
       </Container>
     )
