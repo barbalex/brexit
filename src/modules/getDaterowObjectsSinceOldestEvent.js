@@ -31,13 +31,20 @@ export default (
           event._id.startsWith(`events_${year}_${month}_${day}`) &&
           event.eventType === 'eu'
       )
+      const bothEvents = events.filter(
+        event =>
+          event._id.startsWith(`events_${year}_${month}_${day}`) &&
+          event.eventType === 'both'
+      )
       // order
       migrationEvents.sort((a, b) => (a.order || 99) - (b.order || 99))
       politicsEvents.sort((a, b) => (a.order || 99) - (b.order || 99))
+      bothEvents.sort((a, b) => (a.order || 99) - (b.order || 99))
       const daterowObject = {
         date,
         migrationEvents,
         politicsEvents,
+        bothEvents,
       }
       daterowObjects.push(daterowObject)
       date = moment(date).subtract(1, 'days')
