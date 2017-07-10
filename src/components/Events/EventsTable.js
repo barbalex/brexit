@@ -10,10 +10,11 @@ import DateRows from './DateRows'
 const Container = styled.div`
   width: 100%;
   margin-bottom: 0;
+  position: relative;
 `
 const Header = styled.div`
   position: absolute;
-  top: ${props => props['data-top']}px;
+  top: -40px;
   width: 100%;
   font-weight: bold;
 `
@@ -47,7 +48,7 @@ const Body = styled.div`
   overflow-x: visible;
   overflow-y: auto;
   height: calc(100vh - 94px);
-  margin-top: 77px;
+  margin-top: ${props => props['data-marginTop']};
   border-top: 1px solid #ececec;
   border-bottom: 1px solid #ececec;
   width: 100%;
@@ -56,25 +57,20 @@ const HeaderRow = styled.div`display: flex;`
 
 const enhance = compose(inject(`store`), observer)
 
-const Events = ({
-  store,
-  introJumbotronHeight,
-}: {
-  store: Object,
-  introJumbotronHeight: number,
-}) => {
-  const headerTop = introJumbotronHeight ? introJumbotronHeight + 88 : 173
+const Events = ({ store }: { store: Object }) => {
+  const bodyMarginTop =
+    store.yearsOfEvents.yearsOfEvents.length > 1 ? '77px' : '58px'
 
   return (
     <Container>
-      <Header data-top={headerTop} className="eventsTable-header">
+      <Header className="eventsTable-header">
         <HeaderRow>
-          <HeaderCellDay />
-          <HeaderCellMigration>Maritime Events</HeaderCellMigration>
-          <HeaderCellPolitics>Political Events</HeaderCellPolitics>
+          <HeaderCellDay>Date</HeaderCellDay>
+          <HeaderCellMigration>Great Britain</HeaderCellMigration>
+          <HeaderCellPolitics>European Union</HeaderCellPolitics>
         </HeaderRow>
       </Header>
-      <Body>
+      <Body data-marginTop={bodyMarginTop}>
         <GeminiScrollbar id="eventsTableBody" autoshow>
           <DateRows />
         </GeminiScrollbar>

@@ -5,14 +5,14 @@ import getDateFromEventId from './getDateFromEventId'
 
 export default (
   events: Array<Object>,
-  activeEventYears: Array<number>,
+  activeEventYears: Array<number>
 ): Array<Object> => {
   const oldestEvent = events[events.length - 1]
   if (oldestEvent) {
     const oldestDate = getDateFromEventId(oldestEvent._id)
     const daterowObjects = []
     const activeYearIsCurrentYear = activeEventYears.includes(
-      parseInt(moment().format('YYYY'), 0),
+      parseInt(moment().format('YYYY'), 0)
     )
     let date = activeYearIsCurrentYear
       ? moment()
@@ -24,12 +24,12 @@ export default (
       const migrationEvents = events.filter(
         event =>
           event._id.startsWith(`events_${year}_${month}_${day}`) &&
-          event.eventType === 'migration',
+          event.eventType === 'gb'
       )
       const politicsEvents = events.filter(
         event =>
           event._id.startsWith(`events_${year}_${month}_${day}`) &&
-          event.eventType === 'politics',
+          event.eventType === 'eu'
       )
       // order
       migrationEvents.sort((a, b) => (a.order || 99) - (b.order || 99))

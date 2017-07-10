@@ -128,21 +128,21 @@ class Events extends Component {
               this.introJumbotron = j
             }}
           />
-          <YearButtonsContainer>
-            <ButtonGroup>
-              {yearsOfEvents.map((year, index) =>
-                <Button
-                  key={index}
-                  active={activeEventYears.includes(year)}
-                  onClick={() => this.setActiveYear(year)}
-                >
-                  {year}
-                </Button>
-              )}
-            </ButtonGroup>
-          </YearButtonsContainer>
-          {showEventsTable &&
-            <EventsTable introJumbotronHeight={introJumbotronHeight} />}
+          {yearsOfEvents.length > 1 &&
+            <YearButtonsContainer>
+              <ButtonGroup>
+                {yearsOfEvents.map((year, index) =>
+                  <Button
+                    key={index}
+                    active={activeEventYears.includes(year)}
+                    onClick={() => this.setActiveYear(year)}
+                  >
+                    {year}
+                  </Button>
+                )}
+              </ButtonGroup>
+            </YearButtonsContainer>}
+          {showEventsTable && <EventsTable />}
           {activeEvent && <EditEvent />}
           {showNewEvent && <NewEvent />}
           {store.events.eventToRemove && <ModalRemoveEvent />}

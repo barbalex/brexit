@@ -7,7 +7,7 @@ import withState from 'recompose/withState'
 import debounce from 'lodash/debounce'
 
 import euImage from '../images/eu.svg'
-import ukImage from '../images/uk.svg'
+import gbImage from '../images/gb.svg'
 
 const enhance = compose(withState('flagHeight', 'changeFlagHeight', 150))
 
@@ -95,7 +95,7 @@ class Header extends Component {
       >
         <FlagRow>
           <FlagContainer className="flag">
-            <img src={ukImage} alt="uk" />
+            <img src={gbImage} alt="gb" />
           </FlagContainer>
           <FlagContainer>
             <img src={euImage} alt="eu" />

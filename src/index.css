@@ -45,22 +45,6 @@ a:link {
   left: -26px;
 }
 .events p.event-statistics:before,
-.events p.event-monthlyStatistics:before {
-  font-family: 'Glyphicons Halflings';
-  content: '\e185';
-  font-size: 1em;
-  position: absolute;
-  top: -2px;
-  left: -23px;
-}
-.events p.event-victims:before {
-  font-family: 'Glyphicons Halflings';
-  content: '\e101';
-  font-size: 1.3em;
-  position: absolute;
-  top: -4px;
-  left: -26px;
-}
 .events p.event-highlighted:before {
   font-family: 'Glyphicons Halflings';
   content: '\e006';

@@ -34,8 +34,8 @@ class EventTypeButtonGroup extends Component {
 
   componentDidMount() {
     const { store, changeEventType } = this.props
-    // if no eventType, set migration
-    if (!store.events.activeEvent.eventType) changeEventType('migration')
+    // if no eventType, set gb
+    if (!store.events.activeEvent.eventType) changeEventType('gb')
   }
 
   render() {
@@ -47,16 +47,22 @@ class EventTypeButtonGroup extends Component {
         <Label>Column</Label>
         <ButtonGroup>
           <Button
-            className={eventType === 'migration' ? 'active' : ''}
-            onClick={changeEventType.bind(this, 'migration')}
+            className={eventType === 'gb' ? 'active' : ''}
+            onClick={changeEventType.bind(this, 'gb')}
           >
-            maritime events / monthly statistics
+            Great Britain
           </Button>
           <Button
-            className={eventType === 'politics' ? 'active' : ''}
-            onClick={changeEventType.bind(this, 'politics')}
+            className={eventType === 'eu' ? 'active' : ''}
+            onClick={changeEventType.bind(this, 'eu')}
           >
-            political events / total statistics
+            European Union
+          </Button>
+          <Button
+            className={eventType === 'eu' ? 'active' : ''}
+            onClick={changeEventType.bind(this, 'eu')}
+          >
+            both
           </Button>
         </ButtonGroup>
       </Container>
