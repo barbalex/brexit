@@ -21,12 +21,12 @@ export default (
       const year = moment(date).format('YYYY')
       const month = moment(date).format('MM')
       const day = moment(date).format('DD')
-      const migrationEvents = events.filter(
+      const gbEvents = events.filter(
         event =>
           event._id.startsWith(`events_${year}_${month}_${day}`) &&
           event.eventType === 'gb'
       )
-      const politicsEvents = events.filter(
+      const euEvents = events.filter(
         event =>
           event._id.startsWith(`events_${year}_${month}_${day}`) &&
           event.eventType === 'eu'
@@ -37,16 +37,18 @@ export default (
           event.eventType === 'both'
       )
       // order
-      migrationEvents.sort((a, b) => (a.order || 99) - (b.order || 99))
-      politicsEvents.sort((a, b) => (a.order || 99) - (b.order || 99))
+      gbEvents.sort((a, b) => (a.order || 99) - (b.order || 99))
+      euEvents.sort((a, b) => (a.order || 99) - (b.order || 99))
       bothEvents.sort((a, b) => (a.order || 99) - (b.order || 99))
       const daterowObject = {
         date,
-        migrationEvents,
-        politicsEvents,
+        gbEvents,
+        euEvents,
         bothEvents,
       }
-      daterowObjects.push(daterowObject)
+      if (gbEvents.length > 0 || euEvents.length > 0 || bothEvents.length > 0) {
+        daterowObjects.push(daterowObject)
+      }
       date = moment(date).subtract(1, 'days')
     }
     return daterowObjects

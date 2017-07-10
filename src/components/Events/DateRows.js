@@ -39,25 +39,32 @@ const DateRows = ({ store }: { store: Object }) => {
       const endOfMonth = moment(dRO.date).endOf('month').format('DD')
       const dROForDateRow = {
         date: dRO.date,
-        migrationEvents: dRO.migrationEvents.filter(
+        gbEvents: dRO.gbEvents.filter(
           event => !event.tags || !event.tags.includes('monthlyStatistics')
         ),
-        politicsEvents: dRO.politicsEvents.filter(
+        euEvents: dRO.euEvents.filter(
+          event => !event.tags || !event.tags.includes('monthlyStatistics')
+        ),
+        bothEvents: dRO.bothEvents.filter(
           event => !event.tags || !event.tags.includes('monthlyStatistics')
         ),
       }
       const dROForMonthlyStatsRow = {
         date: dRO.date,
-        migrationEvents: dRO.migrationEvents.filter(
+        gbEvents: dRO.gbEvents.filter(
           event => event.tags && event.tags.includes('monthlyStatistics')
         ),
-        politicsEvents: dRO.politicsEvents.filter(
+        euEvents: dRO.euEvents.filter(
+          event => event.tags && event.tags.includes('monthlyStatistics')
+        ),
+        bothEvents: dRO.bothEvents.filter(
           event => event.tags && event.tags.includes('monthlyStatistics')
         ),
       }
       const dROForMonthlyStatsHasEvents =
-        dROForMonthlyStatsRow.migrationEvents.length > 0 ||
-        dROForMonthlyStatsRow.politicsEvents.length > 0
+        dROForMonthlyStatsRow.gbEvents.length > 0 ||
+        dROForMonthlyStatsRow.euEvents.length > 0 ||
+        dROForMonthlyStatsRow.bothEvents.length > 0
       const needsMonthRow = day === endOfMonth || index === 0
       const needsMonthlyStatisticsRow =
         day === endOfMonth && dROForMonthlyStatsHasEvents

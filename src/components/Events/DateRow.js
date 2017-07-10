@@ -73,9 +73,10 @@ const DateRow = ({
   dateRowObject: Object,
 }) => {
   const day = moment(dRO.date).format('D')
-  const migrationEvents = mapEventComponents(dRO.migrationEvents)
-  const politicsEvents = mapEventComponents(dRO.politicsEvents)
-  const dayWithEvents = migrationEvents.length > 0 || politicsEvents.length > 0
+  const gbEvents = mapEventComponents(dRO.gbEvents)
+  const euEvents = mapEventComponents(dRO.euEvents)
+  const bothEvents = mapEventComponents(dRO.bothEvents)
+  const dayWithEvents = gbEvents.length > 0 || euEvents.length > 0
 
   return (
     <BodyRow>
@@ -93,12 +94,12 @@ const DateRow = ({
         </BodyCellDay>}
       <BodyCellMigration>
         <ul>
-          {migrationEvents}
+          {gbEvents}
         </ul>
       </BodyCellMigration>
       <BodyCellPolitics>
         <ul>
-          {politicsEvents}
+          {euEvents}
         </ul>
       </BodyCellPolitics>
     </BodyRow>
