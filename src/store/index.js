@@ -12,17 +12,6 @@ function Store(): void {
     addPageAttachments: null,
     removePageAttachment: null,
   }
-  this.monthlyEvents = {
-    monthlyEvents: [],
-    activeMonthlyEventId: null,
-    activeMonthlyEvent: null,
-    getMonthlyEventsCallback: null,
-    getMonthlyEvents: null,
-    getMonthlyEvent: null,
-    updateMonthlyEventsInCache: null,
-    revertCache: null,
-    saveMonthlyEvent: null,
-  }
   this.yearsOfEvents = {
     yearsOfEvents: [parseInt(moment().format('YYYY'), 0)],
     getYearsOfEvents: null,

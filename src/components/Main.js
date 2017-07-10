@@ -15,7 +15,6 @@ import AsyncPage from './AsyncPage'
 import AsyncEvents from './AsyncEvents'
 import AsyncCommentaries from './AsyncCommentaries'
 import AsyncActors from './AsyncActors'
-import AsyncMonthlyEvents from './AsyncMonthlyEvents'
 import AsyncPublications from './AsyncPublications'
 import AsyncLogin from './AsyncLogin'
 import Errors from './Errors'
@@ -38,24 +37,6 @@ const Main = ({ store, login }: { store: Object, login: boolean }) => {
             render={() => {
               store.page.getPage('pages_events')
               return <AsyncEvents />
-            }}
-          />
-          <Route
-            path="/monthlyEvents/:year/:month"
-            exact
-            render={({ match }) => {
-              const { year, month } = match.params
-              store.page.getPage('pages_monthlyEvents')
-              store.monthlyEvents.activeMonthlyEventId = `monthlyEvents_${year}_${month}`
-              return <AsyncMonthlyEvents />
-            }}
-          />
-          <Route
-            path="/monthlyEvents"
-            exact
-            render={() => {
-              store.page.getPage('pages_monthlyEvents')
-              return <AsyncMonthlyEvents />
             }}
           />
           <Route

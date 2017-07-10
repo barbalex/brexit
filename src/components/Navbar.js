@@ -139,7 +139,6 @@ const MyNavbar = ({
 }) => {
   const { activePage } = store.page
   const { activeActor } = store.actors
-  const { activeMonthlyEvent } = store.monthlyEvents
   const { activePublication } = store.publications
   const { activeCommentary } = store.commentaries
   const email = store.login.email
@@ -147,7 +146,6 @@ const MyNavbar = ({
   const id = activePage && activePage._id ? activePage._id : null
   const nonEditableIds = [
     'pages_commentaries',
-    'pages_monthlyEvents',
     'pages_publications',
     'pages_actors',
     'pages_events',
@@ -155,7 +153,6 @@ const MyNavbar = ({
   const showEdit =
     email &&
     (!nonEditableIds.includes(id) ||
-      has(activeMonthlyEvent, '_id') ||
       has(activeCommentary, '_id') ||
       has(activeActor, '_id') ||
       has(activePublication, '_id'))

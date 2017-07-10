@@ -56,13 +56,8 @@ const enhance = compose(
       activePublication.article = articleEncoded
       props.store.publications.savePublication(activePublication)
     },
-    onSaveMonthlyEventArticle: props => articleEncoded => {
-      const { activeMonthlyEvent, saveMonthlyEvent } = props.store.monthlyEvents
-      activeMonthlyEvent.article = articleEncoded
-      saveMonthlyEvent(activeMonthlyEvent)
-    },
   }),
-  observer,
+  observer
 )
 
 class Editor extends Component {
@@ -74,7 +69,6 @@ class Editor extends Component {
     docType: string,
     articleDecoded: string,
     onSavePageArticle: () => void,
-    onSaveMonthlyEventArticle: () => void,
     onSavePublicationArticle: () => void,
     onSaveCommentaryArticle: () => void,
     onSaveActorArticle: () => void,
@@ -87,14 +81,13 @@ class Editor extends Component {
       doc,
       docType,
       onSavePageArticle,
-      onSaveMonthlyEventArticle,
       onSavePublicationArticle,
       onSaveCommentaryArticle,
       onSaveActorArticle,
     } = this.props
     // height = window - menu height - (menubar + iconbar)
     let height = window.innerHeight - 52 - 74
-    if (['monthlyEvent', 'publication'].includes(docType)) {
+    if (['publication'].includes(docType)) {
       height = window.innerHeight - 52 - 74 - 76
     }
     if (['commentary', 'actor'].includes(docType)) {
@@ -107,10 +100,6 @@ class Editor extends Component {
       case 'page':
         bodyClass = ''
         saveFunction = onSavePageArticle
-        break
-      case 'monthlyEvent':
-        bodyClass = 'monthlyEvent'
-        saveFunction = onSaveMonthlyEventArticle
         break
       case 'publication':
         bodyClass = 'publication'
@@ -139,14 +128,13 @@ class Editor extends Component {
         'save table contextmenu directionality template paste textcolor autosave',
       ],
       menubar: 'edit insert view format table tools',
-      toolbar: 'insertfile undo redo | styleselect | bold italic underline forecolor backcolor removeformat | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print code fullscreen',
+      toolbar:
+        'insertfile undo redo | styleselect | bold italic underline forecolor backcolor removeformat | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print code fullscreen',
       height,
       browser_spellcheck: true,
       automatic_uploads: false,
       statusbar: false,
       body_class: bodyClass,
-      // $FlowIssue
-      content_css: `${process.env.PUBLIC_URL}/tinymce.css`,
       // enable auto-saving
       setup(editor) {
         editor.on('change undo redo', () => {
@@ -162,7 +150,7 @@ class Editor extends Component {
         {
           scrollTop: 140,
         },
-        800,
+        800
       )
     }
   }

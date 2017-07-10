@@ -145,14 +145,6 @@ class Events extends Component {
           <YearButtonsContainer>
             <ButtonGroup>
               {this.yearButtons()}
-              <Button
-                onClick={() => {
-                  history.push('/monthlyEvents')
-                  store.page.getPage('pages_monthlyEvents')
-                }}
-              >
-                2014 - 2011
-              </Button>
             </ButtonGroup>
           </YearButtonsContainer>
           {showEventsTable &&

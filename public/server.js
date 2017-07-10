@@ -54,14 +54,6 @@ server.register(Inert, function() {
 
   server.route({
     method: 'GET',
-    path: '/tinymce.css',
-    handler: function(request, reply) {
-      reply.file('tinymce.css')
-    },
-  })
-
-  server.route({
-    method: 'GET',
     path: '/favicon.ico',
     handler: function(request, reply) {
       reply.file('favicon.ico')
