@@ -63,7 +63,6 @@ class Events extends Component {
 
   props: {
     store: Object,
-    history: Object,
     docToRemove: Object,
     introJumbotronHeight: number,
     changeDocToRemove: () => void,
@@ -114,23 +113,10 @@ class Events extends Component {
     store.yearsOfEvents.setActiveEventYears([year])
   }
 
-  yearButtons = () => {
-    const { yearsOfEvents, activeEventYears } = this.props.store.yearsOfEvents
-
-    return yearsOfEvents.map((year, index) =>
-      <Button
-        key={index}
-        active={activeEventYears.includes(year)}
-        onClick={() => this.setActiveYear(year)}
-      >
-        {year}
-      </Button>
-    )
-  }
-
   render() {
-    const { store, introJumbotronHeight, history } = this.props
-    const showEventsTable = min(store.yearsOfEvents.activeEventYears) > 2014
+    const { store, introJumbotronHeight } = this.props
+    const { yearsOfEvents, activeEventYears } = store.yearsOfEvents
+    const showEventsTable = min(activeEventYears) > 2014
     const { activeEvent, showNewEvent } = store.events
 
     return (
@@ -144,7 +130,15 @@ class Events extends Component {
           />
           <YearButtonsContainer>
             <ButtonGroup>
-              {this.yearButtons()}
+              {yearsOfEvents.map((year, index) =>
+                <Button
+                  key={index}
+                  active={activeEventYears.includes(year)}
+                  onClick={() => this.setActiveYear(year)}
+                >
+                  {year}
+                </Button>
+              )}
             </ButtonGroup>
           </YearButtonsContainer>
           {showEventsTable &&
