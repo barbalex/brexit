@@ -16,8 +16,6 @@ const BodyCellDay = BodyCell.extend`
   max-width: 60px;
   padding-right: 20px;
   text-align: right;
-`
-const BodyCellDayWithEvents = BodyCellDay.extend`
   p {
     margin-top: 5px !important;
   }
@@ -76,22 +74,14 @@ const DateRow = ({
   const gbEvents = mapEventComponents(dRO.gbEvents)
   const euEvents = mapEventComponents(dRO.euEvents)
   const bothEvents = mapEventComponents(dRO.bothEvents)
-  const dayWithEvents = gbEvents.length > 0 || euEvents.length > 0
 
   return (
     <BodyRow>
-      {dayWithEvents &&
-        <BodyCellDayWithEvents>
-          <p>
-            {day}
-          </p>
-        </BodyCellDayWithEvents>}
-      {!dayWithEvents &&
-        <BodyCellDay>
-          <p>
-            {day}
-          </p>
-        </BodyCellDay>}
+      <BodyCellDay>
+        <p>
+          {day}
+        </p>
+      </BodyCellDay>
       <BodyCellMigration>
         <ul>
           {gbEvents}
