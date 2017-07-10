@@ -59,8 +59,8 @@ class EventTypeButtonGroup extends Component {
             European Union
           </Button>
           <Button
-            className={eventType === 'eu' ? 'active' : ''}
-            onClick={changeEventType.bind(this, 'eu')}
+            className={eventType === 'both' ? 'active' : ''}
+            onClick={changeEventType.bind(this, 'both')}
           >
             both
           </Button>
