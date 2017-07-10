@@ -1,8 +1,9 @@
 // @flow
-import React from 'react'
+import React, { Component } from 'react'
 import GeminiScrollbar from 'react-gemini-scrollbar'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
+import withState from 'recompose/withState'
 import styled from 'styled-components'
 
 import DateRows from './DateRows'
@@ -22,27 +23,36 @@ const HeaderCell = styled.div`
   font-size: ${window.innerWidth < 500 ? 20 : 24}px;
   padding: 5px;
   flex: 1;
+  display: flex;
   white-space: nowrap;
   text-overflow: ellipsis;
-  text-align: center;
+  justify-content: center;
+  align-self: flex-end;
 `
 const HeaderCellDay = HeaderCell.extend`
   width: 60px;
   max-width: 60px;
   padding-right: 20px;
-  text-align: right;
+  justify-content: flex-start;
 `
-const HeaderCellMigration = HeaderCell.extend`
-  width: 50%;
-  max-width: 50%;
+const HeaderCellGb = HeaderCell.extend`
+  flex: 1;
+  justify-content: center;
   word-wrap: break-word;
   padding-right: 10px;
 `
-const HeaderCellPolitics = HeaderCell.extend`
-  width: 50%;
-  max-width: 50%;
+const HeaderCellEu = HeaderCell.extend`
+  flex: 1;
   word-wrap: break-word;
   padding-left: 10px;
+`
+const HeaderCellBoth = HeaderCell.extend`
+  flex-basis: 75px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  word-wrap: break-word;
+  font-style: italic;
+  font-size: ${window.innerWidth < 500 ? 16 : 20}px;
 `
 const Body = styled.div`
   overflow-x: visible;
@@ -55,30 +65,69 @@ const Body = styled.div`
 `
 const HeaderRow = styled.div`display: flex;`
 
-const enhance = compose(inject(`store`), observer)
+const enhance = compose(
+  inject(`store`),
+  withState('headerFixed', 'changeHeaderFixed', false),
+  observer
+)
 
-const Events = ({ store }: { store: Object }) => {
-  const bodyMarginTop =
-    store.yearsOfEvents.yearsOfEvents.length > 1 ? '77px' : '58px'
+class EventsTable extends Component {
+  displayName: 'EventsTable'
 
-  return (
-    <Container>
-      <Header className="eventsTable-header">
-        <HeaderRow>
-          <HeaderCellDay>Date</HeaderCellDay>
-          <HeaderCellMigration>Great Britain</HeaderCellMigration>
-          <HeaderCellPolitics>European Union</HeaderCellPolitics>
-        </HeaderRow>
-      </Header>
-      <Body data-marginTop={bodyMarginTop}>
-        <GeminiScrollbar id="eventsTableBody" autoshow>
-          <DateRows />
-        </GeminiScrollbar>
-      </Body>
-    </Container>
-  )
+  props: {
+    store: Object,
+    headerFixed: boolean,
+    changeHeaderFixed: () => void,
+  }
+
+  constructor() {
+    super()
+    this.handleScroll = this.handleScroll.bind(this)
+  }
+
+  componentDidMount = () => {
+    window.addEventListener('scroll', this.handleScroll)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll)
+  }
+
+  handleScroll = () => {
+    const { changeHeaderFixed } = this.props
+    console.log('window.scrollY:', window.scrollY)
+    if (window.scrollY > 460) {
+      console.log('should lock')
+      changeHeaderFixed(true)
+    } else if (window.scrollY < 460) {
+      console.log('not locked')
+      changeHeaderFixed(false)
+    }
+  }
+
+  render = () => {
+    const { store } = this.props
+    const bodyMarginTop =
+      store.yearsOfEvents.yearsOfEvents.length > 1 ? '77px' : '58px'
+
+    return (
+      <Container>
+        <Header className="eventsTable-header">
+          <HeaderRow>
+            <HeaderCellDay>Date</HeaderCellDay>
+            <HeaderCellGb>Great Britain</HeaderCellGb>
+            <HeaderCellBoth>...both...</HeaderCellBoth>
+            <HeaderCellEu>European Union</HeaderCellEu>
+          </HeaderRow>
+        </Header>
+        <Body data-marginTop={bodyMarginTop}>
+          <GeminiScrollbar id="eventsTableBody" autoshow>
+            <DateRows />
+          </GeminiScrollbar>
+        </Body>
+      </Container>
+    )
+  }
 }
 
-Events.displayName = 'Events'
-
-export default enhance(Events)
+export default enhance(EventsTable)

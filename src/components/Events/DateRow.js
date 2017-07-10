@@ -11,7 +11,9 @@ const BodyCell = styled.div`
   padding: 5px;
   flex: 1;
 `
-const BodyCellDay = BodyCell.extend`
+const Day = styled.div`
+  padding: 5px;
+  flex: 1;
   width: 60px;
   max-width: 60px;
   padding-right: 20px;
@@ -20,17 +22,35 @@ const BodyCellDay = BodyCell.extend`
     margin-top: 5px !important;
   }
 `
-const BodyCellMigration = BodyCell.extend`
-  width: 50%;
-  max-width: 50%;
+const Data = styled.div`
+  flex: 1;
   word-wrap: break-word;
-  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
 `
-const BodyCellPolitics = BodyCell.extend`
+const GbEuData = styled.div`display: flex;`
+const Gb = BodyCell.extend`
   width: 50%;
   max-width: 50%;
   word-wrap: break-word;
-  padding-left: 10px;
+  padding: 5px 5px 5px 0;
+`
+const Eu = BodyCell.extend`
+  width: 50%;
+  max-width: 50%;
+  word-wrap: break-word;
+  padding: 5px 0 5px 5px;
+`
+const Both = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-left: 130px;
+  padding-right: 130px;
+  ul {
+    padding: 5px;
+    align-self: center;
+    font-style: italic;
+  }
 `
 const BodyRow = styled.div`
   display: flex;
@@ -62,6 +82,12 @@ const enhance = compose(inject(`store`), observer)
 
 const mapEventComponents = events =>
   events.map((event, key) => <Event key={key} event={event} />)
+const mapBothEventComponents = events =>
+  events.map((event, key) =>
+    <ul key={key}>
+      <Event event={event} />
+    </ul>
+  )
 
 const DateRow = ({
   store,
@@ -73,25 +99,33 @@ const DateRow = ({
   const day = moment(dRO.date).format('D')
   const gbEvents = mapEventComponents(dRO.gbEvents)
   const euEvents = mapEventComponents(dRO.euEvents)
-  const bothEvents = mapEventComponents(dRO.bothEvents)
+  const bothEvents = mapBothEventComponents(dRO.bothEvents)
 
   return (
     <BodyRow>
-      <BodyCellDay>
+      <Day>
         <p>
           {day}
         </p>
-      </BodyCellDay>
-      <BodyCellMigration>
-        <ul>
-          {gbEvents}
-        </ul>
-      </BodyCellMigration>
-      <BodyCellPolitics>
-        <ul>
-          {euEvents}
-        </ul>
-      </BodyCellPolitics>
+      </Day>
+      <Data>
+        {bothEvents.length > 0 &&
+          <Both>
+            {bothEvents}
+          </Both>}
+        <GbEuData>
+          <Gb>
+            <ul>
+              {gbEvents}
+            </ul>
+          </Gb>
+          <Eu>
+            <ul>
+              {euEvents}
+            </ul>
+          </Eu>
+        </GbEuData>
+      </Data>
     </BodyRow>
   )
 }

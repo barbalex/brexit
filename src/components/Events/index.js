@@ -142,7 +142,8 @@ class Events extends Component {
                 )}
               </ButtonGroup>
             </YearButtonsContainer>}
-          {showEventsTable && <EventsTable />}
+          {showEventsTable &&
+            <EventsTable introJumbotronHeight={introJumbotronHeight} />}
           {activeEvent && <EditEvent />}
           {showNewEvent && <NewEvent />}
           {store.events.eventToRemove && <ModalRemoveEvent />}
