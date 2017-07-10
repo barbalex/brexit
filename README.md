@@ -1,5 +1,5 @@
 ## Goal
-Brexit is a topic of historical proportions, bound to be of interest for many years. And because so important and rich it is also difficult to gain overview. The purpose of this website is to help. A mere chronology focusing on the most relevant information and limited to a handful of publicly available sources. And focus on actual EXIT negotiations, on both sides…, on a process that is bound to go on for years.
+Brexit is a topic of historical proportions and difficult to get an overview. This website is meant to help. It is a simple chronology beginning with the British exit notice the end of March 2017. The focus is on the negotiation dynamics between the two sides based on information of a handful of publicly available sources.
 
 ## History
 
