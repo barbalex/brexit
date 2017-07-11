@@ -120,7 +120,7 @@ class Events extends Component {
     const { activeEvent, showNewEvent } = store.events
 
     return (
-      <DocumentTitle title="blue-borders | Events">
+      <DocumentTitle title="brexit | Events">
         <Container className="events">
           <IntroJumbotron
             ref={j => {

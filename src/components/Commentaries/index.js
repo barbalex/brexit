@@ -265,7 +265,7 @@ class Commentaries extends Component {
       : null
 
     return (
-      <DocumentTitle title="blue-borders | Commentaries">
+      <DocumentTitle title="brexit | Commentaries">
         <Container>
           <h1>Commentaries</h1>
           <PanelGroup

@@ -24,7 +24,7 @@ const Login = ({
   store: Object,
   onClickLogout: () => void,
 }) =>
-  <DocumentTitle title="blue-borders | Login">
+  <DocumentTitle title="brexit | Login">
     <div>
       <h1>Login</h1>
       {!store.login.email && <LoginForm />}

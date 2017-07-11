@@ -75,7 +75,7 @@ const Page = ({
   }
   const createMarkup = () => ({ __html: articleDecoded })
   return (
-    <DocumentTitle title={`blue-borders | ${title}`}>
+    <DocumentTitle title={`brexit | ${title}`}>
       <Container className="page">
         <h1>
           {title}
