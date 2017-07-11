@@ -15,20 +15,11 @@ import withHandlers from 'recompose/withHandlers'
 import styled from 'styled-components'
 
 import publicationCategories from '../../modules/publicationCategories'
+publicationCategories.unshift('')
 
 const ErrorAlert = styled(Alert)`
   magrin-bottom: 10px;
 `
-
-const categoryOptions = () => {
-  const options = publicationCategories.map((category, index) =>
-    <option key={index + 1} value={category}>
-      {category}
-    </option>
-  )
-  options.unshift(<option key={0} value={null} />)
-  return options
-}
 
 const enhance = compose(
   inject(`store`),

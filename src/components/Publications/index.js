@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react'
-import sortBy from 'lodash/sortBy'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withHandlers from 'recompose/withHandlers'
@@ -11,6 +10,7 @@ import { withRouter } from 'react-router'
 import PublicationsOfCategory from './PublicationsOfCategory'
 import NewPublication from './NewPublication'
 import oceanDarkImage from '../../images/oceanDark.jpg'
+import publicationCategoriesList from '../../modules/publicationCategories'
 
 const Container = styled.div`
   margin-bottom: 20px;
@@ -87,15 +87,13 @@ class Publications extends Component {
 
   publicationCategoriesComponent = activePublicationCategory => {
     const { store, onClickCategory } = this.props
-    let publicationCategories = store.publications.getPublicationCategories()
     const { publications } = store.publications
+    const publicationCategoriesExisting = store.publications.getPublicationCategories()
+    const publicationCategories = publicationCategoriesList.filter(c =>
+      publicationCategoriesExisting.includes(c)
+    )
 
     if (publications.length > 0 && publicationCategories.length > 0) {
-      publicationCategories = sortBy(publicationCategories, cat => {
-        let order = orderByCategory[cat]
-        if (!order) order = 4
-        return order
-      })
       return publicationCategories.map(category => {
         return (
           <div
