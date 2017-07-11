@@ -16,18 +16,22 @@ import withState from 'recompose/withState'
 import styled from 'styled-components'
 import { withRouter } from 'react-router'
 
-import oceanDarkImage from '../images/oceanDark.jpg'
+import constants from '../modules/constants'
 
 const StyledNavbar = styled(Navbar)`
   margin-bottom: 0 !important;
   border-radius: 0 !important;
-  background-image: url(${oceanDarkImage});
+  background-color: ${constants.panelColor} !important;
+
   a {
     color: #edf4f8 !important;
   }
   .navbar-brand {
     color: #edf4f8 !important;
     cursor: pointer;
+  }
+  .navbar-nav .active a {
+    background-color: ${constants.panelColorActive} !important;
   }
 `
 

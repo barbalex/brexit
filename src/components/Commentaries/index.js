@@ -14,7 +14,7 @@ import Commentary from './Commentary'
 import NewCommentary from './NewCommentary'
 import ModalRemoveCommentary from './ModalRemoveCommentary'
 import SwallowPanelGroupProps from '../shared/SwallowPanelGroupProps'
-import oceanDarkImage from '../../images/oceanDark.jpg'
+import constants from '../../modules/constants'
 
 const Container = styled.div`
   a.list-group-item {
@@ -35,7 +35,7 @@ const Container = styled.div`
     margin-bottom: -40px !important;
   }
   .panel-heading {
-    background-image: url(${oceanDarkImage});
+    background-color: ${constants.panelColor} !important;
   }
   .panel-heading a {
     color: #edf4f8;

@@ -114,7 +114,7 @@ class Events extends Component {
   }
 
   render() {
-    const { store, introJumbotronHeight } = this.props
+    const { store } = this.props
     const { yearsOfEvents, activeEventYears } = store.yearsOfEvents
     const showEventsTable = min(activeEventYears) > 2014
     const { activeEvent, showNewEvent } = store.events
@@ -142,8 +142,7 @@ class Events extends Component {
                 )}
               </ButtonGroup>
             </YearButtonsContainer>}
-          {showEventsTable &&
-            <EventsTable introJumbotronHeight={introJumbotronHeight} />}
+          {showEventsTable && <EventsTable />}
           {activeEvent && <EditEvent />}
           {showNewEvent && <NewEvent />}
           {store.events.eventToRemove && <ModalRemoveEvent />}

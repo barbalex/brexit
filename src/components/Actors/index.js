@@ -14,7 +14,7 @@ import Actor from './Actor'
 import NewActor from './NewActor'
 import ModalRemoveActor from './ModalRemoveActor'
 import SwallowPanelGroupProps from '../shared/SwallowPanelGroupProps'
-import oceanDarkImage from '../../images/oceanDark.jpg'
+import constants from '../../modules/constants'
 
 const Container = styled.div`
   font-size: x-large;
@@ -26,7 +26,7 @@ const Container = styled.div`
     margin-bottom: 20px;
   }
   .panel-heading {
-    background-image: url(${oceanDarkImage});
+    background-color: ${constants.panelColor} !important;
   }
   .panel-heading a {
     color: #edf4f8;

@@ -3,16 +3,13 @@ import React from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
 
-import oceanDarkImage from '../../images/oceanDark.jpg'
+import constants from '../../modules/constants'
 
 const BodyRow = styled.div`
   display: flex;
   border-top: 1px solid #ececec !important;
   border-radius: 4px;
-  &:hover {
-    background-color: #f5f5f5;
-  }
-  background-image: url(${oceanDarkImage});
+  background-color: ${constants.panelColor};
   color: #edf4f8;
   font-weight: bold;
   ul {

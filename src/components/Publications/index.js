@@ -9,8 +9,8 @@ import { withRouter } from 'react-router'
 
 import PublicationsOfCategory from './PublicationsOfCategory'
 import NewPublication from './NewPublication'
-import oceanDarkImage from '../../images/oceanDark.jpg'
 import publicationCategoriesList from '../../modules/publicationCategories'
+import constants from '../../modules/constants'
 
 const Container = styled.div`
   margin-bottom: 20px;
@@ -44,7 +44,7 @@ const Container = styled.div`
 const PanelGroup = styled.div`
   margin-bottom: 0 !important;
   > div > .panel-heading {
-    background-image: url(${oceanDarkImage});
+    background-color: ${constants.panelColor};
   }
   &.not-active > .panel-heading {
     border-radius: 3px;
