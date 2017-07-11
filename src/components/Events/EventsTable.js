@@ -5,6 +5,7 @@ import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 import withState from 'recompose/withState'
 import styled from 'styled-components'
+import debounce from 'lodash/debounce'
 
 import DateRows from './DateRows'
 
@@ -86,7 +87,7 @@ class EventsTable extends Component {
   }
 
   componentDidMount = () => {
-    window.addEventListener('scroll', this.handleScroll)
+    window.addEventListener('scroll', debounce(this.handleScroll, 150))
   }
 
   componentWillUnmount() {
