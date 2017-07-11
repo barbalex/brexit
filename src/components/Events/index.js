@@ -1,9 +1,7 @@
 // @flow
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import { ButtonGroup, Button } from 'react-bootstrap'
 import moment from 'moment'
-import debounce from 'lodash/debounce'
 import min from 'lodash/min'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
