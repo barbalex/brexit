@@ -1,7 +1,4 @@
-/**
- * can't convert to es6 function because this is referenced
- */
-
+// @flow
 import React from 'react'
 import { Jumbotron } from 'react-bootstrap'
 import styled from 'styled-components'
