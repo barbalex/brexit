@@ -12,7 +12,10 @@ import LoginForm from './LoginForm'
 const enhance = compose(
   inject(`store`),
   withHandlers({
-    onClickLogout: props => () => props.store.login.logout(),
+    onClickLogout: props => (): void => {
+      console.log('log out clicked')
+      props.store.login.logout()
+    },
   }),
   observer
 )

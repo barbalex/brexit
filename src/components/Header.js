@@ -30,8 +30,14 @@ const FlagRow = styled.div`
 const FlagContainer = styled.div`
   position: relative;
   height: 100%;
+  /* needs to be behind title container */
+  z-index: -2;
 `
-const TitleContainer = styled.div`position: relative;`
+const TitleContainer = styled.div`
+  position: relative;
+  /* needs to be behind form elements */
+  z-index: -1;
+`
 const Title = styled.div`
   position: absolute;
   margin-top: ${props => props['data-titleMargintop']}px;
