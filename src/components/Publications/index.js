@@ -54,11 +54,6 @@ const PanelGroup = styled.div`
     font-weight: bold;
   }
 `
-const orderByCategory = {
-  Academic: 3,
-  'European Union': 1,
-  'IOs & NGOs': 2,
-}
 
 const enhance = compose(
   inject(`store`),

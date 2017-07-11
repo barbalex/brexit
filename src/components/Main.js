@@ -31,9 +31,9 @@ const Main = ({ store, login }: { store: Object, login: boolean }) => {
         <Navbar />
         <Header />
         <Switch>
-          <Redirect from="/" exact to="/events" />
+          <Redirect from="/" exact to="/chronology" />
           <Route
-            path="/events"
+            path="/chronology"
             render={() => {
               store.page.getPage('pages_events')
               return <AsyncEvents />

@@ -50,7 +50,7 @@ const enhance = compose(
   withHandlers({
     onClickEvents: props => () => {
       props.store.page.getPage('pages_events')
-      props.history.push('/events')
+      props.history.push('/chronology')
       // if home was clicked, do not toggle nav
     },
     onClickCommentaries: props => () => {
@@ -172,7 +172,7 @@ const MyNavbar = ({
       onToggle={onToggleNav}
     >
       <Navbar.Header>
-        <Navbar.Brand onClick={onClickEvents}>Events</Navbar.Brand>
+        <Navbar.Brand onClick={onClickEvents}>Chronology</Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
