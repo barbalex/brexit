@@ -54,7 +54,6 @@ const enhance = compose(
   inject(`store`),
   withRouter,
   withState('docToRemove', 'changeDocToRemove', null),
-  withState('introJumbotronHeight', 'changeIntroJumbotronHeight', null),
   observer
 )
 
@@ -64,47 +63,13 @@ class Events extends Component {
   props: {
     store: Object,
     docToRemove: Object,
-    introJumbotronHeight: number,
     changeDocToRemove: () => void,
-    changeIntroJumbotronHeight: () => void,
   }
 
   componentDidMount() {
     const { store } = this.props
     store.events.getEvents([parseInt(moment().format('YYYY'), 0)])
     store.yearsOfEvents.getYearsOfEvents()
-    this.setIntroComponentsHeight()
-    window.addEventListener(
-      'resize',
-      debounce(this.setIntroComponentsHeight, 50)
-    )
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener(
-      'resize',
-      debounce(this.setIntroComponentsHeight, 50)
-    )
-  }
-
-  setIntroComponentsHeight = () => {
-    const {
-      introJumbotronHeight: introJumbotronHeightOld,
-      changeIntroJumbotronHeight,
-    } = this.props
-    const introJumbotronDomNode = this.introJumbotron
-      ? // $FlowIssue
-        ReactDOM.findDOMNode(this.introJumbotron)
-      : null
-    const introJumbotronHeight = introJumbotronDomNode
-      ? introJumbotronDomNode.clientHeight
-      : null
-    if (
-      introJumbotronHeight &&
-      introJumbotronHeight !== introJumbotronHeightOld
-    ) {
-      changeIntroJumbotronHeight(introJumbotronHeight)
-    }
   }
 
   setActiveYear = year => {
@@ -122,12 +87,7 @@ class Events extends Component {
     return (
       <DocumentTitle title="brexit | chronology">
         <Container className="events">
-          <IntroJumbotron
-            ref={j => {
-              // $FlowIssue
-              this.introJumbotron = j
-            }}
-          />
+          <IntroJumbotron />
           {yearsOfEvents.length > 1 &&
             <YearButtonsContainer>
               <ButtonGroup>
