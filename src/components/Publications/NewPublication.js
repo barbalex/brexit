@@ -14,11 +14,13 @@ import withState from 'recompose/withState'
 import withHandlers from 'recompose/withHandlers'
 import styled from 'styled-components'
 
+import publicationCategories from '../../modules/publicationCategories'
+
 const ErrorAlert = styled(Alert)`
   magrin-bottom: 10px;
 `
 
-const categoryOptions = publicationCategories => {
+const categoryOptions = () => {
   const options = publicationCategories.map((category, index) =>
     <option key={index + 1} value={category}>
       {category}
@@ -79,52 +81,51 @@ const NewPublication = ({
   onChangeCategory: () => void,
   createNewPublication: () => void,
   close: () => void,
-}) => {
-  const publicationCategories = store.publications.getPublicationCategories()
+}) =>
+  <Modal show onHide={close} bsSize="large">
+    <Modal.Header>
+      <Modal.Title>New publication</Modal.Title>
+    </Modal.Header>
 
-  return (
-    <Modal show onHide={close} bsSize="large">
-      <Modal.Header>
-        <Modal.Title>New publication</Modal.Title>
-      </Modal.Header>
+    <Modal.Body>
+      <FormGroup controlId="event">
+        <ControlLabel>Title</ControlLabel>
+        <FormControl
+          type="text"
+          value={title}
+          onChange={onChangeTitle}
+          tabIndex={1}
+          autoFocus
+        />
+      </FormGroup>
+      <FormGroup controlId="category">
+        <ControlLabel>Category</ControlLabel>
+        <FormControl
+          componentClass="select"
+          value={category}
+          onChange={onChangeCategory}
+          tabIndex={2}
+        >
+          {publicationCategories.map((category, index) =>
+            <option key={index} value={category}>
+              {category}
+            </option>
+          )}
+        </FormControl>
+      </FormGroup>
+      {error &&
+        <ErrorAlert bsStyle="danger">
+          {error}
+        </ErrorAlert>}
+    </Modal.Body>
 
-      <Modal.Body>
-        <FormGroup controlId="event">
-          <ControlLabel>Title</ControlLabel>
-          <FormControl
-            type="text"
-            value={title}
-            onChange={onChangeTitle}
-            tabIndex={1}
-            autoFocus
-          />
-        </FormGroup>
-        <FormGroup controlId="category">
-          <ControlLabel>Category</ControlLabel>
-          <FormControl
-            componentClass="select"
-            value={category}
-            onChange={onChangeCategory}
-            tabIndex={2}
-          >
-            {categoryOptions(publicationCategories)}
-          </FormControl>
-        </FormGroup>
-        {error &&
-          <ErrorAlert bsStyle="danger">
-            {error}
-          </ErrorAlert>}
-      </Modal.Body>
-
-      <Modal.Footer>
-        <Button onClick={close}>discard input and close</Button>
-        <Button bsStyle="primary" onClick={createNewPublication}>
-          create new publication
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  )
-}
+    <Modal.Footer>
+      <Button onClick={close}>discard input and close</Button>
+      <Button bsStyle="primary" onClick={createNewPublication}>
+        create new publication
+      </Button>
+    </Modal.Footer>
+  </Modal>
 
 NewPublication.displayName = 'NewPublication'
 
