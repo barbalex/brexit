@@ -35,7 +35,6 @@ function Store(): void {
     removeEvent: null,
     eventToRemove: null,
     setEventToRemove: null,
-    replaceEvent: null,
   }
   this.commentaries = {
     commentaries: [],

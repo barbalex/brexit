@@ -3,6 +3,7 @@ import { extendObservable, action, computed } from 'mobx'
 import app from 'ampersand-app'
 import moment from 'moment'
 import slug from 'speakingurl'
+import cloneDeep from 'lodash/cloneDeep'
 
 import getEvents from '../../modules/getEvents'
 import sortEvents from '../../modules/sortEvents'
@@ -143,12 +144,14 @@ export default (store: Object): void => {
     ),
 
     removeEvent: action('removeEvent', (event: Object): void => {
+      // clone event in case event is immediately changed
+      const myEvent = cloneDeep(event)
       // keep old cache in case of error
       const oldEvents = store.events.events
       const oldActiveEventId = store.events.activeEventId
       // optimistically remove event from cache
-      store.events.removeEventFromCache(event)
-      app.db.remove(event).catch(error => {
+      store.events.removeEventFromCache(myEvent)
+      app.db.remove(myEvent).catch(error => {
         // oops. Revert optimistic removal
         store.events.revertCache(oldEvents, oldActiveEventId)
         store.error.showError({
@@ -162,12 +165,6 @@ export default (store: Object): void => {
 
     setEventToRemove: action('setEventToRemove', (event: Object): void => {
       store.events.eventToRemove = event
-    }),
-
-    replaceEvent: action('replaceEvent', (event: Object): void => {
-      // if an event's title or date are changed, it has to be replaced with a new one
-      store.events.newEvent(event)
-      store.events.removeEvent(event)
     }),
   })
 }

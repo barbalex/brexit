@@ -112,20 +112,22 @@ const enhance = compose(
       }
     },
     onBlurTitle: props => (e: Object): void => {
-      const { activeEvent, replaceEvent } = props.store.events
+      const { activeEvent, newEvent, removeEvent } = props.store.events
       activeEvent.title = e.target.value
       if (activeEvent.title) {
+        removeEvent(activeEvent)
         activeEvent.date = getDateFromEventId(activeEvent._id)
-        replaceEvent(activeEvent)
+        newEvent(activeEvent)
       }
     },
     onChangeDatePicker: props => (event: Object, picker: Object): void => {
       const { changeError, store } = props
-      const { activeEvent, replaceEvent } = store.events
+      const { activeEvent, newEvent, removeEvent } = store.events
       const datePassed = moment(picker.startDate, 'DD.MM.YYYY')
       if (datePassed) {
+        removeEvent(activeEvent)
         activeEvent.date = datePassed
-        replaceEvent(activeEvent)
+        newEvent(activeEvent)
       } else {
         changeError('Please choose a date')
       }
