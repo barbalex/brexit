@@ -34,9 +34,10 @@ const DateRows = ({ store }: { store: Object }) => {
   )
   const dateRows = []
   if (dateRowObjects.length > 0) {
+    let lastEndOfMonth
     dateRowObjects.forEach((dRO, index) => {
       const day = moment(dRO.date).format('D')
-      const endOfMonth = moment(dRO.date).endOf('month').format('DD')
+      const endOfMonth = moment(dRO.date).endOf('month').format('MM.DD')
       const dROForDateRow = {
         date: dRO.date,
         gbEvents: dRO.gbEvents.filter(
@@ -65,12 +66,12 @@ const DateRows = ({ store }: { store: Object }) => {
         dROForMonthlyStatsRow.gbEvents.length > 0 ||
         dROForMonthlyStatsRow.euEvents.length > 0 ||
         dROForMonthlyStatsRow.bothEvents.length > 0
-      const needsMonthRow = day === endOfMonth || index === 0
-      const needsMonthlyStatisticsRow =
-        day === endOfMonth && dROForMonthlyStatsHasEvents
+      const needsMonthRow = !lastEndOfMonth || endOfMonth !== lastEndOfMonth
       if (needsMonthRow) {
         dateRows.push(<MonthRow key={`${index}monthRow`} dateRowObject={dRO} />)
       }
+      const needsMonthlyStatisticsRow =
+        day === endOfMonth && dROForMonthlyStatsHasEvents
       if (needsMonthlyStatisticsRow) {
         dateRows.push(
           <MonthlyStatisticsRow
@@ -80,6 +81,7 @@ const DateRows = ({ store }: { store: Object }) => {
         )
       }
       dateRows.push(<DateRow key={index} dateRowObject={dROForDateRow} />)
+      lastEndOfMonth = endOfMonth
     })
     const renderDateRow = (index, key) => dateRows[index]
 
