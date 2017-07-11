@@ -10,9 +10,9 @@ const StyledJumbotron = styled(Jumbotron)`
   hyphens: manual !important;
   padding-left: 30px !important;
   padding-right: 30px !important;
-  padding-top: 20px !important;
-  padding-bottom: 15px !important;
-  margin-top: 30px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  margin-top: 20px !important;
   margin-bottom: 20px !important;
   text-align: center !important;
   background-color: transparent !important;

@@ -12,7 +12,7 @@ import gbImage from '../images/gb.svg'
 const enhance = compose(withState('flagHeight', 'changeFlagHeight', 150))
 
 const Container = styled.div`
-  margin-top: 80px;
+  margin-top: 75px;
   display: flex;
   flex-direction: column;
   min-height: ${props => props['data-height']}px;
