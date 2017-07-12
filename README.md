@@ -3,7 +3,7 @@ Brexit is a complex topic difficult to grasp. The present website is meant to he
 
 ## History
 
-This project was built based on [blue-borders](https://github.com/barbalex/bb2), [https://blue-borders.ch](https://blue-borders.ch).
+This project was built based on [blue-borders](//github.com/barbalex/bb2), [https://blue-borders.ch](//blue-borders.ch).
 
 ## Used technologies:
 
@@ -22,5 +22,5 @@ This project was built based on [blue-borders](https://github.com/barbalex/bb2),
 - [Flow](//flow.org):
   - static type checker
   - find errors before the code runs
-- [react router 4](https://reacttraining.com/react-router) with [react-loadable](https://github.com/thejameskyle/react-loadable)
+- [react router 4](//reacttraining.com/react-router) with [react-loadable](//github.com/thejameskyle/react-loadable)
   - splitting code to accelerate first load
