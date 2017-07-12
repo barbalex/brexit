@@ -33,6 +33,8 @@ const FlagContainer = styled.div`
   /* needs to be behind title container */
   z-index: -2;
 `
+const FlagContainerLeft = FlagContainer.extend`padding-right: 5px;`
+const FlagContainerRight = FlagContainer.extend`padding-left: 5px;`
 const TitleContainer = styled.div`
   position: relative;
   /* needs to be behind form elements */
@@ -100,12 +102,12 @@ class Header extends Component {
         }}
       >
         <FlagRow>
-          <FlagContainer className="flag">
+          <FlagContainerLeft className="flag">
             <img src={gbImage} alt="gb" />
-          </FlagContainer>
-          <FlagContainer>
+          </FlagContainerLeft>
+          <FlagContainerRight>
             <img src={euImage} alt="eu" />
-          </FlagContainer>
+          </FlagContainerRight>
         </FlagRow>
         <TitleContainer>
           <Title
