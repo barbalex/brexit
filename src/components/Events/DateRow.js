@@ -36,13 +36,13 @@ const Gb = BodyCell.extend`
   width: 50%;
   max-width: 50%;
   word-wrap: break-word;
-  padding: 5px 5px 5px 0;
+  padding: 5px ${props => props['data-padding']}px 5px 0;
 `
 const Eu = BodyCell.extend`
   width: 50%;
   max-width: 50%;
   word-wrap: break-word;
-  padding: 5px 0 5px 5px;
+  padding: 5px 0 5px ${props => props['data-padding']}px;
 `
 const Both = styled.div`
   display: flex;
@@ -135,6 +135,7 @@ class DateRow extends Component {
     const euEvents = mapEventComponents(dRO.euEvents)
     const bothEvents = mapBothEventComponents(dRO.bothEvents)
     const bothPadding = rowWidth / 5
+    const gbEuPadding = rowWidth / 12
 
     return (
       <BodyRow
@@ -154,12 +155,12 @@ class DateRow extends Component {
               {bothEvents}
             </Both>}
           <GbEuData>
-            <Gb>
+            <Gb data-padding={gbEuPadding}>
               <ul>
                 {gbEvents}
               </ul>
             </Gb>
-            <Eu>
+            <Eu data-padding={gbEuPadding}>
               <ul>
                 {euEvents}
               </ul>
