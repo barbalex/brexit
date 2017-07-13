@@ -52,8 +52,6 @@ const HeaderCellBoth = HeaderCell.extend`
   flex-grow: 0;
   flex-shrink: 0;
   word-wrap: break-word;
-  font-style: italic;
-  font-size: ${window.innerWidth < 500 ? 16 : 20}px;
 `
 const Body = styled.div`
   overflow-x: visible;
@@ -117,7 +115,7 @@ class EventsTable extends Component {
           <HeaderRow>
             <HeaderCellDay>Date</HeaderCellDay>
             <HeaderCellGb>Great Britain</HeaderCellGb>
-            <HeaderCellBoth>...both...</HeaderCellBoth>
+            <HeaderCellBoth>GB & EU</HeaderCellBoth>
             <HeaderCellEu>European Union</HeaderCellEu>
           </HeaderRow>
         </Header>

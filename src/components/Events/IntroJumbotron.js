@@ -5,8 +5,8 @@ import styled from 'styled-components'
 
 const StyledJumbotron = styled(Jumbotron)`
   hyphens: manual !important;
-  padding-left: 30px !important;
-  padding-right: 30px !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
   padding-top: 10px !important;
   padding-bottom: 10px !important;
   margin-top: 20px !important;
@@ -18,7 +18,7 @@ const StyledJumbotron = styled(Jumbotron)`
 `
 const P = styled.p`
   margin-bottom: 0 !important;
-  font-size: 18px !important;
+  font-size: 22px !important;
 `
 
 const IntroJumbotron = () =>

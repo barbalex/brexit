@@ -49,7 +49,6 @@ const Both = styled.div`
   ul {
     padding: 5px;
     align-self: center;
-    font-style: italic;
   }
 `
 const BodyRow = styled.div`

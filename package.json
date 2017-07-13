@@ -1,7 +1,7 @@
 {
-  "name": "bb2",
-  "version": "2.0.0",
-  "description": "Most mi­grants and re­fu­gees ar­ri­ving in Eu­ro­pe cross the blue bor­­ders of the Eas­­tern and Cen­­tral Me­diterrane­an. The flow is massive and high­ly com­plex. This web­­si­te provides a rough over­­view by co­ve­­ring chro­­no­­lo­­gi­­cal­­ly both ma­ri­­ti­me and political events",
+  "name": "brexit",
+  "version": "0.5.0",
+  "description": "Brexit is a complex topic difficult to grasp. The present website is meant to help. It is a simple chronology based on a handful of publicly available sources and focusing on the negotiation dynamics between the two sides",
   "private": true,
   "dependencies": {
     "ampersand-app": "2.0.0",
