@@ -13,6 +13,9 @@ const StyledGlyphicon = styled(Glyphicon)`
   padding-right: 3px;
   vertical-align: 10%;
 `
+const P = styled.p`
+  font-weight: ${props => (props['data-bold'] ? 'bold' : 'normal')};
+`
 const OuterSpan = styled.span`padding-left: 5px;`
 
 const enhance = compose(inject(`store`), observer)
@@ -36,11 +39,11 @@ const Event = ({ store, event }: { store: Object, event: Object }) => {
 
   return (
     <li className={classNames}>
-      <p className={classNames}>
+      <P className={classNames} data-bold={event.bold}>
         {event.title} <span>{links}</span>
         {showEditingGlyphons && <EditEventGlyph event={event} />}
         {showEditingGlyphons && <RemoveEventGlyph event={event} />}
-      </p>
+      </P>
     </li>
   )
 }

@@ -96,6 +96,8 @@ const StyledAlert = styled(Alert)`
   margin-top: 10px;
   margin-bottom: 10px;
 `
+const BoldLabel = styled.label`margin-bottom: 20px;`
+const BoldInput = styled.input`margin-right: 5px !important;`
 
 const enhance = compose(
   inject(`store`),
@@ -142,6 +144,11 @@ const enhance = compose(
       activeEvent.order = e.target.value
       saveEvent(activeEvent)
     },
+    onChangeBold: props => (e: Object): void => {
+      const { activeEvent, saveEvent } = props.store.events
+      activeEvent.bold = !activeEvent.bold
+      saveEvent(activeEvent)
+    },
     close: props => (): void => {
       props.store.events.getEvent(null)
     },
@@ -158,6 +165,7 @@ const EditEvent = ({
   onChangeDatePicker,
   onChangeOrder,
   onBlurOrder,
+  onChangeBold,
   close,
 }: {
   store: Object,
@@ -168,6 +176,7 @@ const EditEvent = ({
   onChangeDatePicker: () => void,
   onChangeOrder: () => void,
   onBlurOrder: () => void,
+  onChangeBold: () => void,
   close: () => void,
 }) =>
   <StyledModal show onHide={close} bsSize="large">
@@ -202,6 +211,14 @@ const EditEvent = ({
         />
       </FormGroup>
       <TagsInput />
+      <BoldLabel>
+        <BoldInput
+          type="checkbox"
+          checked={!!store.events.activeEvent.bold}
+          onChange={onChangeBold}
+        />
+        Use bold text
+      </BoldLabel>
       <EventLinks />
       {error &&
         <StyledAlert bsStyle="danger">

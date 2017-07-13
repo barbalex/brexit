@@ -125,7 +125,6 @@ class DateRow extends Component {
     const rowWidth = rowDomNode ? rowDomNode.clientWidth : null
     if (rowWidth && rowWidth !== rowWidthOld) {
       changeRowWidth(rowWidth)
-      console.log('rowWidth:', rowWidth)
     }
   }
 
