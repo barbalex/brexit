@@ -146,10 +146,7 @@ const enhance = compose(
     },
     onChangeBold: props => (e: Object): void => {
       const { activeEvent, saveEvent } = props.store.events
-      console.log('activeEvent.bold before:', activeEvent.bold)
-      console.log('e.target.value:', e.target.value)
       activeEvent.bold = !activeEvent.bold
-      console.log('activeEvent.bold after:', activeEvent.bold)
       saveEvent(activeEvent)
     },
     close: props => (): void => {
