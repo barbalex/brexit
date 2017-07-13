@@ -30,7 +30,11 @@ const enhance = compose(
     },
     onBlurUrl: props => (): void => {
       const { store, link: oldLink, link: newLink } = props
-      const { activeEvent } = store.events
+      // DANGER: computed only recomputes when _id changes!
+      // so do not use store.events.activeEvent
+      const activeEvent = store.events.events.find(
+        event => event._id === store.events.activeEventId
+      )
       const index = activeEvent.links.findIndex(
         link => link.label === oldLink.label && link.url === oldLink.url
       )
@@ -42,7 +46,11 @@ const enhance = compose(
     },
     onBlurLabel: props => (): void => {
       const { store, link: oldLink, link: newLink } = props
-      const { activeEvent } = store.events
+      // DANGER: computed only recomputes when _id changes!
+      // so do not use store.events.activeEvent
+      const activeEvent = store.events.events.find(
+        event => event._id === store.events.activeEventId
+      )
       const index = activeEvent.links.findIndex(
         link => link.url === oldLink.url && link.label === oldLink.label
       )
@@ -51,7 +59,11 @@ const enhance = compose(
     },
     onRemoveLink: props => (): void => {
       const { store, link: linkToRemove } = props
-      const { activeEvent } = store.events
+      // DANGER: computed only recomputes when _id changes!
+      // so do not use store.events.activeEvent
+      const activeEvent = store.events.events.find(
+        event => event._id === store.events.activeEventId
+      )
       activeEvent.links = activeEvent.links.filter(
         link =>
           link.label !== linkToRemove.label && link.url !== linkToRemove.url

@@ -23,7 +23,11 @@ const enhance = compose(
   withHandlers({
     onChangeTag: props => (tag, event) => {
       const checked = event.target.checked
-      const { activeEvent } = props.store.events
+      // DANGER: computed only recomputes when _id changes!
+      // so do not use store.events.activeEvent
+      const activeEvent = props.store.events.events.find(
+        event => event._id === props.store.events.activeEventId
+      )
       if (checked) {
         activeEvent.tags.push(tag)
         props.store.events.saveEvent(activeEvent)
@@ -48,25 +52,34 @@ const EventTags = ({
 }: {
   store: Object,
   onChangeTag: () => void,
-}) =>
-  <Container>
-    <Label>Tags</Label>
-    <div className="event-tags">
-      {allTags.map((option, index) =>
-        <div key={index} className="form-group event-tag">
-          <label>
-            <input
-              type="checkbox"
-              checked={store.events.activeEvent.tags.includes(option.tag)}
-              onChange={event => onChangeTag(option.tag, event)}
-            />
-            {option.iconText && tagIcon(option)}
-            &nbsp;{option.tag}
-          </label>
-        </div>
-      )}
-    </div>
-  </Container>
+}) => {
+  // DANGER: computed only recomputes when _id changes!
+  // so do not use store.events.activeEvent
+  const activeEvent = store.events.events.find(
+    event => event._id === store.events.activeEventId
+  )
+
+  return (
+    <Container>
+      <Label>Tags</Label>
+      <div className="event-tags">
+        {allTags.map((option, index) =>
+          <div key={index} className="form-group event-tag">
+            <label>
+              <input
+                type="checkbox"
+                checked={activeEvent.tags.includes(option.tag)}
+                onChange={event => onChangeTag(option.tag, event)}
+              />
+              {option.iconText && tagIcon(option)}
+              &nbsp;{option.tag}
+            </label>
+          </div>
+        )}
+      </div>
+    </Container>
+  )
+}
 
 EventTags.displayName = 'EventTags'
 

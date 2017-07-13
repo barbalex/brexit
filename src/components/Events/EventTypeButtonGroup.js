@@ -16,7 +16,12 @@ const enhance = compose(
   inject(`store`),
   withHandlers({
     changeEventType: props => eventType => {
-      const { activeEvent, saveEvent } = props.store.events
+      const { saveEvent } = props.store.events
+      // DANGER: computed only recomputes when _id changes!
+      // so do not use store.events.activeEvent
+      const activeEvent = props.store.events.events.find(
+        event => event._id === props.store.events.activeEventId
+      )
       activeEvent.eventType = eventType
       saveEvent(activeEvent)
     },
@@ -35,12 +40,22 @@ class EventTypeButtonGroup extends Component {
   componentDidMount() {
     const { store, changeEventType } = this.props
     // if no eventType, set gb
-    if (!store.events.activeEvent.eventType) changeEventType('gb')
+    // DANGER: computed only recomputes when _id changes!
+    // so do not use store.events.activeEvent
+    const activeEvent = store.events.events.find(
+      event => event._id === store.events.activeEventId
+    )
+    if (!activeEvent.eventType) changeEventType('gb')
   }
 
   render() {
     const { changeEventType, store } = this.props
-    const { eventType } = store.events.activeEvent
+    // DANGER: computed only recomputes when _id changes!
+    // so do not use store.events.activeEvent
+    const activeEvent = store.events.events.find(
+      event => event._id === store.events.activeEventId
+    )
+    const eventType = activeEvent.eventType
 
     return (
       <Container>

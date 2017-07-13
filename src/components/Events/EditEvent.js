@@ -146,7 +146,10 @@ const enhance = compose(
     },
     onChangeBold: props => (e: Object): void => {
       const { activeEvent, saveEvent } = props.store.events
+      console.log('activeEvent.bold before:', activeEvent.bold)
+      console.log('e.target.value:', e.target.value)
       activeEvent.bold = !activeEvent.bold
+      console.log('activeEvent.bold after:', activeEvent.bold)
       saveEvent(activeEvent)
     },
     close: props => (): void => {
@@ -178,58 +181,67 @@ const EditEvent = ({
   onBlurOrder: () => void,
   onChangeBold: () => void,
   close: () => void,
-}) =>
-  <StyledModal show onHide={close} bsSize="large">
-    <Modal.Header closeButton>
-      <Modal.Title>Edit event</Modal.Title>
-    </Modal.Header>
+}) => {
+  // DANGER: computed only recomputes when _id changes!
+  // so do not use store.events.activeEvent
+  const activeEvent = store.events.events.find(
+    event => event._id === store.events.activeEventId
+  )
 
-    <Modal.Body>
-      <FormGroup controlId="eventTitle">
-        <ControlLabel>Title</ControlLabel>
-        <FormControl
-          type="text"
-          value={store.events.activeEvent.title}
-          onChange={onChangeTitle}
-          onBlur={onBlurTitle}
-          tabIndex={1}
-        />
-      </FormGroup>
-      <DateInput
-        date={getDateFromEventId(store.events.activeEvent._id)}
-        onChangeDatePicker={onChangeDatePicker}
-      />
-      <EventTypeButtonGroup />
-      <FormGroup controlId="eventOrder">
-        <ControlLabel>Order</ControlLabel>
-        <EventOrder
-          type="number"
-          value={store.events.activeEvent.order}
-          onChange={onChangeOrder}
-          onBlur={onBlurOrder}
-          tabIndex={4}
-        />
-      </FormGroup>
-      <TagsInput />
-      <BoldLabel>
-        <BoldInput
-          type="checkbox"
-          checked={!!store.events.activeEvent.bold}
-          onChange={onChangeBold}
-        />
-        Use bold text
-      </BoldLabel>
-      <EventLinks />
-      {error &&
-        <StyledAlert bsStyle="danger">
-          {error}
-        </StyledAlert>}
-    </Modal.Body>
+  return (
+    <StyledModal show onHide={close} bsSize="large">
+      <Modal.Header closeButton>
+        <Modal.Title>Edit event</Modal.Title>
+      </Modal.Header>
 
-    <Modal.Footer>
-      <Button onClick={close}>close</Button>
-    </Modal.Footer>
-  </StyledModal>
+      <Modal.Body>
+        <FormGroup controlId="eventTitle">
+          <ControlLabel>Title</ControlLabel>
+          <FormControl
+            type="text"
+            value={activeEvent.title}
+            onChange={onChangeTitle}
+            onBlur={onBlurTitle}
+            tabIndex={1}
+          />
+        </FormGroup>
+        <DateInput
+          date={getDateFromEventId(activeEvent._id)}
+          onChangeDatePicker={onChangeDatePicker}
+        />
+        <EventTypeButtonGroup />
+        <FormGroup controlId="eventOrder">
+          <ControlLabel>Order</ControlLabel>
+          <EventOrder
+            type="number"
+            value={activeEvent.order}
+            onChange={onChangeOrder}
+            onBlur={onBlurOrder}
+            tabIndex={4}
+          />
+        </FormGroup>
+        <TagsInput />
+        <BoldLabel>
+          <BoldInput
+            type="checkbox"
+            checked={activeEvent.bold || false}
+            onChange={onChangeBold}
+          />
+          Use bold text
+        </BoldLabel>
+        <EventLinks />
+        {error &&
+          <StyledAlert bsStyle="danger">
+            {error}
+          </StyledAlert>}
+      </Modal.Body>
+
+      <Modal.Footer>
+        <Button onClick={close}>close</Button>
+      </Modal.Footer>
+    </StyledModal>
+  )
+}
 
 EditEvent.displayName = 'EditEvent'
 

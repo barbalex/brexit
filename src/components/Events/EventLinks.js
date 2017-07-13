@@ -24,8 +24,14 @@ const enhance = compose(
         url: '',
         label: '',
       }
-      props.store.events.activeEvent.links.push(newLink)
-      props.store.events.saveEvent(props.store.events.activeEvent)
+      const { events } = props.store
+      // DANGER: computed only recomputes when _id changes!
+      // so do not use store.events.activeEvent
+      const activeEvent = events.events.find(
+        event => event._id === events.activeEventId
+      )
+      activeEvent.links.push(newLink)
+      events.saveEvent(activeEvent)
     },
     onCloseMeta: props => () => props.changeShowMeta(false),
   }),
@@ -39,7 +45,11 @@ const EventLinks = ({
   store: Object,
   onNewLink: () => void,
 }) => {
-  const { activeEvent } = store.events
+  // DANGER: computed only recomputes when _id changes!
+  // so do not use store.events.activeEvent
+  const activeEvent = store.events.events.find(
+    event => event._id === store.events.activeEventId
+  )
 
   return (
     <div>
