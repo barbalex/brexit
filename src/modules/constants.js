@@ -1,5 +1,5 @@
 // @flow
 export default {
-  panelColor: '#00247d',
-  panelColorActive: '#000059',
+  panelColor: '#039',
+  panelColorActive: '#002173',
 }

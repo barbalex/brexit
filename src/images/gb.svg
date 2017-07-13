@@ -12,7 +12,7 @@
  <clipPath id="t">
   <path d="m30 15h30v15zv15h-30zh-30v-15zv-15h30z"/>
  </clipPath>
- <path d="m0 0v30h60v-30z" fill="#00247d"/>
+ <path d="m0 0v30h60v-30z" fill="#039"/>
  <path d="m0 0 60 30m0-30-60 30" stroke="#fff" stroke-width="6"/>
  <path d="m0 0 60 30m0-30-60 30" clip-path="url(#t)" stroke="#cf142b" stroke-width="4"/>
  <path d="m30 0v30m-30-15h60" stroke="#fff" stroke-width="10"/>
