@@ -128,7 +128,9 @@ class EventsTable extends Component {
     const bodyMarginTop =
       store.yearsOfEvents.yearsOfEvents.length > 1 ? '77px' : '58px'
     const bothPadding = width / 5
-    const gbEuPadding = width / 12
+    // -55 corrects for the fact that "GB & EU" uses 110px in the middle
+    // which is not the case in the rows
+    const gbEuPadding = width / 12 - 55
 
     return (
       <Container
