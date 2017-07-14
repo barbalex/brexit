@@ -1,6 +1,11 @@
 // @flow
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
@@ -26,6 +31,7 @@ const Main = ({ store, login }: { store: Object, login: boolean }) => {
         <Navbar />
         <Header />
         <Switch>
+          <Redirect from="/chronology" exact to="/" />
           <Route
             path="/"
             exact
