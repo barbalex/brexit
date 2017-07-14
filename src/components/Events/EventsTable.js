@@ -113,7 +113,7 @@ class EventsTable extends Component {
 
   handleScroll = () => {
     const { changeHeaderFixed } = this.props
-    console.log('window.scrollY:', window.scrollY)
+    // console.log('window.scrollY:', window.scrollY)
     if (window.scrollY > 460) {
       // console.log('should lock')
       changeHeaderFixed(true)

@@ -19,7 +19,7 @@ export default (store: Object): void => {
         }
         window.localStorage.email = email
         store.login.email = email
-        history.push('/chronology')
+        history.push('/')
       }
     }),
 

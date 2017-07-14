@@ -1,11 +1,6 @@
 // @flow
 import React from 'react'
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
@@ -31,9 +26,9 @@ const Main = ({ store, login }: { store: Object, login: boolean }) => {
         <Navbar />
         <Header />
         <Switch>
-          <Redirect from="/" exact to="/chronology" />
           <Route
-            path="/chronology"
+            path="/"
+            exact
             render={() => {
               store.page.getPage('pages_events')
               return <AsyncEvents />

@@ -54,7 +54,7 @@ const enhance = compose(
   withHandlers({
     onClickEvents: props => () => {
       props.store.page.getPage('pages_events')
-      props.history.push('/chronology')
+      props.history.push('/')
       // if home was clicked, do not toggle nav
     },
     onClickCommentaries: props => () => {
