@@ -27,7 +27,7 @@ const BodyCell = styled.div`
 
 const enhance = compose(inject(`store`), observer)
 
-const DateRows = ({ store }: { store: Object }) => {
+const DateRows = ({ store, width }: { store: Object, width: number }) => {
   const dateRowObjects = getDaterowObjectsSinceOldestEvent(
     store.events.events,
     store.yearsOfEvents.activeEventYears
@@ -80,7 +80,9 @@ const DateRows = ({ store }: { store: Object }) => {
           />
         )
       }
-      dateRows.push(<DateRow key={index} dateRowObject={dROForDateRow} />)
+      dateRows.push(
+        <DateRow key={index} dateRowObject={dROForDateRow} width={width} />
+      )
       lastEndOfMonth = endOfMonth
     })
     const renderDateRow = (index, key) => dateRows[index]
