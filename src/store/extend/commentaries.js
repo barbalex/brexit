@@ -2,6 +2,7 @@
 import { extendObservable, action, computed } from 'mobx'
 import app from 'ampersand-app'
 import moment from 'moment'
+import slug from 'speakingurl'
 
 import getCommentaries from '../../modules/getCommentaries'
 import getPathFromDocId from '../../modules/getPathFromDocId'
@@ -56,10 +57,11 @@ export default (store: Object): void => {
         const year = moment(date).year()
         const month = moment(date).format('MM')
         const day = moment(date).format('DD')
-        const _id = `commentaries_${year}_${month}_${day}_${title}`
+        const titleSlugified = slug(title, { lower: true })
+        const _id = `commentaries_${year}_${month}_${day}_${titleSlugified}`
         const draft = true
         const article = 'IA=='
-        const type = 'commentaries'
+        const type = 'commentary'
         const commentary = { _id, title, draft, article, type }
         store.commentaries.saveCommentary(commentary)
       }
