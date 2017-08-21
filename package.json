@@ -1,6 +1,6 @@
 {
   "name": "brexit",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "description": "Brexit is a complex topic difficult to grasp. The present website is meant to help. It is a simple chronology based on a handful of publicly available sources and focusing on the negotiation dynamics between the two sides",
   "private": true,
   "dependencies": {
@@ -8,7 +8,7 @@
     "babel-polyfill": "6.26.0",
     "bootstrap": "3.3.7",
     "classnames": "2.2.5",
-    "gemini-scrollbar": "1.5.1",
+    "gemini-scrollbar": "1.5.2",
     "isdev": "1.0.1",
     "js-base64": "2.1.9",
     "local-links": "1.4.1",
@@ -31,8 +31,8 @@
     "react-loadable": "4.0.3",
     "react-router": "4.1.1",
     "react-router-dom": "4.1.1",
-    "recompose": "0.24.0",
-    "speakingurl": "13.0.0",
+    "recompose": "0.25.0",
+    "speakingurl": "14.0.0",
     "styled-components": "2.1.2",
     "tinymce": "4.6.4"
   },
