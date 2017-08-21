@@ -34,23 +34,19 @@ const AttachedImagesList = ({
   urlCopied: string,
   onCopyUrl: () => void,
   changeUrlCopied: () => void,
-}) => {
-  console.log('rendering AttachedImagesList')
-  return (
-    <Container className="media">
-      {Object.keys(doc._attachments || []).map(key =>
-        <AttachedImage
-          key={key}
-          doc={doc}
-          attName={key}
-          urlCopied={urlCopied}
-          onCopyUrl={onCopyUrl}
-          attachments={doc._attachments}
-        />
-      )}
-    </Container>
-  )
-}
+}) =>
+  <Container className="media">
+    {Object.keys(doc._attachments || []).map(key =>
+      <AttachedImage
+        key={key}
+        doc={doc}
+        attName={key}
+        urlCopied={urlCopied}
+        onCopyUrl={onCopyUrl}
+        attachments={doc._attachments}
+      />
+    )}
+  </Container>
 
 AttachedImagesList.displayName = 'AttachedImagesList'
 

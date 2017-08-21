@@ -25,7 +25,7 @@
     "react-copy-to-clipboard": "5.0.0",
     "react-document-title": "2.0.3",
     "react-dom": "15.6.1",
-    "react-dropzone": "3.13.3",
+    "react-dropzone": "4.1.0",
     "react-gemini-scrollbar": "2.3.2",
     "react-list": "0.8.6",
     "react-loadable": "4.0.4",
