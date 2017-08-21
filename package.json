@@ -37,9 +37,9 @@
     "tinymce": "4.6.4"
   },
   "devDependencies": {
-    "css-loader": "0.28.4",
-    "flow-bin": "0.50.0",
-    "html-loader": "0.4.5",
+    "css-loader": "0.28.5",
+    "flow-bin": "0.53.1",
+    "html-loader": "0.5.1",
     "postcss-loader": "2.0.6",
     "react-scripts": "1.0.11"
   },
