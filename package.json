@@ -41,7 +41,7 @@
     "flow-bin": "0.50.0",
     "html-loader": "0.4.5",
     "postcss-loader": "2.0.6",
-    "react-scripts": "1.0.10"
+    "react-scripts": "1.0.11"
   },
   "scripts": {
     "start": "react-scripts start",
