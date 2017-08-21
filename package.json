@@ -34,7 +34,7 @@
     "recompose": "0.25.0",
     "speakingurl": "14.0.0",
     "styled-components": "2.1.2",
-    "tinymce": "4.6.4"
+    "tinymce": "4.6.5"
   },
   "devDependencies": {
     "css-loader": "0.28.5",
