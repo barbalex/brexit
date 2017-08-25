@@ -123,7 +123,7 @@ class EventsTable extends Component {
     }
   }
 
-  render = () => {
+  render() {
     const { store, width } = this.props
     const bodyMarginTop =
       store.yearsOfEvents.yearsOfEvents.length > 1 ? '77px' : '58px'

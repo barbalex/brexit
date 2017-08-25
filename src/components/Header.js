@@ -88,7 +88,7 @@ class Header extends Component {
     }
   }
 
-  render = () => {
+  render() {
     const { flagHeight } = this.props
     const titleSize = flagHeight / 5
     const titleMarginTop = -(flagHeight / 2 + 25)
