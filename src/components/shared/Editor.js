@@ -51,11 +51,6 @@ const enhance = compose(
       activeActor.article = articleEncoded
       props.store.actors.saveActor(activeActor)
     },
-    onSavePublicationArticle: props => articleEncoded => {
-      const { activePublication } = props.store.publications
-      activePublication.article = articleEncoded
-      props.store.publications.savePublication(activePublication)
-    },
   }),
   observer
 )
@@ -69,7 +64,6 @@ class Editor extends Component {
     docType: string,
     articleDecoded: string,
     onSavePageArticle: () => void,
-    onSavePublicationArticle: () => void,
     onSaveCommentaryArticle: () => void,
     onSaveActorArticle: () => void,
     changeDoc: () => void,
@@ -81,15 +75,11 @@ class Editor extends Component {
       doc,
       docType,
       onSavePageArticle,
-      onSavePublicationArticle,
       onSaveCommentaryArticle,
       onSaveActorArticle,
     } = this.props
     // height = window - menu height - (menubar + iconbar)
     let height = window.innerHeight - 52 - 74
-    if (['publication'].includes(docType)) {
-      height = window.innerHeight - 52 - 74 - 76
-    }
     if (['commentary', 'actor'].includes(docType)) {
       height = window.innerHeight - 52 - 74 - 90
     }
@@ -100,10 +90,6 @@ class Editor extends Component {
       case 'page':
         bodyClass = ''
         saveFunction = onSavePageArticle
-        break
-      case 'publication':
-        bodyClass = 'publication'
-        saveFunction = onSavePublicationArticle
         break
       case 'commentary':
         bodyClass = 'commentary'

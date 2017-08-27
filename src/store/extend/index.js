@@ -3,7 +3,6 @@ import extendPage from './page'
 import extendYearsOfEvents from './yearsOfEvents'
 import extendEvents from './events'
 import extendCommentaries from './commentaries'
-import extendPublications from './publications'
 import extendActors from './actors'
 import extendLogin from './login'
 import extendStore from './store'
@@ -14,7 +13,6 @@ export default (store: Object): void => {
   extendYearsOfEvents(store)
   extendEvents(store)
   extendCommentaries(store)
-  extendPublications(store)
   extendActors(store)
   extendLogin(store)
   extendStore(store)

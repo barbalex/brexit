@@ -15,7 +15,6 @@ import AsyncPage from './AsyncPage'
 import AsyncEvents from './AsyncEvents'
 import AsyncCommentaries from './AsyncCommentaries'
 import AsyncActors from './AsyncActors'
-import AsyncPublications from './AsyncPublications'
 import AsyncLogin from './AsyncLogin'
 import Errors from './Errors'
 import NotFound from './NotFound'
@@ -74,32 +73,6 @@ const Main = ({ store, login }: { store: Object, login: boolean }) => {
             render={() => {
               store.page.getPage('pages_actors')
               return <AsyncActors />
-            }}
-          />
-          <Route
-            path="/publications/:category/:title"
-            exact
-            render={({ match }) => {
-              const { category, title } = match.params
-              store.page.getPage('pages_publications')
-              store.publications.activePublicationId = `publications_${category}_${title}`
-              return <AsyncPublications />
-            }}
-          />
-          <Route
-            path="/publications/:category"
-            exact
-            render={() => {
-              store.page.getPage('pages_publications')
-              return <AsyncPublications />
-            }}
-          />
-          <Route
-            path="/publications"
-            exact
-            render={() => {
-              store.page.getPage('pages_publications')
-              return <AsyncPublications />
             }}
           />
           <Route

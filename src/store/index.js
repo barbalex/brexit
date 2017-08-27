@@ -55,26 +55,6 @@ function Store(): void {
     setCommentaryToRemove: null,
     toggleDraftOfCommentary: null,
   }
-  this.publications = {
-    publications: [],
-    activePublicationCategory: null,
-    activePublicationId: null,
-    activePublication: null,
-    getPublicationsCallback: null,
-    getPublications: null,
-    newPublication: null,
-    showNewPublication: null,
-    setShowNewPublication: null,
-    getPublication: null,
-    updatePublicationInCache: null,
-    revertCache: null,
-    savePublication: null,
-    removePublicationFromCache: null,
-    removePublication: null,
-    toggleDraftOfPublication: null,
-    getPublicationCategories: null,
-    setPublicationCategory: null,
-  }
   this.actors = {
     actors: [],
     activeActorId: null,
