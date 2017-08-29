@@ -265,9 +265,9 @@ class Commentaries extends Component {
       : null
 
     return (
-      <DocumentTitle title="brexit | Commentaries">
+      <DocumentTitle title="brexit | Commentary">
         <Container>
-          <h1>Commentaries</h1>
+          <h1>Commentary</h1>
           <PanelGroup
             activeKey={activeCommentaryId}
             id="commentariesAccordion"
