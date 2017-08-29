@@ -17,7 +17,8 @@ const StyledJumbotron = styled(Jumbotron)`
   border-radius: 4px !important;
 `
 const P = styled.p`
-  margin-bottom: 0 !important;
+  margin-top: 15px !important;
+  margin-bottom: 15px !important;
   font-size: 22px !important;
 `
 
@@ -27,9 +28,7 @@ const IntroJumbotron = () =>
       Brexit is a complex topic difficult to grasp. The present website is meant
       to help. It is a simple chronology based on a handful of publicly
       available sources and focusing on the negotiation dynamics between the two
-      sides.<br />
-      <br />
-      WEBSITE UNDER CONSTRUCTION
+      sides.
     </P>
   </StyledJumbotron>
 
