@@ -166,7 +166,7 @@ class Commentaries extends Component {
         placement="top"
         overlay={
           <Tooltip id="toggleDraft">
-            {doc.draft ? 'publish' : 'unpublish'}
+            {doc.draft ? 'unpublish' : 'publish'}
           </Tooltip>
         }
       >
