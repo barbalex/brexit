@@ -74,12 +74,11 @@ const Page = ({
     )
   }
   const createMarkup = () => ({ __html: articleDecoded })
+
   return (
     <DocumentTitle title={`brexit | ${title}`}>
       <Container className="page">
-        <h1>
-          {title}
-        </h1>
+        <h1>{title}</h1>
         <div dangerouslySetInnerHTML={createMarkup()} />
       </Container>
     </DocumentTitle>
