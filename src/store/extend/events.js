@@ -7,6 +7,7 @@ import cloneDeep from 'lodash/cloneDeep'
 
 import getEvents from '../../modules/getEvents'
 import sortEvents from '../../modules/sortEvents'
+import slugOptions from '../../modules/slugOptions'
 
 export default (store: Object): void => {
   extendObservable(store.events, {
@@ -49,7 +50,7 @@ export default (store: Object): void => {
       const year = moment(event.date).year()
       const month = moment(event.date).format('MM')
       const day = moment(event.date).format('DD')
-      const _id = `events_${year}_${month}_${day}_${slug(title)}`
+      const _id = `events_${year}_${month}_${day}_${slug(title, slugOptions)}`
       const type = 'events'
       const eventType = event.eventType || 'gb'
       const links = event.links || []

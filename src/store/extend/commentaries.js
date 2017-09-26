@@ -7,6 +7,7 @@ import slug from 'speakingurl'
 import getCommentaries from '../../modules/getCommentaries'
 import getPathFromDocId from '../../modules/getPathFromDocId'
 import sortCommentaries from '../../modules/sortCommentaries'
+import slugOptions from '../../modules/slugOptions'
 
 export default (store: Object): void => {
   extendObservable(store.commentaries, {
@@ -57,7 +58,7 @@ export default (store: Object): void => {
         const year = moment(date).year()
         const month = moment(date).format('MM')
         const day = moment(date).format('DD')
-        const titleSlugified = slug(title, { lower: true })
+        const titleSlugified = slug(title, slugOptions)
         const _id = `commentaries_${year}_${month}_${day}_${titleSlugified}`
         const draft = true
         const article = 'IA=='

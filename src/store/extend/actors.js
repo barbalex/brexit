@@ -6,6 +6,7 @@ import slug from 'speakingurl'
 import getPathFromDocId from '../../modules/getPathFromDocId'
 import getActors from '../../modules/getActors'
 import sortActors from '../../modules/sortActors'
+import slugOptions from '../../modules/slugOptions'
 
 export default (store: Object): void => {
   extendObservable(store.actors, {
@@ -42,7 +43,7 @@ export default (store: Object): void => {
     }),
 
     newActor: action('newActor', (category: string): void => {
-      const categorySlugified = slug(category, { lower: true })
+      const categorySlugified = slug(category, slugOptions)
       const _id = `actors_${categorySlugified}`
       const draft = true
       const article = 'IA=='
