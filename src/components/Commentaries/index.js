@@ -17,6 +17,10 @@ import SwallowPanelGroupProps from '../shared/SwallowPanelGroupProps'
 import constants from '../../modules/constants'
 
 const Container = styled.div`
+  p,
+  div {
+    font-size: medium;
+  }
   a.list-group-item {
     padding-right: 50px !important;
   }
@@ -145,7 +149,7 @@ class Commentaries extends Component {
     }
   }
 
-  removeCommentaryGlyph = doc =>
+  removeCommentaryGlyph = doc => (
     <OverlayTrigger
       placement="top"
       overlay={<Tooltip id="removeThisCommentary">remove</Tooltip>}
@@ -155,6 +159,7 @@ class Commentaries extends Component {
         onClick={this.props.onRemoveCommentary.bind(this, doc)}
       />
     </OverlayTrigger>
+  )
 
   toggleDraftGlyph = doc => {
     const { onToggleDraft } = this.props
@@ -230,7 +235,7 @@ class Commentaries extends Component {
               {showEditingGlyphons && this.toggleDraftGlyph(doc)}
               {showEditingGlyphons && this.removeCommentaryGlyph(doc)}
             </PanelHeading>
-            {isActiveCommentary &&
+            {isActiveCommentary && (
               <div
                 id={`#collapse${index}`}
                 className="panel-collapse collapse in"
@@ -245,7 +250,8 @@ class Commentaries extends Component {
                 >
                   <Commentary />
                 </PanelBody>
-              </div>}
+              </div>
+            )}
           </div>
         )
       })

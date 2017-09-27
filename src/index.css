@@ -6,11 +6,6 @@ body {
   hyphens: auto;
 }
 
-p,
-div {
-  font-size: medium;
-}
-
 a,
 a:link {
   cursor: pointer;

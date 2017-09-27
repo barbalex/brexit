@@ -23,6 +23,10 @@ const StyledNavbar = styled(Navbar)`
   border-radius: 0 !important;
   background-color: ${constants.panelColor} !important;
 
+  p,
+  div {
+    font-size: medium;
+  }
   a {
     color: #edf4f8 !important;
   }
@@ -177,9 +181,9 @@ const MyNavbar = ({
             About us
           </NavItem>
         </Nav>
-        {showNavbarRight &&
+        {showNavbarRight && (
           <Nav navbar pullRight>
-            {showEdit &&
+            {showEdit && (
               <OverlayTrigger
                 placement="bottom"
                 overlay={
@@ -191,8 +195,9 @@ const MyNavbar = ({
                 <NavItem onClick={onClickEdit}>
                   <Glyphicon glyph={glyph} />
                 </NavItem>
-              </OverlayTrigger>}
-            {showAddCommentary &&
+              </OverlayTrigger>
+            )}
+            {showAddCommentary && (
               <OverlayTrigger
                 placement="bottom"
                 overlay={<Tooltip id="newCommentary">new commentary</Tooltip>}
@@ -200,8 +205,9 @@ const MyNavbar = ({
                 <NavItem onClick={onClickNewCommentary}>
                   <Glyphicon glyph="plus" />
                 </NavItem>
-              </OverlayTrigger>}
-            {showAddEvent &&
+              </OverlayTrigger>
+            )}
+            {showAddEvent && (
               <OverlayTrigger
                 placement="bottom"
                 overlay={<Tooltip id="newEvent">new event</Tooltip>}
@@ -209,8 +215,9 @@ const MyNavbar = ({
                 <NavItem onClick={onClickNewEvent}>
                   <Glyphicon glyph="plus" />
                 </NavItem>
-              </OverlayTrigger>}
-            {showAddActor &&
+              </OverlayTrigger>
+            )}
+            {showAddActor && (
               <OverlayTrigger
                 placement="bottom"
                 overlay={<Tooltip id="newActor">new actor</Tooltip>}
@@ -218,7 +225,8 @@ const MyNavbar = ({
                 <NavItem onClick={onClickNewActor}>
                   <Glyphicon glyph="plus" />
                 </NavItem>
-              </OverlayTrigger>}
+              </OverlayTrigger>
+            )}
             <OverlayTrigger
               placement="bottom"
               overlay={<Tooltip id="logout">log out</Tooltip>}
@@ -227,7 +235,8 @@ const MyNavbar = ({
                 <Glyphicon glyph="log-out" />
               </NavItem>
             </OverlayTrigger>
-          </Nav>}
+          </Nav>
+        )}
       </Navbar.Collapse>
     </StyledNavbar>
   )

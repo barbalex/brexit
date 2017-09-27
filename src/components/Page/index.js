@@ -13,6 +13,10 @@ import Editor from '../shared/Editor'
 import Meta from './PageMeta'
 
 const Container = styled.div`
+  p,
+  div {
+    font-size: medium;
+  }
   h1 {
     font-size: 36px;
     font-weight: 500;

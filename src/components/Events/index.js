@@ -18,6 +18,10 @@ import EventsTable from './EventsTable'
 
 const Container = styled.div`
   position: relative !important;
+  p,
+  div {
+    font-size: medium;
+  }
   p.event-weather {
     position: relative !important;
   }
@@ -86,10 +90,10 @@ class Events extends Component {
       <DocumentTitle title="brexit-chronology">
         <Container className="events">
           <IntroJumbotron />
-          {yearsOfEvents.length > 1 &&
+          {yearsOfEvents.length > 1 && (
             <YearButtonsContainer>
               <ButtonGroup>
-                {yearsOfEvents.map((year, index) =>
+                {yearsOfEvents.map((year, index) => (
                   <Button
                     key={index}
                     active={activeEventYears.includes(year)}
@@ -97,9 +101,10 @@ class Events extends Component {
                   >
                     {year}
                   </Button>
-                )}
+                ))}
               </ButtonGroup>
-            </YearButtonsContainer>}
+            </YearButtonsContainer>
+          )}
           {showEventsTable && <EventsTable />}
           {activeEvent && <EditEvent />}
           {showNewEvent && <NewEvent />}

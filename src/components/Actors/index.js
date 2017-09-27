@@ -19,6 +19,10 @@ import constants from '../../modules/constants'
 const Container = styled.div`
   font-size: x-large;
   font-weight: 700;
+  p,
+  div {
+    font-size: medium;
+  }
   h2 {
     font-size: large;
     font-weight: 700;
@@ -200,7 +204,7 @@ class Actors extends Component {
                 </a>
               </h4>
               {showEditingGlyphons && this.toggleDraftGlyph(doc)}
-              {showEditingGlyphons &&
+              {showEditingGlyphons && (
                 <OverlayTrigger
                   placement="top"
                   overlay={<Tooltip id="removeThisActor">remove</Tooltip>}
@@ -209,9 +213,10 @@ class Actors extends Component {
                     glyph="remove-circle"
                     onClick={event => this.props.onRemoveActor(doc, event)}
                   />
-                </OverlayTrigger>}
+                </OverlayTrigger>
+              )}
             </PanelHeading>
-            {isActiveActor &&
+            {isActiveActor && (
               <div
                 id={`#collapse${index}`}
                 className="panel-collapse collapse in"
@@ -226,7 +231,8 @@ class Actors extends Component {
                 >
                   <Actor />
                 </PanelBody>
-              </div>}
+              </div>
+            )}
           </div>
         )
       })
