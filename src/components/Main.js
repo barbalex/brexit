@@ -17,6 +17,7 @@ import AsyncCommentaries from './AsyncCommentaries'
 import AsyncActors from './AsyncActors'
 import AsyncLogin from './AsyncLogin'
 import Errors from './Errors'
+import UpdateAvailable from './UpdateAvailable'
 import NotFound from './NotFound'
 
 const enhance = compose(inject(`store`), observer)
@@ -95,6 +96,7 @@ const Main = ({ store, login }: { store: Object, login: boolean }) => {
           <Route component={NotFound} />
         </Switch>
         {errors && errors.length > 0 && <Errors />}
+        {store.updateAvailable && <UpdateAvailable />}
       </div>
     </Router>
   )
