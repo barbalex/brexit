@@ -18,7 +18,7 @@ import 'babel-polyfill'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.css'
 
-registerServiceWorker()
+registerServiceWorker(store)
 
 // some old browsers can't deal with ArrayBuffer
 // pouchdb needs it

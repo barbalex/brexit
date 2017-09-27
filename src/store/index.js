@@ -105,6 +105,7 @@ function Store(): void {
   }
   this.editing = false
   this.toggleEditing = null
+  this.updateAvailable = false
 }
 
 const MyStore = new Store()
