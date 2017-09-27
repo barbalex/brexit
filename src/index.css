@@ -1,5 +1,18 @@
-@import '../node_modules/react-bootstrap-daterangepicker/css/daterangepicker.css';
+@import '../node_modules/react-datepicker/dist/react-datepicker.css';
 @import '../node_modules/gemini-scrollbar/gemini-scrollbar.css';
+
+/*
+ * without this setting something (the browser?) sets it to 10px
+ * which fucks up react-datepicker
+*/
+html {
+  font-size: 16px !important;
+}
+
+/* prevent buttons from lying above the datepicker */
+.react-datepicker-popper {
+  z-index: 9;
+}
 
 body {
   margin-top: 52px;

@@ -16,9 +16,7 @@ import styled from 'styled-components'
 
 import DateInput from '../Events/DateInput'
 
-const ErrorAlert = styled(Alert)`
-  magrin-bottom: 10px;
-`
+const ErrorAlert = styled(Alert)`magrin-bottom: 10px;`
 
 const enhance = compose(
   inject(`store`),
@@ -27,8 +25,8 @@ const enhance = compose(
   withState('error', 'changeError', null),
   withHandlers({
     onChangeTitle: props => event => props.changeTitle(event.target.value),
-    onChangeDate: props => (event, picker) =>
-      props.changeDate(moment(picker.startDate, 'DD.MM.YYYY')),
+    onChangeDate: props => (date: Date) =>
+      props.changeDate(moment(date, 'DD.MM.YYYY')),
     createNewCommentary: props => () => {
       const { title, date } = props
       if (title && date) {
@@ -62,7 +60,7 @@ const NewCommentary = ({
   onChangeTitle: () => void,
   onChangeDate: () => void,
   createNewCommentary: () => void,
-}) =>
+}) => (
   <Modal show bsSize="large">
     <Modal.Header>
       <Modal.Title>New commentary</Modal.Title>
@@ -80,10 +78,7 @@ const NewCommentary = ({
         />
       </FormGroup>
       <DateInput date={date} onChangeDatePicker={onChangeDate} />
-      {error &&
-        <ErrorAlert bsStyle="danger">
-          {error}
-        </ErrorAlert>}
+      {error && <ErrorAlert bsStyle="danger">{error}</ErrorAlert>}
     </Modal.Body>
 
     <Modal.Footer>
@@ -93,6 +88,7 @@ const NewCommentary = ({
       </Button>
     </Modal.Footer>
   </Modal>
+)
 
 NewCommentary.displayName = 'NewCommentary'
 

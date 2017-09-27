@@ -98,8 +98,8 @@ const enhance = compose(
   withHandlers({
     onChangeTitle: props => (event: Object): void =>
       props.changeTitle(event.target.value),
-    onChangeDatePicker: props => (event: Object, picker: Object): void =>
-      props.changeDate(moment(picker.startDate, 'DD.MM.YYYY')),
+    onChangeDatePicker: props => (date: Date): void =>
+      props.changeDate(moment(date, 'DD.MM.YYYY')),
     close: props => () => props.store.events.setShowNewEvent(false),
     createNewEvent: props => () => {
       const { title, date, store } = props
@@ -133,7 +133,7 @@ const NewEvent = ({
   onChangeDatePicker: () => void,
   close: () => void,
   createNewEvent: () => void,
-}) =>
+}) => (
   <StyledModal show onHide={close} bsSize="large">
     <Modal.Header>
       <Modal.Title>New event</Modal.Title>
@@ -151,10 +151,7 @@ const NewEvent = ({
         />
       </FormGroup>
       <DateInput date={date} onChangeDatePicker={onChangeDatePicker} />
-      {error &&
-        <StyledAlert bsStyle="danger">
-          {error}
-        </StyledAlert>}
+      {error && <StyledAlert bsStyle="danger">{error}</StyledAlert>}
     </Modal.Body>
 
     <Modal.Footer>
@@ -164,6 +161,7 @@ const NewEvent = ({
       </Button>
     </Modal.Footer>
   </StyledModal>
+)
 
 NewEvent.displayName = 'NewEvent'
 
