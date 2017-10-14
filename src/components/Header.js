@@ -42,10 +42,10 @@ const TitleContainer = styled.div`
 `
 const Title = styled.div`
   position: absolute;
-  margin-top: ${props => props['data-titleMargintop']}px;
+  margin-top: ${props => props['data-titlemargintop']}px;
   width: 100%;
   text-align: center;
-  font-size: ${props => props['data-titleSize']}px;
+  font-size: ${props => props['data-titlesize']}px;
   font-weight: 800;
   line-height: 46px;
   text-align: center;
@@ -111,8 +111,8 @@ class Header extends Component {
         </FlagRow>
         <TitleContainer>
           <Title
-            data-titleSize={titleSize}
-            data-titleMargintop={titleMarginTop}
+            data-titlesize={titleSize}
+            data-titlemargintop={titleMarginTop}
           >
             brexit chronology
           </Title>

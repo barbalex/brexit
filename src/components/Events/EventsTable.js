@@ -58,7 +58,7 @@ const Body = styled.div`
   overflow-x: visible;
   overflow-y: auto;
   height: calc(100vh - 94px);
-  margin-top: ${props => props['data-marginTop']};
+  margin-top: ${props => props['data-margintop']};
   border-top: 1px solid #ececec;
   border-bottom: 1px solid #ececec;
   width: 100%;
@@ -151,7 +151,7 @@ class EventsTable extends Component {
             </HeaderCellEu>
           </HeaderRow>
         </Header>
-        <Body data-marginTop={bodyMarginTop}>
+        <Body data-margintop={bodyMarginTop}>
           <GeminiScrollbar id="eventsTableBody" autoshow>
             <DateRows width={width} />
           </GeminiScrollbar>
