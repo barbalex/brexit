@@ -34,11 +34,11 @@
     "recompose": "0.26.0",
     "speakingurl": "14.0.1",
     "styled-components": "2.4.0",
-    "tinymce": "4.7.1"
+    "tinymce": "4.7.4"
   },
   "devDependencies": {
     "css-loader": "0.28.8",
-    "flow-bin": "0.62.0",
+    "flow-bin": "0.63.1",
     "html-loader": "0.5.4",
     "postcss-loader": "2.0.10",
     "react-scripts": "1.0.17"
