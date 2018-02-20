@@ -69,12 +69,14 @@ const PanelHeading = styled.div`
     !props.isActiveCommentary ? '3px' : 0};
 `
 const PanelBody = styled.div`
-  margin-top: ${props => props['data-panelBodyMarginTop']};
-  padding: ${props => props['data-panelBodyPadding']};
+  margin-top: ${props => props['data-panelbodymargintop']};
+  padding: ${props => props['data-panelbodypadding']};
   max-height: ${window.innerHeight - 141}px;
   overflow-y: auto;
 `
-const Copyright = styled.p`margin-top: 70px;`
+const Copyright = styled.p`
+  margin-top: 70px;
+`
 
 const enhance = compose(
   inject(`store`),
@@ -195,8 +197,8 @@ class Commentaries extends Component {
           ? doc._id === activeCommentary._id
           : false
         const showEditingGlyphons = !!store.login.email
-        const panelBodyPadding = store.editing ? '0 !important' : '15px'
-        const panelBodyMarginTop = store.editing ? '-1px' : 0
+        const panelbodypadding = store.editing ? '0 !important' : '15px'
+        const panelbodymargintop = store.editing ? '-1px' : 0
 
         // use pure bootstrap.
         // advantage: can add edit icon to panel-heading
@@ -245,8 +247,8 @@ class Commentaries extends Component {
               >
                 <PanelBody
                   className="panel-body"
-                  data-panelBodyPadding={panelBodyPadding}
-                  data-panelBodyMarginTop={panelBodyMarginTop}
+                  data-panelbodypadding={panelbodypadding}
+                  data-panelbodymargintop={panelbodymargintop}
                 >
                   <Commentary />
                 </PanelBody>

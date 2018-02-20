@@ -58,8 +58,8 @@ const PanelHeading = styled.div`
   border-bottom-left-radius: ${props => (!props.isActiveActor ? '3px' : 0)};
 `
 const PanelBody = styled.div`
-  padding: ${props => props['data-panelBodyPadding']};
-  margin-top: ${props => props['data-panelBodyMarginTop']};
+  padding: ${props => props['data-panelbodypadding']};
+  margin-top: ${props => props['data-panelbodymargintop']};
   max-height: ${window.innerHeight - 141}px;
   overflow-y: auto;
 `
@@ -168,8 +168,8 @@ class Actors extends Component {
       return actors.map((doc, index) => {
         const isActiveActor = activeActor ? doc._id === activeActor._id : false
         const showEditingGlyphons = !!store.login.email
-        const panelBodyPadding = store.editing ? '0 !important' : '15px'
-        const panelBodyMarginTop = store.editing ? '-1px' : 0
+        const panelbodypadding = store.editing ? '0 !important' : '15px'
+        const panelbodymargintop = store.editing ? '-1px' : 0
         const ref = isActiveActor
           ? '_activeActorPanel'
           : `_actorPanel${doc._id}`
@@ -226,8 +226,8 @@ class Actors extends Component {
               >
                 <PanelBody
                   className="panel-body"
-                  data-panelBodyPadding={panelBodyPadding}
-                  data-panelBodyMarginTop={panelBodyMarginTop}
+                  data-panelbodypadding={panelbodypadding}
+                  data-panelbodymargintop={panelbodymargintop}
                 >
                   <Actor />
                 </PanelBody>
