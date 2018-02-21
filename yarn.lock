@@ -4648,7 +4648,7 @@ mobx@3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/mobx/-/mobx-3.5.1.tgz#8e682ec535cf44e04005b9e37e2df66acc975a42"
 
-moment@2.20.1, moment@^2.17.1:
+moment@2.20.1:
   version "2.20.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.20.1.tgz#d6eb1a46cbcc14a2b2f9434112c1ff8907f313fd"
 
@@ -5175,7 +5175,7 @@ pluralize@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
 
-popper.js@^1.12.5:
+popper.js@^1.12.9:
   version "1.12.9"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.12.9.tgz#0dfbc2dff96c451bb332edcfcfaaf566d331d5b3"
 
@@ -5826,15 +5826,14 @@ react-copy-to-clipboard@5.0.1:
     copy-to-clipboard "^3"
     prop-types "^15.5.8"
 
-react-datepicker@^0.55.0:
-  version "0.55.0"
-  resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-0.55.0.tgz#5ab8be35b1ee3e512fadf97d4e96c9d14ae06594"
+react-datepicker@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-1.2.1.tgz#95866b2bb9691abb2dd7f8b141c348c1401b1f02"
   dependencies:
     classnames "^2.2.5"
-    moment "^2.17.1"
-    prop-types "^15.5.8"
-    react-onclickoutside "^6.1.1"
-    react-popper "^0.7.2"
+    prop-types "^15.6.0"
+    react-onclickoutside "^6.7.1"
+    react-popper "^0.8.2"
 
 react-dev-utils@^5.0.0:
   version "5.0.0"
@@ -5904,7 +5903,7 @@ react-loadable@5.3.1:
   dependencies:
     prop-types "^15.5.0"
 
-react-onclickoutside@^6.1.1:
+react-onclickoutside@^6.7.1:
   version "6.7.1"
   resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.7.1.tgz#6a5b5b8b4eae6b776259712c89c8a2b36b17be93"
 
@@ -5918,12 +5917,12 @@ react-overlays@^0.7.4:
     prop-types-extra "^1.0.1"
     warning "^3.0.0"
 
-react-popper@^0.7.2:
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-0.7.5.tgz#71c25946f291db381231281f6b95729e8b801596"
+react-popper@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-0.8.2.tgz#092095ff13933211d3856d9f325511ec3a42f12c"
   dependencies:
-    popper.js "^1.12.5"
-    prop-types "^15.5.10"
+    popper.js "^1.12.9"
+    prop-types "^15.6.0"
 
 react-router-dom@4.2.2:
   version "4.2.2"

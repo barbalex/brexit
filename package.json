@@ -22,7 +22,7 @@
     "react": "16.2.0",
     "react-bootstrap": "^0.31.3",
     "react-copy-to-clipboard": "5.0.1",
-    "react-datepicker": "^0.55.0",
+    "react-datepicker": "1.2.1",
     "react-document-title": "2.0.3",
     "react-dom": "16.2.0",
     "react-dropzone": "4.2.8",
