@@ -44,7 +44,8 @@ const Main = ({ store, login }: { store: Object, login: boolean }) => {
             path="/commentaries/:year/:month/:day/:title"
             exact
             render={({ match }) => {
-              const { year, month, day, title } = match.params
+              let { year, month, day, title } = match.params
+              title = decodeURIComponent(title)
               store.page.getPage('pages_commentaries')
               store.commentaries.activeCommentaryId = `commentaries_${year}_${month}_${day}_${title}`
               return <AsyncCommentaries />

@@ -5,6 +5,6 @@
 export default {
   lang: 'de',
   symbols: true,
-  uric: true,
+  uricNoSlash: true,
   mark: true,
 }

@@ -106,7 +106,7 @@ class Editor extends Component {
     // see: https://www.ephox.com/blog/how-to-integrate-react-with-tinymce
     // add codemirror? see: https://github.com/christiaan/tinymce-codemirror
     tinymce.init({
-      selector: `#${doc._id}`,
+      selector: `#${doc._id.replace('?', '')}`,
       theme: 'modern',
       plugins: [
         'advlist autolink link image lists charmap print hr anchor pagebreak',
@@ -150,13 +150,15 @@ class Editor extends Component {
     // this is needed for correct behaviour, see
     // http://stackoverflow.com/questions/29169158/react-html-editor-tinymce
     const { doc } = this.props
-    const instanceSelector = `#${doc._id}`
+    const instanceSelector = `#${doc._id.replace('?', '')}`
     tinymce.remove(instanceSelector)
   }
 
   render() {
     const { doc, articleDecoded } = this.props
-    return <textarea id={doc._id} defaultValue={articleDecoded} />
+    return (
+      <textarea id={doc._id.replace('?', '')} defaultValue={articleDecoded} />
+    )
   }
 }
 
