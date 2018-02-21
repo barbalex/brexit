@@ -277,7 +277,7 @@ class Commentaries extends Component {
         <Container>
           <h1>Commentary</h1>
           <PanelGroup
-            activeKey={activeCommentaryId}
+            defaultActiveKey={activeCommentaryId}
             id="commentariesAccordion"
             accordion
           >

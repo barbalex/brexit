@@ -249,7 +249,11 @@ class Actors extends Component {
       <DocumentTitle title="brexit | Actors">
         <Container>
           <h1>Actors</h1>
-          <PanelGroup activeKey={activeId} id="actorsAccordion" accordion>
+          <PanelGroup
+            defaultActiveKey={activeId}
+            id="actorsAccordion"
+            accordion
+          >
             <SwallowPanelGroupProps>
               {this.actorsComponent()}
             </SwallowPanelGroupProps>
