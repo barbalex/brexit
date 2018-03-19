@@ -1,7 +1,8 @@
 {
   "name": "brexit",
   "version": "1.0.0",
-  "description": "Brexit is a complex topic difficult to grasp. The present website is meant to help. It is a simple chronology based on a handful of publicly available sources and focusing on the negotiation dynamics between the two sides",
+  "description":
+    "Brexit is a complex topic difficult to grasp. The present website is meant to help. It is a simple chronology based on a handful of publicly available sources and focusing on the negotiation dynamics between the two sides",
   "private": true,
   "dependencies": {
     "ampersand-app": "2.0.0",
@@ -13,8 +14,8 @@
     "js-base64": "2.4.3",
     "local-links": "1.4.1",
     "lodash": "4.17.5",
-    "mobx": "3.5.1",
-    "mobx-react": "4.4.2",
+    "mobx": "4.1.0",
+    "mobx-react": "5.0.0",
     "moment": "2.20.1",
     "pouchdb": "6.4.3",
     "pouchdb-authentication": "1.1.2",
