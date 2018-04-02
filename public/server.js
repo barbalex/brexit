@@ -40,8 +40,8 @@ const provision = async () => {
   server.route({
     method: 'GET',
     path: '/service-worker.js',
-    handler: function(request, reply) {
-      reply.file('service-worker.js').type('text/javascript')
+    handler: {
+      file: 'service-worker.js',
     },
   })
 
