@@ -24,16 +24,16 @@ const provision = async () => {
   server.route({
     method: 'GET',
     path: '/manifest.json',
-    handler: function(request, reply) {
-      reply.file('manifest.json')
+    handler: {
+      file: 'manifest.json'
     },
   })
 
   server.route({
     method: 'GET',
     path: '/asset-manifest.json',
-    handler: function(request, reply) {
-      reply.file('asset-manifest.json')
+    handler: {
+      file: 'asset-manifest.json'
     },
   })
 
@@ -48,8 +48,8 @@ const provision = async () => {
   server.route({
     method: 'GET',
     path: '/favicon.ico',
-    handler: function(request, reply) {
-      reply.file('favicon.ico')
+    handler: {
+      file: 'favicon.ico'
     },
   })
 
