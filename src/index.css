@@ -52,7 +52,14 @@ a:link {
   top: -3px;
   left: -26px;
 }
-.events p.event-statistics:before,
+.events p.event-statistics:before {
+  font-family: 'Glyphicons Halflings';
+  content: '\e185';
+  font-size: 1.3em;
+  position: absolute;
+  top: -7px;
+  left: -26px;
+}
 .events p.event-highlighted:before {
   font-family: 'Glyphicons Halflings';
   content: '\e006';

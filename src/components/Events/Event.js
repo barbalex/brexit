@@ -2,6 +2,7 @@
 import React from 'react'
 import { Glyphicon } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
+import { toJS } from 'mobx'
 import compose from 'recompose/compose'
 import styled from 'styled-components'
 
@@ -20,7 +21,8 @@ const OuterSpan = styled.span`padding-left: 5px;`
 
 const enhance = compose(inject(`store`), observer)
 
-const Event = ({ store, event }: { store: Object, event: Object }) => {
+const Event = ({ store, event: evPassed }: { store: Object, event: Object }) => {
+  const event = toJS(evPassed)
   const showEditingGlyphons = !!store.login.email
   const classNames =
     event.tags && event.tags.length > 0
