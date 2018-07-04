@@ -1,115 +1,26 @@
 // @flow
-import extendStore from './extend'
-import moment from 'moment'
+import { observable, extendObservable } from "mobx"
+
+import yearsOfEvents from './yearsOfEvents'
+import page from './page'
+import events from './events'
+import commentaries from './commentaries'
+import actors from './actors'
+import login from './login'
+import error from './error'
+import store from './store'
 
 function Store(): void {
-  this.page = {
-    activePage: null,
-    editing: false,
-    showMeta: false,
-    getPage: null,
-    savePage: null,
-    addPageAttachments: null,
-    removePageAttachment: null,
-  }
-  this.yearsOfEvents = {
-    yearsOfEvents: [parseInt(moment().format('YYYY'), 0)],
-    getYearsOfEvents: null,
-    activeEventYears: [parseInt(moment().format('YYYY'), 0)],
-    setActiveEventYears: null,
-  }
-  this.events = {
-    events: [],
-    activeEventId: null,
-    activeEvent: null,
-    getEventsCallback: null,
-    getEvents: null,
-    newEvent: null,
-    showNewEvent: null,
-    setShowNewEvent: null,
-    getEvent: null,
-    updateEventsInCache: null,
-    revertCache: null,
-    saveEvent: null,
-    removeEventFromCache: null,
-    removeEvent: null,
-    eventToRemove: null,
-    setEventToRemove: null,
-  }
-  this.commentaries = {
-    commentaries: [],
-    activeCommentaryId: null,
-    activeCommentary: null,
-    getCommentariesCallback: null,
-    getCommentaries: null,
-    showNewCommentary: false,
-    toggleShowNewCommentary: null,
-    newCommentary: null,
-    getCommentary: null,
-    updateCommentariesInCache: null,
-    revertCache: null,
-    saveCommentary: null,
-    removeCommentaryFromCache: null,
-    removeCommentary: null,
-    commentaryToRemove: null,
-    setCommentaryToRemove: null,
-    toggleDraftOfCommentary: null,
-  }
-  this.actors = {
-    actors: [],
-    activeActorId: null,
-    activeActor: null,
-    getActorsCallback: null,
-    getActors: null,
-    newActor: null,
-    showNewActor: false,
-    setShowNewActor: null,
-    getActor: null,
-    updateActorsInCache: null,
-    revertCache: null,
-    saveActor: null,
-    removeActorFromCache: null,
-    removeActor: null,
-    actorToRemove: null,
-    setActorToRemove: null,
-    toggleDraftOfActor: null,
-  }
-  /*
-   * contains email of logged in user
-   * well, it is saved in localStorage as window.localStorage.email
-   * app.js sets default email (null) if not exists on app start
-   */
-  this.login = {
-    getLogin: null,
-    login: null,
-    logout: null,
-    email: null,
-  }
-  /*
-   * receives an error object with two keys: title, msg
-   * keeps error objects in the array errors
-   * deletes errors after a defined time - the time while the error will be shown to the user
-   *
-   * if a view wants to inform of an error it
-   * calls action showError and passes the object
-   *
-   * the errorStore triggers, passing the errors array
-   * ...then triggers again after removing the last error some time later
-   *
-   * Test: app.store.error.showError({title: 'testTitle', msg: 'testMessage'})
-   * template: app.store.error.showError({title: 'title', msg: error})
-   */
-  this.error = {
-    errors: [],
-    showError: null,
-  }
-  this.editing = false
-  this.toggleEditing = null
-  this.updateAvailable = false
+  extendObservable(this, store(this))
+  this.page = observable(page(this))
+  this.yearsOfEvents = observable(yearsOfEvents(this))
+  this.events = observable(events(this))
+  this.commentaries = observable(commentaries(this))
+  this.actors = observable(actors(this))
+  this.login = observable(login(this))
+  this.error = observable(error(this))
 }
 
 const MyStore = new Store()
-
-extendStore(MyStore)
 
 export default MyStore
