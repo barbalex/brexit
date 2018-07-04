@@ -73,6 +73,12 @@ const enhance = compose(
 )
 
 class EventsTable extends Component {
+  constructor(props) {
+    super(props)
+    this.container = React.createRef()
+    this.handleScroll = this.handleScroll.bind(this)
+  }
+
   displayName: 'EventsTable'
 
   props: {
@@ -81,11 +87,6 @@ class EventsTable extends Component {
     changeHeaderFixed: () => void,
     width: number,
     changeWidth: () => void,
-  }
-
-  constructor() {
-    super()
-    this.handleScroll = this.handleScroll.bind(this)
   }
 
   componentDidMount = () => {
@@ -134,10 +135,7 @@ class EventsTable extends Component {
 
     return (
       <Container
-        ref={c => {
-          // $FlowIssue
-          this.container = c
-        }}
+        ref={this.container}
       >
         <Header className="eventsTable-header">
           <HeaderRow>

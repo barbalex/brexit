@@ -9,8 +9,8 @@ import {
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
 
-import Header from '../components/Header'
 import Navbar from '../components/Navbar'
+import Header from '../components/Header'
 import AsyncPage from './AsyncPage'
 import AsyncEvents from './AsyncEvents'
 import AsyncCommentaries from './AsyncCommentaries'

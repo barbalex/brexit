@@ -57,6 +57,11 @@ const Title = styled.div`
 `
 
 class Header extends Component {
+  constructor(props) {
+    super(props)
+    this.container = React.createRef()
+  }
+
   displayName: 'Header'
 
   props: {
@@ -96,10 +101,7 @@ class Header extends Component {
     return (
       <Container
         data-height={flagHeight}
-        ref={j => {
-          // $FlowIssue
-          this.container = j
-        }}
+        ref={this.container}
       >
         <FlagRow>
           <FlagContainerLeft className="flag">

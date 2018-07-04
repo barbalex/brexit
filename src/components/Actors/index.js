@@ -94,6 +94,11 @@ const enhance = compose(
 )
 
 class Actors extends Component {
+  constructor(props) {
+    super(props)
+    this.container = React.createRef()
+  }
+  
   displayName: 'Actors'
 
   props: {
