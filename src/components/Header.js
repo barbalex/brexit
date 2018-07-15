@@ -12,7 +12,7 @@ import gbImage from '../images/gb.svg'
 const enhance = compose(withState('flagHeight', 'changeFlagHeight', 150))
 
 const Container = styled.div`
-  margin-top: 75px;
+  margin-top: 23px;
   display: flex;
   flex-direction: column;
   min-height: ${props => props['data-height']}px;
@@ -33,8 +33,12 @@ const FlagContainer = styled.div`
   /* needs to be behind title container */
   z-index: -2;
 `
-const FlagContainerLeft = FlagContainer.extend`padding-right: 5px;`
-const FlagContainerRight = FlagContainer.extend`padding-left: 5px;`
+const FlagContainerLeft = FlagContainer.extend`
+  padding-right: 5px;
+`
+const FlagContainerRight = FlagContainer.extend`
+  padding-left: 5px;
+`
 const TitleContainer = styled.div`
   position: relative;
   /* needs to be behind form elements */
@@ -99,10 +103,7 @@ class Header extends Component {
     const titleMarginTop = -(flagHeight / 2 + 25)
 
     return (
-      <Container
-        data-height={flagHeight}
-        ref={this.container}
-      >
+      <Container data-height={flagHeight} ref={this.container}>
         <FlagRow>
           <FlagContainerLeft className="flag">
             <img src={gbImage} alt="gb" />
