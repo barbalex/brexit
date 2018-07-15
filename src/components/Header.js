@@ -81,9 +81,9 @@ class Header extends Component {
 
   setFlagHeight = () => {
     const { containerWidth: containerWidthOld, changeFlagHeight } = this.props
-    const containerDomNode = this.container
+    const containerDomNode = this.container.current
       ? // $FlowIssue
-        ReactDOM.findDOMNode(this.container)
+        ReactDOM.findDOMNode(this.container.current)
       : null
     const containerWidth = containerDomNode
       ? containerDomNode.clientWidth

@@ -63,7 +63,9 @@ const Body = styled.div`
   border-bottom: 1px solid #ececec;
   width: 100%;
 `
-const HeaderRow = styled.div`display: flex;`
+const HeaderRow = styled.div`
+  display: flex;
+`
 
 const enhance = compose(
   inject(`store`),
@@ -102,9 +104,9 @@ class EventsTable extends Component {
 
   setWidth = () => {
     const { width: widthOld, changeWidth } = this.props
-    const containerNode = this.container
+    const containerNode = this.container.current
       ? // $FlowIssue
-        ReactDOM.findDOMNode(this.container)
+        ReactDOM.findDOMNode(this.container.current)
       : null
     const width = containerNode ? containerNode.clientWidth : null
     if (width && width !== widthOld) {
@@ -134,9 +136,7 @@ class EventsTable extends Component {
     const gbEuPadding = width / 12 - 55
 
     return (
-      <Container
-        ref={this.container}
-      >
+      <Container ref={this.container}>
         <Header className="eventsTable-header">
           <HeaderRow>
             <HeaderCellDay />
