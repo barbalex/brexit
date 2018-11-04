@@ -1,58 +1,48 @@
 // @flow
-import React from 'react'
+import React, { useCallback, useContext } from 'react'
 import { Modal, Button } from 'react-bootstrap'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
-import withHandlers from 'recompose/withHandlers'
+import { observer } from 'mobx-react'
 
-const enhance = compose(
-  inject(`store`),
-  withHandlers({
-    remove: props => () => {
-      const {
-        actorToRemove,
-        removeActor,
-        setActorToRemove,
-      } = props.store.actors
+import storeContext from '../../storeContext'
+
+const ModalRemoveActor = () => {
+  const store = useContext(storeContext)
+  const remove = useCallback(
+    () => {
+      const { actorToRemove, removeActor, setActorToRemove } = store.actors
       removeActor(actorToRemove)
       setActorToRemove(null)
     },
-    abort: props => () => props.store.actors.setActorToRemove(null),
-  }),
-  observer,
-)
+    [store.actors.actorToRemove],
+  )
+  const abort = useCallback(() => store.actors.setActorToRemove(null))
 
-const ModalRemoveActor = ({
-  store,
-  remove,
-  abort,
-}: { store: Object, remove: () => void, abort: () => void }) => (
-  <div className="static-modal">
-    <Modal.Dialog>
-      <Modal.Header>
-        <Modal.Title>
-          Remove actor "{store.actors.actorToRemove.category}"
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <p>
-          Are you sure you want to remove actor "
-          {store.actors.actorToRemove.category}
-          "?
-        </p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button bsStyle="danger" onClick={remove}>
-          yes, remove!
-        </Button>
-        <Button onClick={abort}>
-          no!
-        </Button>
-      </Modal.Footer>
-    </Modal.Dialog>
-  </div>
-)
+  return (
+    <div className="static-modal">
+      <Modal.Dialog>
+        <Modal.Header>
+          <Modal.Title>
+            Remove actor "{store.actors.actorToRemove.category}"
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            Are you sure you want to remove actor "
+            {store.actors.actorToRemove.category}
+            "?
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button bsStyle="danger" onClick={remove}>
+            yes, remove!
+          </Button>
+          <Button onClick={abort}>no!</Button>
+        </Modal.Footer>
+      </Modal.Dialog>
+    </div>
+  )
+}
 
 ModalRemoveActor.displayName = 'ModalRemoveActor'
 
-export default enhance(ModalRemoveActor)
+export default observer(ModalRemoveActor)
