@@ -31,24 +31,24 @@ const HeaderCell = styled.div`
   justify-content: center;
   align-self: flex-end;
 `
-const HeaderCellDay = HeaderCell.extend`
+const HeaderCellDay = styled(HeaderCell)`
   width: 60px;
   max-width: 60px;
   padding-right: 20px;
   justify-content: flex-start;
 `
-const HeaderCellGb = HeaderCell.extend`
+const HeaderCellGb = styled(HeaderCell)`
   flex: 1;
   justify-content: center;
   word-wrap: break-word;
   padding-right: ${props => props['data-padding']}px;
 `
-const HeaderCellEu = HeaderCell.extend`
+const HeaderCellEu = styled(HeaderCell)`
   flex: 1;
   word-wrap: break-word;
   padding-left: ${props => props['data-padding']}px;
 `
-const HeaderCellBoth = HeaderCell.extend`
+const HeaderCellBoth = styled(HeaderCell)`
   flex-basis: 75px;
   flex-grow: 0;
   flex-shrink: 0;
@@ -71,7 +71,7 @@ const enhance = compose(
   inject(`store`),
   withState('headerFixed', 'changeHeaderFixed', false),
   withState('width', 'changeWidth', 0),
-  observer
+  observer,
 )
 
 class EventsTable extends Component {

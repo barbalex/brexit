@@ -28,14 +28,16 @@ const Data = styled.div`
   display: flex;
   flex-direction: column;
 `
-const GbEuData = styled.div`display: flex;`
-const Gb = BodyCell.extend`
+const GbEuData = styled.div`
+  display: flex;
+`
+const Gb = styled(BodyCell)`
   width: 50%;
   max-width: 50%;
   word-wrap: break-word;
   padding: 5px ${props => props['data-padding']}px 5px 0;
 `
-const Eu = BodyCell.extend`
+const Eu = styled(BodyCell)`
   width: 50%;
   max-width: 50%;
   word-wrap: break-word;
@@ -79,16 +81,19 @@ const BodyRow = styled.div`
   }
 `
 
-const enhance = compose(inject(`store`), observer)
+const enhance = compose(
+  inject(`store`),
+  observer,
+)
 
 const mapEventComponents = events =>
   events.map((event, key) => <Event key={key} event={event} />)
 const mapBothEventComponents = events =>
-  events.map((event, key) =>
+  events.map((event, key) => (
     <ul key={key}>
       <Event event={event} />
     </ul>
-  )
+  ))
 
 const DateRow = ({
   store,
@@ -109,25 +114,18 @@ const DateRow = ({
   return (
     <BodyRow>
       <Day>
-        <p>
-          {day}
-        </p>
+        <p>{day}</p>
       </Day>
       <Data>
-        {bothEvents.length > 0 &&
-          <Both data-padding={bothPadding}>
-            {bothEvents}
-          </Both>}
+        {bothEvents.length > 0 && (
+          <Both data-padding={bothPadding}>{bothEvents}</Both>
+        )}
         <GbEuData>
           <Gb data-padding={gbEuPadding}>
-            <ul>
-              {gbEvents}
-            </ul>
+            <ul>{gbEvents}</ul>
           </Gb>
           <Eu data-padding={gbEuPadding}>
-            <ul>
-              {euEvents}
-            </ul>
+            <ul>{euEvents}</ul>
           </Eu>
         </GbEuData>
       </Data>

@@ -1,15 +1,16 @@
 // @flow
-import React from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import { Button } from 'react-bootstrap'
 import { Base64 } from 'js-base64'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
-import withState from 'recompose/withState'
-import withHandlers from 'recompose/withHandlers'
+import { observer } from 'mobx-react'
 import styled from 'styled-components'
 
 import Editor from '../shared/Editor'
 import Meta from '../Page/PageMeta'
+import storeContext from '../../storeContext'
+
+//import { setConfig } from 'react-hot-loader'
+//setConfig({ pureSFC: true })
 
 const MetaButton = styled(Button)`
   position: fixed;
@@ -17,30 +18,14 @@ const MetaButton = styled(Button)`
   right: 10px;
 `
 
-const enhance = compose(
-  inject(`store`),
-  withState('showMeta', 'changeShowMeta', false),
-  withHandlers({
-    onClickMeta: props => () => props.changeShowMeta(!props.showMeta),
-    onCloseMeta: props => () => props.changeShowMeta(false),
-  }),
-  observer
-)
-
-const Actor = ({
-  store,
-  showMeta,
-  onClickMeta,
-  onCloseMeta,
-}: {
-  store: Object,
-  showMeta: boolean,
-  onClickMeta: () => void,
-  onCloseMeta: () => void,
-}) => {
+const Actor = () => {
+  const store = useContext(storeContext)
   const { activeActor } = store.actors
   const articleEncoded = activeActor.article
   const articleDecoded = Base64.decode(articleEncoded)
+  const [showMeta, setShowMeta] = useState(false)
+  const onClickMeta = useCallback(() => setShowMeta(!showMeta), [showMeta])
+  const onCloseMeta = useCallback(() => setShowMeta(false))
 
   if (store.editing) {
     return (
@@ -66,4 +51,4 @@ const Actor = ({
 
 Actor.displayName = 'Actor'
 
-export default enhance(Actor)
+export default observer(Actor)

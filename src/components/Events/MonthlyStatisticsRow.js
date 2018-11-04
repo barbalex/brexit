@@ -10,19 +10,19 @@ const BodyCell = styled.div`
   padding: 5px;
   flex: 1;
 `
-const BodyCellDay = BodyCell.extend`
+const BodyCellDay = styled(BodyCell)`
   width: 60px;
   max-width: 60px;
   padding-right: 20px;
   text-align: right;
 `
-const BodyCellMigration = BodyCell.extend`
+const BodyCellMigration = styled(BodyCell)`
   width: 50%;
   max-width: 50%;
   word-wrap: break-word;
   padding-right: 10px;
 `
-const BodyCellPolitics = BodyCell.extend`
+const BodyCellPolitics = styled(BodyCell)`
   width: 50%;
   max-width: 50%;
   word-wrap: break-word;
@@ -55,7 +55,10 @@ const BodyRow = styled.div`
   }
 `
 
-const enhance = compose(inject(`store`), observer)
+const enhance = compose(
+  inject(`store`),
+  observer,
+)
 
 const mapEventComponents = (events: Array<Object>) =>
   events.map((event, key) => <Event key={key} event={event} />)
@@ -78,14 +81,10 @@ const MonthlyStatisticsRow = ({
           <p />
         </BodyCellDay>
         <BodyCellMigration>
-          <ul>
-            {migrationEvents}
-          </ul>
+          <ul>{migrationEvents}</ul>
         </BodyCellMigration>
         <BodyCellPolitics>
-          <ul>
-            {politicsEvents}
-          </ul>
+          <ul>{politicsEvents}</ul>
         </BodyCellPolitics>
       </BodyRow>
     )

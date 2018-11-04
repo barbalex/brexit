@@ -33,10 +33,10 @@ const FlagContainer = styled.div`
   /* needs to be behind title container */
   z-index: -2;
 `
-const FlagContainerLeft = FlagContainer.extend`
+const FlagContainerLeft = styled(FlagContainer)`
   padding-right: 5px;
 `
-const FlagContainerRight = FlagContainer.extend`
+const FlagContainerRight = styled(FlagContainer)`
   padding-left: 5px;
 `
 const TitleContainer = styled.div`

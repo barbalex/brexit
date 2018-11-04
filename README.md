@@ -14,8 +14,6 @@ This project was built based on [blue-borders](//github.com/barbalex/bb2), [http
 - [MobX](//github.com/mobxjs/mobx):
   - simple yet powerful state management
   - computed data like in Excel
-- [recompose](//github.com/acdlite/recompose):
-  - clear separation of logic and user interface
 - [React](//facebook.github.io/react):
   - declarative user interface is a function of state
   - built from components

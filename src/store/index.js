@@ -1,5 +1,5 @@
 // @flow
-import { observable, extendObservable } from "mobx"
+import { observable, extendObservable } from 'mobx'
 
 import yearsOfEvents from './yearsOfEvents'
 import page from './page'

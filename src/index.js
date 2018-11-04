@@ -18,6 +18,8 @@ import 'babel-polyfill'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.css'
 
+import { StoreContextProvider } from './storeContext'
+
 registerServiceWorker(store)
 
 // some old browsers can't deal with ArrayBuffer
@@ -32,7 +34,7 @@ Bitte versuchen Sie es mit einer aktuellen Version von (zum Beispiel):
 - Firefox
 - Safari
 - Internet Explorer (ab Version 10)
-- Edge`
+- Edge`,
   )
 }
 
@@ -66,8 +68,10 @@ app.extend({
 app.init()
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Main />
-  </Provider>,
-  document.getElementById('root')
+  <StoreContextProvider value={store}>
+    <Provider store={store}>
+      <Main />
+    </Provider>
+  </StoreContextProvider>,
+  document.getElementById('root'),
 )
