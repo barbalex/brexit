@@ -8,17 +8,17 @@ import {
   FormControl,
   InputGroup,
 } from 'react-bootstrap'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
+import { observer } from 'mobx-react'
 import styled from 'styled-components'
 
-const StyledFormControl = styled(FormControl)`border-radius: 4px !important;`
-const StyledInputGroup = styled(InputGroup)`width: 100%;`
-
-const enhance = compose(inject(`store`), observer)
+const StyledFormControl = styled(FormControl)`
+  border-radius: 4px !important;
+`
+const StyledInputGroup = styled(InputGroup)`
+  width: 100%;
+`
 
 const EventDate = ({
-  store,
   date,
   onChangeDatePicker,
 }: {
@@ -51,4 +51,4 @@ const EventDate = ({
 
 EventDate.displayName = 'EventDate'
 
-export default enhance(EventDate)
+export default observer(EventDate)
