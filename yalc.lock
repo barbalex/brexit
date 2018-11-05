@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "mobx-react": {
-      "signature": "154dbbe989441d0bd7a5c72a1e27b409",
+      "signature": "32c1289bce26ab79040170dca564a5cb",
       "file": true
     }
   }
