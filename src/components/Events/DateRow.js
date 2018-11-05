@@ -1,8 +1,7 @@
 // @flow
 import React from 'react'
 import moment from 'moment'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
+import { observer } from 'mobx-react'
 import styled from 'styled-components'
 
 import Event from './Event'
@@ -81,11 +80,6 @@ const BodyRow = styled.div`
   }
 `
 
-const enhance = compose(
-  inject(`store`),
-  observer,
-)
-
 const mapEventComponents = events =>
   events.map((event, key) => <Event key={key} event={event} />)
 const mapBothEventComponents = events =>
@@ -96,11 +90,9 @@ const mapBothEventComponents = events =>
   ))
 
 const DateRow = ({
-  store,
   width,
   dateRowObject: dRO,
 }: {
-  store: Object,
   width: number,
   dateRowObject: Object,
 }) => {
@@ -135,4 +127,4 @@ const DateRow = ({
 
 DateRow.displayName = 'DateRow'
 
-export default enhance(DateRow)
+export default observer(DateRow)
