@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import {
   Modal,
   Button,
@@ -9,10 +9,7 @@ import {
   FormControl,
 } from 'react-bootstrap'
 import moment from 'moment'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
-import withState from 'recompose/withState'
-import withHandlers from 'recompose/withHandlers'
+import { observer } from 'mobx-react'
 import styled from 'styled-components'
 
 import EventTypeButtonGroup from './EventTypeButtonGroup'
@@ -20,6 +17,7 @@ import DateInput from './DateInput'
 import TagsInput from './TagsInput'
 import EventLinks from './EventLinks'
 import getDateFromEventId from '../../modules/getDateFromEventId'
+import storeContext from '../../storeContext'
 
 const StyledModal = styled(Modal)`
   .col-xs-1,
@@ -89,30 +87,44 @@ const StyledModal = styled(Modal)`
     cursor: pointer;
   }
 `
-const EventOrder = styled(FormControl)`margin-bottom: 20px;`
+const EventOrder = styled(FormControl)`
+  margin-bottom: 20px;
+`
 const StyledAlert = styled(Alert)`
   margin-top: 10px;
   margin-bottom: 10px;
 `
-const BoldLabel = styled.label`margin-bottom: 20px;`
-const BoldInput = styled.input`margin-right: 5px !important;`
+const BoldLabel = styled.label`
+  margin-bottom: 20px;
+`
+const BoldInput = styled.input`
+  margin-right: 5px !important;
+`
 
-const enhance = compose(
-  inject(`store`),
-  withState('error', 'changeError', null),
-  withHandlers({
-    onChangeTitle: props => (e: Object): void => {
-      const { store, changeError } = props
+const EditEvent = () => {
+  const store = useContext(storeContext)
+  const { events } = store
+  const { newEvent, removeEvent, saveEvent, getEvent } = events
+  // DANGER: computed only recomputes when _id changes!
+  // so do not use store.events.activeEvent
+  const activeEvent = store.events.events.find(
+    event => event._id === store.events.activeEventId,
+  )
+  const [error, changeError] = useState(null)
+  const onChangeTitle = useCallback(
+    (e: Object): void => {
       const title = e.target.value
       if (title) {
-        store.events.activeEvent.title = title
+        activeEvent.title = title
         changeError(null)
       } else {
         changeError('Please add a title')
       }
     },
-    onBlurTitle: props => (e: Object): void => {
-      const { activeEvent, newEvent, removeEvent } = props.store.events
+    [activeEvent.title],
+  )
+  const onBlurTitle = useCallback(
+    (e: Object): void => {
       activeEvent.title = e.target.value
       if (activeEvent.title) {
         removeEvent(activeEvent)
@@ -120,9 +132,10 @@ const enhance = compose(
         newEvent(activeEvent)
       }
     },
-    onChangeDatePicker: props => (date: Date): void => {
-      const { changeError, store } = props
-      const { activeEvent, newEvent, removeEvent } = store.events
+    [activeEvent],
+  )
+  const onChangeDatePicker = useCallback(
+    (date: Date): void => {
       const datePassed = moment(date, 'DD.MM.YYYY')
       if (datePassed) {
         removeEvent(activeEvent)
@@ -132,55 +145,33 @@ const enhance = compose(
         changeError('Please choose a date')
       }
     },
-    onChangeOrder: props => (e: Object): void => {
-      const { store, changeError } = props
-      store.events.activeEvent.order = e.target.value
+    [activeEvent],
+  )
+  const onChangeOrder = useCallback(
+    (e: Object): void => {
+      activeEvent.order = e.target.value
       changeError(null)
     },
-    onBlurOrder: props => (e: Object): void => {
-      const { activeEvent, saveEvent } = props.store.events
+    [activeEvent.order],
+  )
+  const onBlurOrder = useCallback(
+    (e: Object): void => {
       activeEvent.order = e.target.value
       saveEvent(activeEvent)
     },
-    onChangeBold: props => (e: Object): void => {
-      const { activeEvent, saveEvent } = props.store.events
+    [activeEvent.order],
+  )
+  const onChangeBold = useCallback(
+    (e: Object): void => {
       activeEvent.bold = !activeEvent.bold
       saveEvent(activeEvent)
     },
-    close: props => (): void => {
-      props.store.events.getEvent(null)
+    [activeEvent.bold],
+  )
+  const close = useCallback(
+    (): void => {
+      getEvent(null)
     },
-  }),
-  observer
-)
-
-const EditEvent = ({
-  store,
-  error,
-  changeError,
-  onChangeTitle,
-  onBlurTitle,
-  onChangeDatePicker,
-  onChangeOrder,
-  onBlurOrder,
-  onChangeBold,
-  close,
-}: {
-  store: Object,
-  error: string,
-  changeError: () => void,
-  onChangeTitle: () => void,
-  onBlurTitle: () => void,
-  onChangeDatePicker: () => void,
-  onChangeOrder: () => void,
-  onBlurOrder: () => void,
-  onChangeBold: () => void,
-  close: () => void,
-}) => {
-  // DANGER: computed only recomputes when _id changes!
-  // so do not use store.events.activeEvent
-  const activeEvent = store.events.events.find(
-    event => event._id === store.events.activeEventId
   )
 
   return (
@@ -237,4 +228,4 @@ const EditEvent = ({
 
 EditEvent.displayName = 'EditEvent'
 
-export default enhance(EditEvent)
+export default observer(EditEvent)
