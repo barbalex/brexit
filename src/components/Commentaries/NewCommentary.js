@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import {
   Modal,
   Button,
@@ -8,88 +8,76 @@ import {
   FormControl,
 } from 'react-bootstrap'
 import moment from 'moment'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
-import withState from 'recompose/withState'
-import withHandlers from 'recompose/withHandlers'
+import { observer } from 'mobx-react'
 import styled from 'styled-components'
 
 import DateInput from '../Events/DateInput'
+import storeContext from '../../storeContext'
 
-const ErrorAlert = styled(Alert)`magrin-bottom: 10px;`
+const ErrorAlert = styled(Alert)`
+  magrin-bottom: 10px;
+`
 
-const enhance = compose(
-  inject(`store`),
-  withState('title', 'changeTitle', ''),
-  withState('date', 'changeDate', moment()),
-  withState('error', 'changeError', null),
-  withHandlers({
-    onChangeTitle: props => event => props.changeTitle(event.target.value),
-    onChangeDate: props => (date: Date) =>
-      props.changeDate(moment(date, 'DD.MM.YYYY')),
-    createNewCommentary: props => () => {
-      const { title, date } = props
+const NewCommentary = () => {
+  const store = useContext(storeContext)
+  const { commentaries, error } = store
+  const { newCommentary, toggleShowNewCommentary } = commentaries
+  const [title, setTitle] = useState('')
+  const [date, setDate] = useState(moment())
+  // eslint-disable-next-line no-unused-vars
+  const [errorMessage, setErrorMessage] = useState(null)
+  const onChangeTitle = useCallback(event => setTitle(event.target.value))
+  const onChangeDate = useCallback((date: Date) =>
+    setDate(moment(date, 'DD.MM.YYYY')),
+  )
+  const createNewCommentary = useCallback(
+    () => {
       if (title && date) {
-        props.store.commentaries.newCommentary(title, date)
-        props.store.commentaries.toggleShowNewCommentary()
+        newCommentary(title, date)
+        toggleShowNewCommentary()
       } else {
-        let error = 'Please choose a date'
-        if (!title) error = 'Please add a title'
-        props.store.error.showError({ error })
+        let errorMessage = 'Please choose a date'
+        if (!title) errorMessage = 'Please add a title'
+        error.showError({ error: errorMessage })
       }
     },
-    onCloseNewCommentary: props => () =>
-      props.store.commentaries.toggleShowNewCommentary(),
-  }),
-  observer
-)
+    [title, date],
+  )
+  const onCloseNewCommentary = useCallback(() => toggleShowNewCommentary())
 
-const NewCommentary = ({
-  title,
-  date,
-  error,
-  onCloseNewCommentary,
-  onChangeTitle,
-  onChangeDate,
-  createNewCommentary,
-}: {
-  title: string,
-  date: Date,
-  error: string,
-  onCloseNewCommentary: () => void,
-  onChangeTitle: () => void,
-  onChangeDate: () => void,
-  createNewCommentary: () => void,
-}) => (
-  <Modal show bsSize="large">
-    <Modal.Header>
-      <Modal.Title>New commentary</Modal.Title>
-    </Modal.Header>
+  return (
+    <Modal show bsSize="large">
+      <Modal.Header>
+        <Modal.Title>New commentary</Modal.Title>
+      </Modal.Header>
 
-    <Modal.Body>
-      <FormGroup controlId="commentaryTitle">
-        <ControlLabel>Title</ControlLabel>
-        <FormControl
-          type="text"
-          value={title}
-          onChange={onChangeTitle}
-          autoFocus
-          tabIndex={1}
-        />
-      </FormGroup>
-      <DateInput date={date} onChangeDatePicker={onChangeDate} />
-      {error && <ErrorAlert bsStyle="danger">{error}</ErrorAlert>}
-    </Modal.Body>
+      <Modal.Body>
+        <FormGroup controlId="commentaryTitle">
+          <ControlLabel>Title</ControlLabel>
+          <FormControl
+            type="text"
+            value={title}
+            onChange={onChangeTitle}
+            autoFocus
+            tabIndex={1}
+          />
+        </FormGroup>
+        <DateInput date={date} onChangeDatePicker={onChangeDate} />
+        {errorMessage && (
+          <ErrorAlert bsStyle="danger">{errorMessage}</ErrorAlert>
+        )}
+      </Modal.Body>
 
-    <Modal.Footer>
-      <Button onClick={onCloseNewCommentary}>discard input and close</Button>
-      <Button bsStyle="primary" onClick={createNewCommentary}>
-        create new commentary
-      </Button>
-    </Modal.Footer>
-  </Modal>
-)
+      <Modal.Footer>
+        <Button onClick={onCloseNewCommentary}>discard input and close</Button>
+        <Button bsStyle="primary" onClick={createNewCommentary}>
+          create new commentary
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  )
+}
 
 NewCommentary.displayName = 'NewCommentary'
 
-export default enhance(NewCommentary)
+export default observer(NewCommentary)
