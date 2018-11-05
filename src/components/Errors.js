@@ -9,12 +9,12 @@
  * ...then triggers again some time later, passing an empty error object
  */
 
-import React from 'react'
+import React, { useCallback, useContext } from 'react'
 import { Overlay, Glyphicon } from 'react-bootstrap'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
-import withHandlers from 'recompose/withHandlers'
+import { observer } from 'mobx-react'
 import styled from 'styled-components'
+
+import storeContext from '../storeContext'
 
 const Container = styled.div`
   position: absolute;
@@ -39,8 +39,12 @@ const Error = styled.div`
   padding-left: 10px;
   padding-right: 10px;
 `
-const Title = styled.p`margin-bottom: 0;`
-const Message = styled.p`margin-bottom: -2px;`
+const Title = styled.p`
+  margin-bottom: 0;
+`
+const Message = styled.p`
+  margin-bottom: -2px;
+`
 const StyledGlyphicon = styled(Glyphicon)`
   position: absolute !important;
   top: 3px !important;
@@ -55,43 +59,30 @@ const Hr = styled.hr`
   border: 1px solid #ccc;
 `
 
-const enhance = compose(
-  inject(`store`),
-  withHandlers({
-    onClickGlyph: props => () => props.store.error.showError(),
-  }),
-  observer
-)
+const Errors = () => {
+  const store = useContext(storeContext)
+  const onClickGlyph = useCallback(() => store.error.showError())
 
-const Errors = ({
-  store,
-  onClickGlyph,
-}: {
-  store: Object,
-  onClickGlyph: () => void,
-}) =>
-  <Overlay show={store.error.errors.length > 0}>
-    <Container id="errors">
-      <StyledGlyphicon glyph="remove-circle" onClick={onClickGlyph} />
-      {store.error.errors.map((error, index) =>
-        <ErrorContainer key={index} first={index === 0}>
-          <Error>
-            {error.title &&
-              <Title>
-                {error.title}
-              </Title>}
-            <Message>
-              <em>
-                {error.msg}
-              </em>
-            </Message>
-          </Error>
-          {index + 1 < store.error.errors.length && <Hr />}
-        </ErrorContainer>
-      )}
-    </Container>
-  </Overlay>
+  return (
+    <Overlay show={store.error.errors.length > 0}>
+      <Container id="errors">
+        <StyledGlyphicon glyph="remove-circle" onClick={onClickGlyph} />
+        {store.error.errors.map((error, index) => (
+          <ErrorContainer key={index} first={index === 0}>
+            <Error>
+              {error.title && <Title>{error.title}</Title>}
+              <Message>
+                <em>{error.msg}</em>
+              </Message>
+            </Error>
+            {index + 1 < store.error.errors.length && <Hr />}
+          </ErrorContainer>
+        ))}
+      </Container>
+    </Overlay>
+  )
+}
 
 Errors.displayName = 'Errors'
 
-export default enhance(Errors)
+export default observer(Errors)
