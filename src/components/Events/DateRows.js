@@ -1,15 +1,15 @@
 // @flow
-import React from 'react'
+import React, { useContext } from 'react'
 import moment from 'moment'
 import ReactList from 'react-list'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
+import { observer } from 'mobx-react'
 import styled from 'styled-components'
 
 import DateRow from './DateRow'
 import MonthRow from './MonthRow'
 import MonthlyStatisticsRow from './MonthlyStatisticsRow'
 import getDaterowObjectsSinceOldestEvent from '../../modules/getDaterowObjectsSinceOldestEvent'
+import storeContext from '../../storeContext'
 
 const BodyRow = styled.div`
   display: flex;
@@ -25,41 +25,42 @@ const BodyCell = styled.div`
   padding-left: 10px;
 `
 
-const enhance = compose(inject(`store`), observer)
-
-const DateRows = ({ store, width }: { store: Object, width: number }) => {
+const DateRows = ({ width }: { width: number }) => {
+  const store = useContext(storeContext)
   const dateRowObjects = getDaterowObjectsSinceOldestEvent(
     store.events.events,
-    store.yearsOfEvents.activeEventYears
+    store.yearsOfEvents.activeEventYears,
   )
   const dateRows = []
   if (dateRowObjects.length > 0) {
     let lastEndOfMonth
     dateRowObjects.forEach((dRO, index) => {
       const day = moment(dRO.date).format('D')
-      const endOfMonth = moment(dRO.date).endOf('month').format('MM.DD')
+      const endOfMonth = moment(dRO.date)
+        .endOf('month')
+        .format('MM.DD')
       const dROForDateRow = {
         date: dRO.date,
         gbEvents: dRO.gbEvents.filter(
-          event => !event.tags || !event.tags.includes('monthlyStatistics')
+          event => !event.tags || !event.tags.includes('monthlyStatistics'),
         ),
         euEvents: dRO.euEvents.filter(
-          event => !event.tags || !event.tags.includes('monthlyStatistics')
+          event => !event.tags || !event.tags.includes('monthlyStatistics'),
         ),
         bothEvents: dRO.bothEvents.filter(
-          event => !event.tags || !event.tags.includes('monthlyStatistics')
+          event => !event.tags || !event.tags.includes('monthlyStatistics'),
         ),
       }
       const dROForMonthlyStatsRow = {
         date: dRO.date,
         gbEvents: dRO.gbEvents.filter(
-          event => event.tags && event.tags.includes('monthlyStatistics')
+          event => event.tags && event.tags.includes('monthlyStatistics'),
         ),
         euEvents: dRO.euEvents.filter(
-          event => event.tags && event.tags.includes('monthlyStatistics')
+          event => event.tags && event.tags.includes('monthlyStatistics'),
         ),
         bothEvents: dRO.bothEvents.filter(
-          event => event.tags && event.tags.includes('monthlyStatistics')
+          event => event.tags && event.tags.includes('monthlyStatistics'),
         ),
       }
       const dROForMonthlyStatsHasEvents =
@@ -77,11 +78,11 @@ const DateRows = ({ store, width }: { store: Object, width: number }) => {
           <MonthlyStatisticsRow
             key={`${index}monthlyStatisticsRow`}
             dateRowObject={dROForMonthlyStatsRow}
-          />
+          />,
         )
       }
       dateRows.push(
-        <DateRow key={index} dateRowObject={dROForDateRow} width={width} />
+        <DateRow key={index} dateRowObject={dROForDateRow} width={width} />,
       )
       lastEndOfMonth = endOfMonth
     })
@@ -108,4 +109,4 @@ const DateRows = ({ store, width }: { store: Object, width: number }) => {
 
 DateRows.displayName = 'DateRows'
 
-export default enhance(DateRows)
+export default observer(DateRows)
