@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { useCallback, useContext } from 'react'
 import {
   Row,
   Col,
@@ -9,10 +9,10 @@ import {
   FormGroup,
   FormControl,
 } from 'react-bootstrap'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
-import withHandlers from 'recompose/withHandlers'
+import { observer } from 'mobx-react'
 import styled from 'styled-components'
+
+import storeContext from '../../storeContext'
 
 const StyledGlyphicon = styled(Glyphicon)`
   font-size: 1.5em;
@@ -20,115 +20,104 @@ const StyledGlyphicon = styled(Glyphicon)`
   cursor: pointer;
 `
 
-const enhance = compose(
-  inject(`store`),
-  withHandlers({
-    onChangeUrl: props => (e: Object): void => {
-      // not using action because don't know
-      // how to find this link in activeEvent.links...
-      props.link.url = e.target.value
-    },
-    onBlurUrl: props => (): void => {
-      const { store, link: oldLink, link: newLink } = props
-      // DANGER: computed only recomputes when _id changes!
-      // so do not use store.events.activeEvent
-      const activeEvent = store.events.events.find(
-        event => event._id === store.events.activeEventId
-      )
-      const index = activeEvent.links.findIndex(
-        link => link.label === oldLink.label && link.url === oldLink.url
-      )
-      activeEvent.links[index] = newLink
-      store.events.saveEvent(activeEvent)
-    },
-    onChangeLabel: props => (e: Object): void => {
-      props.link.label = e.target.value
-    },
-    onBlurLabel: props => (): void => {
-      const { store, link: oldLink, link: newLink } = props
-      // DANGER: computed only recomputes when _id changes!
-      // so do not use store.events.activeEvent
-      const activeEvent = store.events.events.find(
-        event => event._id === store.events.activeEventId
-      )
-      const index = activeEvent.links.findIndex(
-        link => link.url === oldLink.url && link.label === oldLink.label
-      )
-      activeEvent.links[index] = newLink
-      store.events.saveEvent(activeEvent)
-    },
-    onRemoveLink: props => (): void => {
-      const { store, link: linkToRemove } = props
-      // DANGER: computed only recomputes when _id changes!
-      // so do not use store.events.activeEvent
-      const activeEvent = store.events.events.find(
-        event => event._id === store.events.activeEventId
-      )
-      activeEvent.links = activeEvent.links.filter(
-        link =>
-          link.label !== linkToRemove.label && link.url !== linkToRemove.url
-      )
-      store.events.saveEvent(activeEvent)
-    },
-  }),
-  observer
-)
-
 const EventLink = ({
-  store,
   link,
   focus,
   index,
-  onChangeUrl,
-  onBlurUrl,
-  onChangeLabel,
-  onBlurLabel,
-  onRemoveLink,
 }: {
-  store: Object,
   link: Object,
   focus: boolean,
   index: number,
-  onChangeUrl: () => void,
-  onBlurUrl: () => void,
-  onChangeLabel: () => void,
-  onBlurLabel: () => void,
-  onRemoveLink: () => void,
-}) =>
-  <Row key={index}>
-    <Col sm={3} lg={2}>
-      <FormGroup controlId="eventLink">
-        <FormControl
-          type="text"
-          bsSize="small"
-          value={link.label}
-          onChange={onChangeLabel}
-          onBlur={onBlurLabel}
-          autoFocus={focus && !link.label}
-        />
-      </FormGroup>
-    </Col>
-    <Col sm={8} lg={9}>
-      <FormGroup controlId="eventUrl">
-        <FormControl
-          type="url"
-          bsSize="small"
-          value={link.url}
-          onChange={onChangeUrl}
-          onBlur={onBlurUrl}
-        />
-      </FormGroup>
-    </Col>
-    <Col sm={1} lg={1}>
-      <OverlayTrigger
-        placement="right"
-        overlay={<Tooltip id="removeLink">remove</Tooltip>}
-      >
-        <StyledGlyphicon glyph="remove-circle" onClick={onRemoveLink} />
-      </OverlayTrigger>
-    </Col>
-  </Row>
+}) => {
+  const store = useContext(storeContext)
+  const { events } = store
+  const { saveEvent } = events
+  // DANGER: computed only recomputes when _id changes!
+  // so do not use store.events.activeEvent
+  const activeEvent = events.events.find(
+    event => event._id === events.activeEventId,
+  )
+  const onChangeUrl = useCallback(
+    (e: Object): void => {
+      // not using action because don't know
+      // how to find this link in activeEvent.links...
+      link.url = e.target.value
+    },
+    [link],
+  )
+  const onBlurUrl = useCallback(
+    (): void => {
+      const i = activeEvent.links.findIndex(
+        l => l.label === link.label && l.url === link.url,
+      )
+      activeEvent.links[i] = { ...link }
+      saveEvent(activeEvent)
+    },
+    [link, activeEvent],
+  )
+  const onChangeLabel = useCallback(
+    (e: Object): void => {
+      link.label = e.target.value
+    },
+    [link],
+  )
+  const onBlurLabel = useCallback(
+    (): void => {
+      const i = activeEvent.links.findIndex(
+        l => l.url === link.url && l.label === link.label,
+      )
+      activeEvent.links[i] = { ...link }
+      saveEvent(activeEvent)
+    },
+    [link, activeEvent],
+  )
+  const onRemoveLink = useCallback(
+    (): void => {
+      activeEvent.links = activeEvent.links.filter(
+        l => l.label !== link.label && l.url !== link.url,
+      )
+      saveEvent(activeEvent)
+    },
+    [link],
+  )
+
+  return (
+    <Row key={index}>
+      <Col sm={3} lg={2}>
+        <FormGroup controlId="eventLink">
+          <FormControl
+            type="text"
+            bsSize="small"
+            value={link.label}
+            onChange={onChangeLabel}
+            onBlur={onBlurLabel}
+            autoFocus={focus && !link.label}
+          />
+        </FormGroup>
+      </Col>
+      <Col sm={8} lg={9}>
+        <FormGroup controlId="eventUrl">
+          <FormControl
+            type="url"
+            bsSize="small"
+            value={link.url}
+            onChange={onChangeUrl}
+            onBlur={onBlurUrl}
+          />
+        </FormGroup>
+      </Col>
+      <Col sm={1} lg={1}>
+        <OverlayTrigger
+          placement="right"
+          overlay={<Tooltip id="removeLink">remove</Tooltip>}
+        >
+          <StyledGlyphicon glyph="remove-circle" onClick={onRemoveLink} />
+        </OverlayTrigger>
+      </Col>
+    </Row>
+  )
+}
 
 EventLink.displayName = 'EventLink'
 
-export default enhance(EventLink)
+export default observer(EventLink)
