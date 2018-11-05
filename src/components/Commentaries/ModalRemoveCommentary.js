@@ -1,59 +1,52 @@
 // @flow
-import React from 'react'
+import React, { useCallback, useContext } from 'react'
 import { Modal, Button } from 'react-bootstrap'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
-import withHandlers from 'recompose/withHandlers'
+import { observer } from 'mobx-react'
 
-const enhance = compose(
-  inject(`store`),
-  withHandlers({
-    abort: props => event =>
-      props.store.commentaries.setCommentaryToRemove(null),
-    remove: props => () => {
-      const {
-        commentaryToRemove,
-        removeCommentary,
-        setCommentaryToRemove,
-      } = props.store.commentaries
+import storeContext from '../../storeContext'
+
+const ModalRemoveCommentary = () => {
+  const store = useContext(storeContext)
+  const {
+    commentaryToRemove,
+    removeCommentary,
+    setCommentaryToRemove,
+  } = store.commentaries
+  const abort = useCallback(event => setCommentaryToRemove(null))
+  const remove = useCallback(
+    () => {
       removeCommentary(commentaryToRemove)
       setCommentaryToRemove(null)
     },
-  }),
-  observer,
-)
+    [commentaryToRemove],
+  )
 
-const ModalRemoveCommentary = ({
-  store,
-  remove,
-  abort,
-}: { store: Object, remove: () => void, abort: () => void }) => (
-  <div className="static-modal">
-    <Modal.Dialog>
-      <Modal.Header>
-        <Modal.Title>
-          Remove commentary "{store.commentaries.commentaryToRemove.title}"
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <p>
-          Are you sure you want to remove commentary "
-          {store.commentaries.commentaryToRemove.title}
-          "?
-        </p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button bsStyle="danger" onClick={remove}>
-          yes, remove!
-        </Button>
-        <Button onClick={abort}>
-          no!
-        </Button>
-      </Modal.Footer>
-    </Modal.Dialog>
-  </div>
-)
+  return (
+    <div className="static-modal">
+      <Modal.Dialog>
+        <Modal.Header>
+          <Modal.Title>
+            Remove commentary "{commentaryToRemove.title}"
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            Are you sure you want to remove commentary "
+            {commentaryToRemove.title}
+            "?
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button bsStyle="danger" onClick={remove}>
+            yes, remove!
+          </Button>
+          <Button onClick={abort}>no!</Button>
+        </Modal.Footer>
+      </Modal.Dialog>
+    </div>
+  )
+}
 
 ModalRemoveCommentary.displayName = 'ModalRemoveCommentary'
 
-export default enhance(ModalRemoveCommentary)
+export default observer(ModalRemoveCommentary)
