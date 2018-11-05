@@ -1,13 +1,13 @@
 // @flow
-import React from 'react'
+import React, { useContext } from 'react'
 import { Glyphicon } from 'react-bootstrap'
-import { observer, inject } from 'mobx-react'
+import { observer } from 'mobx-react'
 import { toJS } from 'mobx'
-import compose from 'recompose/compose'
 import styled from 'styled-components'
 
 import RemoveEventGlyph from './RemoveEventGlyph'
 import EditEventGlyph from './EditEventGlyph'
+import storeContext from '../../storeContext'
 
 const StyledGlyphicon = styled(Glyphicon)`
   font-size: 0.7em;
@@ -17,11 +17,12 @@ const StyledGlyphicon = styled(Glyphicon)`
 const P = styled.p`
   font-weight: ${props => (props['data-bold'] ? 'bold' : 'normal')};
 `
-const OuterSpan = styled.span`padding-left: 5px;`
+const OuterSpan = styled.span`
+  padding-left: 5px;
+`
 
-const enhance = compose(inject(`store`), observer)
-
-const Event = ({ store, event: evPassed }: { store: Object, event: Object }) => {
+const Event = ({ event: evPassed }: { event: Object }) => {
+  const store = useContext(storeContext)
   const event = toJS(evPassed)
   const showEditingGlyphons = !!store.login.email
   const classNames =
@@ -29,7 +30,7 @@ const Event = ({ store, event: evPassed }: { store: Object, event: Object }) => 
       ? event.tags.map(tag => `event-${tag}`).join(' ')
       : []
 
-  const links = event.links.map((link, key) =>
+  const links = event.links.map((link, key) => (
     <OuterSpan key={key}>
       {key > 0 && ' '}
       <a href={link.url} target="_blank" rel="noopener noreferrer">
@@ -37,7 +38,7 @@ const Event = ({ store, event: evPassed }: { store: Object, event: Object }) => 
         {link.label}
       </a>
     </OuterSpan>
-  )
+  ))
 
   return (
     <li className={classNames}>
@@ -52,4 +53,4 @@ const Event = ({ store, event: evPassed }: { store: Object, event: Object }) => 
 
 Event.displayName = 'Event'
 
-export default enhance(Event)
+export default observer(Event)
