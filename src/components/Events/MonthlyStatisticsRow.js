@@ -1,11 +1,8 @@
 // @flow
-import React, { useState, useCallback, useContext } from 'react'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
+import React from 'react'
 import styled from 'styled-components'
 
 import Event from './Event'
-import storeContext from '../../storeContext'
 
 const BodyCell = styled.div`
   padding: 5px;
@@ -56,11 +53,6 @@ const BodyRow = styled.div`
   }
 `
 
-const enhance = compose(
-  inject(`store`),
-  observer,
-)
-
 const mapEventComponents = (events: Array<Object>) =>
   events.map((event, key) => <Event key={key} event={event} />)
 
@@ -69,8 +61,6 @@ const MonthlyStatisticsRow = ({
 }: {
   dateRowObject: Object,
 }) => {
-  const store = useContext(storeContext)
-
   const migrationEvents = mapEventComponents(dRO.migrationEvents)
   const politicsEvents = mapEventComponents(dRO.politicsEvents)
   const dayWithEvents = migrationEvents.length > 0 || politicsEvents.length > 0
@@ -95,4 +85,4 @@ const MonthlyStatisticsRow = ({
 
 MonthlyStatisticsRow.displayName = 'MonthlyStatisticsRow'
 
-export default enhance(MonthlyStatisticsRow)
+export default MonthlyStatisticsRow
