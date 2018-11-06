@@ -9,10 +9,8 @@ import {
   FormControl,
 } from 'react-bootstrap'
 import moment from 'moment'
-import { observer, inject } from 'mobx-react'
+import { observer } from 'mobx-react'
 import compose from 'recompose/compose'
-import withState from 'recompose/withState'
-import withHandlers from 'recompose/withHandlers'
 import styled from 'styled-components'
 
 import DateInput from './DateInput'
@@ -91,49 +89,32 @@ const StyledAlert = styled(Alert)`
   margin-bottom: 10px;
 `
 
-const enhance = compose(
-  inject(`store`),
-  withState('title', 'changeTitle', ''),
-  withState('date', 'changeDate', moment()),
-  withState('error', 'changeError', null),
-  withHandlers({
-    onChangeTitle: props => (event: Object): void =>
-      props.changeTitle(event.target.value),
-    onChangeDatePicker: props => (date: Date): void =>
-      props.changeDate(moment(date, 'DD.MM.YYYY')),
-    close: props => () => props.store.events.setShowNewEvent(false),
-    createNewEvent: props => () => {
-      const { title, date, store } = props
-      if (title && date) {
-        store.events.newEvent({ date, title })
-        props.store.events.setShowNewEvent(false)
-      } else {
-        const error = !!title ? 'Please choose a date' : 'Please add a title'
-        props.changeError(error)
-      }
-    },
-  }),
-  observer,
-)
+const enhance = compose(observer)
 
-const NewEvent = ({
-  title,
-  date,
-  error,
-  onChangeTitle,
-  onChangeDatePicker,
-  close,
-  createNewEvent,
-}: {
-  title: string,
-  date: Date,
-  error: string,
-  onChangeTitle: () => void,
-  onChangeDatePicker: () => void,
-  close: () => void,
-  createNewEvent: () => void,
-}) => {
+const NewEvent = () => {
   const store = useContext(storeContext)
+  const { setShowNewEvent, newEvent } = store.events
+
+  const [title, changeTitle] = useState('')
+  const [date, changeDate] = useState(moment())
+  const [error, changeError] = useState(null)
+
+  const onChangeTitle = useCallback(
+    (event: Object): void => changeTitle(event.target.value),
+  )
+  const onChangeDatePicker = useCallback(
+    (date: Date): void => changeDate(moment(date, 'DD.MM.YYYY')),
+  )
+  const close = useCallback(() => setShowNewEvent(false))
+  const createNewEvent = useCallback(() => {
+    if (title && date) {
+      newEvent({ date, title })
+      setShowNewEvent(false)
+    } else {
+      const error = !!title ? 'Please choose a date' : 'Please add a title'
+      changeError(error)
+    }
+  }, [])
 
   return (
     <StyledModal show onHide={close} bsSize="large">
