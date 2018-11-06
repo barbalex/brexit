@@ -1,7 +1,7 @@
 // @flow
 
 import app from 'ampersand-app'
-import React from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import {
   Alert,
   Button,
@@ -10,14 +10,13 @@ import {
   FormControl,
 } from 'react-bootstrap'
 import isObject from 'lodash/isObject'
-import { observer, inject } from 'mobx-react'
+import { observer } from 'mobx-react'
 import compose from 'recompose/compose'
-import withHandlers from 'recompose/withHandlers'
-import withState from 'recompose/withState'
 import styled from 'styled-components'
 import { withRouter } from 'react-router'
 
 import validateEmail from './validateEmail'
+import storeContext from '../../storeContext'
 
 const StyledAlert = styled(Alert)`
   margin-bottom: 8px;
@@ -29,106 +28,83 @@ const ValidateDivAfterRBC = styled.div`
 `
 
 const enhance = compose(
-  inject(`store`),
   withRouter,
-  withState('invalidEmail', 'changeInvalidEmail', false),
-  withState('invalidPassword', 'changeInvalidPassword', false),
-  withState('newEmail', 'changeNewEmail', ''),
-  withState('password', 'changePassword', ''),
-  withState('loginError', 'changeLoginError', ''),
-  withHandlers({
-    validEmail: props => (newEmail: string): boolean => {
+  observer,
+)
+
+const LoginForm = ({ history }: { history: Object }) => {
+  const store = useContext(storeContext)
+  const { login } = store
+
+  const [invalidEmail, changeInvalidEmail] = useState(false)
+  const [invalidPassword, changeInvalidPassword] = useState(false)
+  const [newEmail, changeNewEmail] = useState('')
+  const [password, changePassword] = useState('')
+  const [loginError, changeLoginError] = useState('')
+
+  const validEmail = useCallback(
+    (newEmail: string): boolean => {
       const validEmail = newEmail && validateEmail(newEmail)
       const invalidEmail = !validEmail
-      props.changeInvalidEmail(invalidEmail)
+      changeInvalidEmail(invalidEmail)
       return !!validEmail
     },
-    validPassword: props => (password: boolean): boolean => {
+  )
+  const validPassword = useCallback(
+    (password: boolean): boolean => {
       const validPassword = !!password
       const invalidPassword = !validPassword
-      props.changeInvalidPassword(invalidPassword)
+      changeInvalidPassword(invalidPassword)
       return validPassword
     },
-  }),
-  withHandlers({
-    validSignin: props => (newEmail: string, password: string): boolean => {
-      const validEmail = props.validEmail(newEmail)
-      const validPassword = props.validPassword(password)
-      return validEmail && validPassword
-    },
-  }),
-  withHandlers({
-    checkSignin: props => async (newEmail, password): Promise<void> => {
-      if (props.validSignin(newEmail, password)) {
+  )
+  const validSignin = useCallback(
+    (newEmail: string, password: string): boolean =>
+      validEmail(newEmail) && validPassword(password),
+  )
+  const checkSignin = useCallback(
+    async (newEmail, password): Promise<void> => {
+      if (validSignin(newEmail, password)) {
         try {
           await app.db.login(newEmail, password)
-          props.store.login.login(newEmail, props.history)
+          login.login(newEmail, history)
         } catch (error) {
-          props.changeNewEmail(null)
-          props.changeLoginError(error)
+          changeNewEmail(null)
+          changeLoginError(error)
         }
       }
     },
-  }),
-  withHandlers({
-    onKeyDownEmail: props => event => {
-      const enter = 13
-      if (event.keyCode === enter) {
-        // if enter was pressed, update the value first
-        const newEmail = event.target.value
-        props.changeNewEmail(newEmail)
-        props.checkSignin(newEmail, props.password)
-      }
-    },
-    onKeyDownPassword: props => event => {
-      const enter = 13
-      if (event.keyCode === enter) {
-        // if enter was pressed, update the value first
-        const password = event.target.value
-        props.changePassword(password)
-        props.checkSignin(props.newEmail, password)
-      }
-    },
-    onBlurEmail: props => event => {
+    [history, login],
+  )
+  const onKeyDownEmail = useCallback(event => {
+    const enter = 13
+    if (event.keyCode === enter) {
+      // if enter was pressed, update the value first
       const newEmail = event.target.value
-      props.changeNewEmail(newEmail)
-      props.validEmail(newEmail)
-    },
-    onBlurPassword: props => event => props.changePassword(event.target.value),
-    onAlertDismiss: props => () => props.changeLoginError(null),
-    onClickLogin: props => () =>
-      props.checkSignin(props.newEmail, props.password),
-  }),
-  observer
-)
+      changeNewEmail(newEmail)
+      checkSignin(newEmail, password)
+    }
+  })
+  const onKeyDownPassword = useCallback(event => {
+    const enter = 13
+    if (event.keyCode === enter) {
+      // if enter was pressed, update the value first
+      const password = event.target.value
+      changePassword(password)
+      checkSignin(newEmail, password)
+    }
+  })
+  const onBlurEmail = useCallback(event => {
+    const newEmail = event.target.value
+    changeNewEmail(newEmail)
+    validEmail(newEmail)
+  })
+  const onBlurPassword = useCallback(event =>
+    changePassword(event.target.value),
+  )
+  const onAlertDismiss = useCallback(() => changeLoginError(null))
+  const onClickLogin = useCallback(() => checkSignin(newEmail, password))
 
-const LoginForm = ({
-  store,
-  invalidEmail,
-  invalidPassword,
-  newEmail,
-  password,
-  loginError,
-  onKeyDownEmail,
-  onKeyDownPassword,
-  onBlurEmail,
-  onBlurPassword,
-  onAlertDismiss,
-  onClickLogin,
-}: {
-  store: Object,
-  invalidEmail: boolean,
-  invalidPassword: boolean,
-  newEmail: string,
-  password: string,
-  loginError: string | Object,
-  onKeyDownEmail: () => void,
-  onKeyDownPassword: () => void,
-  onBlurEmail: () => void,
-  onBlurPassword: () => void,
-  onAlertDismiss: () => void,
-  onClickLogin: () => void,
-}) => {
   const emailInputBsStyle = invalidEmail ? 'error' : null
   const passwordInputBsStyle = invalidPassword ? 'error' : null
   let error = loginError
@@ -155,8 +131,9 @@ const LoginForm = ({
             autoFocus
           />
         </FormGroup>
-        {invalidEmail &&
-          <ValidateDivAfterRBC>Please check email</ValidateDivAfterRBC>}
+        {invalidEmail && (
+          <ValidateDivAfterRBC>Please check email</ValidateDivAfterRBC>
+        )}
       </div>
       <div className="formGroup">
         <FormGroup controlId="password">
@@ -172,13 +149,15 @@ const LoginForm = ({
             required
           />
         </FormGroup>
-        {invalidPassword &&
-          <ValidateDivAfterRBC>Please check password</ValidateDivAfterRBC>}
+        {invalidPassword && (
+          <ValidateDivAfterRBC>Please check password</ValidateDivAfterRBC>
+        )}
       </div>
-      {isError &&
+      {isError && (
         <StyledAlert bsStyle="danger" onDismiss={onAlertDismiss}>
           Error: {error}
-        </StyledAlert>}
+        </StyledAlert>
+      )}
       <Button className="btn-primary" onClick={onClickLogin}>
         log in
       </Button>
