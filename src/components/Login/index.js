@@ -1,28 +1,21 @@
 // @flow
 
-import React, { useState, useCallback, useContext } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { Button } from 'react-bootstrap'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
-import withHandlers from 'recompose/withHandlers'
+import { observer } from 'mobx-react'
 import DocumentTitle from 'react-document-title'
 
 import LoginForm from './LoginForm'
 import storeContext from '../../storeContext'
 
-const enhance = compose(
-  inject(`store`),
-  withHandlers({
-    onClickLogout: props => (): void => {
-      console.log('log out clicked')
-      props.store.login.logout()
-    },
-  }),
-  observer,
-)
-
-const Login = ({ onClickLogout }: { onClickLogout: () => void }) => {
+const Login = () => {
   const store = useContext(storeContext)
+  const onClickLogout = useCallback(
+    (): void => {
+      console.log('log out clicked')
+      store.login.logout()
+    },
+  )
 
   return (
     <DocumentTitle title="brexit | Login">
@@ -41,4 +34,4 @@ const Login = ({ onClickLogout }: { onClickLogout: () => void }) => {
 
 Login.displayName = 'Login'
 
-export default enhance(Login)
+export default observer(Login)
