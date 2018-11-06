@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import {
   Navbar,
   NavItem,
@@ -9,14 +9,13 @@ import {
   OverlayTrigger,
 } from 'react-bootstrap'
 import has from 'lodash/has'
-import { observer, inject } from 'mobx-react'
+import { observer } from 'mobx-react'
 import compose from 'recompose/compose'
-import withHandlers from 'recompose/withHandlers'
-import withState from 'recompose/withState'
 import styled from 'styled-components'
 import { withRouter } from 'react-router'
 
 import constants from '../modules/constants'
+import storeContext from '../storeContext'
 
 const StyledNavbar = styled(Navbar)`
   margin-bottom: 0 !important;
@@ -45,99 +44,34 @@ const isNavMobile = () => {
 }
 
 const enhance = compose(
-  inject(`store`),
   withRouter,
-  withState('navExpanded', 'changeNavExpanded', false),
-  withHandlers({
-    onToggleNav: props => () => {
-      const navIsMobile = isNavMobile()
-      // toggle only if nav is in mobile mode
-      if (navIsMobile) props.changeNavExpanded(!props.navExpanded)
-    },
-  }),
-  withHandlers({
-    onClickEvents: props => () => {
-      props.store.page.getPage('pages_events')
-      props.history.push('/')
-      // if home was clicked, do not toggle nav
-    },
-    onClickCommentaries: props => () => {
-      props.store.page.getPage('pages_commentaries')
-      props.history.push('/commentaries')
-      props.onToggleNav()
-    },
-    onClickActors: props => () => {
-      props.store.page.getPage('pages_actors')
-      props.history.push('/actors')
-      props.onToggleNav()
-    },
-    onClickLinks: props => () => {
-      props.store.page.getPage('pages_links')
-      props.history.push('/links')
-      props.onToggleNav()
-    },
-    onClickAboutUs: props => () => {
-      props.store.page.getPage('pages_aboutUs')
-      props.history.push('/aboutUs')
-      props.onToggleNav()
-    },
-    onClickEdit: props => () => {
-      props.store.toggleEditing()
-      props.onToggleNav()
-    },
-    onClickLogout: props => () => {
-      props.store.login.logout()
-      props.onToggleNav()
-      // need to force update
-    },
-    onClickNewCommentary: props => () =>
-      props.store.commentaries.toggleShowNewCommentary(),
-    onClickNewEvent: props => () => props.store.events.setShowNewEvent(true),
-    onClickNewActor: props => () => props.store.actors.setShowNewActor(true),
-  }),
-  observer
+  observer,
 )
 
 const MyNavbar = ({
-  store,
   match,
   location,
   history,
-  navExpanded,
-  onToggleNav,
-  onClickEvents,
-  onClickCommentaries,
-  onClickActors,
-  onClickLinks,
-  onClickAboutUs,
-  onClickEdit,
-  onClickLogout,
-  onClickNewCommentary,
-  onClickNewEvent,
-  onClickNewActor,
 }: {
-  store: Object,
   match: Object,
   location: Object,
   history: Object,
-  navExpanded: boolean,
-  onToggleNav: () => void,
-  onClickEvents: () => void,
-  onClickCommentaries: () => void,
-  onClickActors: () => void,
-  onClickLinks: () => void,
-  onClickAboutUs: () => void,
-  onClickEdit: () => void,
-  onClickLogout: () => void,
-  onClickNewCommentary: () => void,
-  onClickNewEvent: () => void,
-  onClickNewActor: () => void,
 }) => {
-  const { activePage } = store.page
-  const { activeActor } = store.actors
-  const { activeCommentary } = store.commentaries
-  const email = store.login.email
-  const glyph = store.editing ? 'eye-open' : 'pencil'
+  const store = useContext(storeContext)
+  const {
+    page,
+    commentaries,
+    actors,
+    events,
+    login,
+    editing,
+    toggleEditing,
+  } = store
+  const { activePage } = page
+  const { activeActor } = actors
+  const { activeCommentary } = commentaries
+  const email = login.email
+  const glyph = editing ? 'eye-open' : 'pencil'
   const id = activePage && activePage._id ? activePage._id : null
   const nonEditableIds = ['pages_commentaries', 'pages_actors', 'pages_events']
   const showEdit =
@@ -150,6 +84,70 @@ const MyNavbar = ({
   const showAddActor = email && activePage._id === 'pages_actors'
   const showNavbarRight =
     email || showEdit || showAddCommentary || showAddEvent || showAddActor
+  const [navExpanded, setNavExpanded] = useState(false)
+  const onToggleNav = useCallback(() => {
+    const navIsMobile = isNavMobile()
+    // toggle only if nav is in mobile mode
+    if (navIsMobile) setNavExpanded(!navExpanded)
+  })
+  const onClickEvents = useCallback(
+    () => {
+      page.getPage('pages_events')
+      history.push('/')
+      // if home was clicked, do not toggle nav
+    },
+    [page],
+  )
+  const onClickCommentaries = useCallback(
+    () => {
+      page.getPage('pages_commentaries')
+      history.push('/commentaries')
+      onToggleNav()
+    },
+    [page],
+  )
+  const onClickActors = useCallback(
+    () => {
+      page.getPage('pages_actors')
+      history.push('/actors')
+      onToggleNav()
+    },
+    [page],
+  )
+  const onClickLinks = useCallback(
+    () => {
+      page.getPage('pages_links')
+      history.push('/links')
+      onToggleNav()
+    },
+    [page],
+  )
+  const onClickAboutUs = useCallback(
+    () => {
+      page.getPage('pages_aboutUs')
+      history.push('/aboutUs')
+      onToggleNav()
+    },
+    [page],
+  )
+  const onClickEdit = useCallback(() => {
+    toggleEditing()
+    onToggleNav()
+  })
+  const onClickLogout = useCallback(
+    () => {
+      login.logout()
+      onToggleNav()
+      // need to force update
+    },
+    [login],
+  )
+  const onClickNewCommentary = useCallback(
+    () => commentaries.toggleShowNewCommentary(),
+    [commentaries],
+  )
+  const onClickNewEvent = useCallback(() => events.setShowNewEvent(true))
+  const onClickNewActor = useCallback(() => actors.setShowNewActor(true))
 
   return (
     <StyledNavbar
@@ -187,8 +185,8 @@ const MyNavbar = ({
               <OverlayTrigger
                 placement="bottom"
                 overlay={
-                  <Tooltip id={store.editing ? 'preview' : 'edit'}>
-                    {store.editing ? 'preview' : 'edit'}
+                  <Tooltip id={editing ? 'preview' : 'edit'}>
+                    {editing ? 'preview' : 'edit'}
                   </Tooltip>
                 }
               >
