@@ -1,17 +1,8 @@
 // @flow
-import React, {
-  Component,
-  useState,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-} from 'react'
-import ReactDOM from 'react-dom'
-import { Glyphicon, PanelGroup } from 'react-bootstrap'
-import { observer, inject } from 'mobx-react'
+import React, { useContext, useEffect, useRef } from 'react'
+import { PanelGroup } from 'react-bootstrap'
+import { observer } from 'mobx-react'
 import compose from 'recompose/compose'
-import withHandlers from 'recompose/withHandlers'
 import styled from 'styled-components'
 import DocumentTitle from 'react-document-title'
 import { withRouter } from 'react-router'
@@ -46,35 +37,23 @@ const Container = styled.div`
 `
 
 const enhance = compose(
-  inject(`store`),
   withRouter,
-  withHandlers({
-    onRemoveActor: props => (docToRemove, event) => {
-      event.preventDefault()
-      event.stopPropagation()
-      props.store.actors.setActorToRemove(docToRemove)
-    },
-    onToggleDraft: props => (doc, event) => {
-      event.preventDefault()
-      event.stopPropagation()
-      props.store.actors.toggleDraftOfActor(doc)
-    },
-  }),
   observer,
 )
 
 const Actors = () => {
   const store = useContext(storeContext)
-  const { actors } = store
+  const { activeActor, actorToRemove, showNewActor } = store.actors
+
+  //console.log('Actor', { actors: store.actors.actors })
+
+  const activeActorPanel = useRef(null)
 
   useEffect(() => {
-    // TODO: only on did mount?
-    store.actors.getActors()
-
-    if (actors.activeActor) {
+    if (activeActor) {
       window.setTimeout(() => {
         // $FlowIssue
-        const node = ReactDOM.findDOMNode(this._activeActorPanel)
+        const node = activeActorPanel.current
         if (node) {
           const navWrapperOffsetTop = document.getElementById('nav-wrapper')
             .offsetTop
@@ -91,49 +70,23 @@ const Actors = () => {
       }, 200)
     }
   })
-}
-class Actors extends Component {
-  constructor(props) {
-    super(props)
-    this.container = React.createRef()
-  }
 
-  displayName: 'Actors'
+  const activeId = activeActor ? activeActor._id : null
 
-  props: {
-    store: Object,
-    onClickActor: () => void,
-    onClickActorCollapse: () => void,
-    onRemoveActor: () => void,
-    onToggleDraft: () => void,
-  }
-
-  actorsComponent = () => {}
-
-  render() {
-    const { store } = this.props
-    const { activeActor, showNewActor } = store.actors
-    const activeId = activeActor ? activeActor._id : null
-
-    return (
-      <DocumentTitle title="brexit | Actors">
-        <Container>
-          <h1>Actors</h1>
-          <PanelGroup
-            defaultActiveKey={activeId}
-            id="actorsAccordion"
-            accordion
-          >
-            <SwallowPanelGroupProps>
-              <ActorsComponent />
-            </SwallowPanelGroupProps>
-          </PanelGroup>
-          {showNewActor && <NewActor />}
-          {store.actors.actorToRemove && <ModalRemoveActor />}
-        </Container>
-      </DocumentTitle>
-    )
-  }
+  return (
+    <DocumentTitle title="brexit | Actors">
+      <Container>
+        <h1>Actors</h1>
+        <PanelGroup defaultActiveKey={activeId} id="actorsAccordion" accordion>
+          <SwallowPanelGroupProps>
+            <ActorsComponent activeActorPanel={activeActorPanel} />
+          </SwallowPanelGroupProps>
+        </PanelGroup>
+        {showNewActor && <NewActor />}
+        {actorToRemove && <ModalRemoveActor />}
+      </Container>
+    </DocumentTitle>
+  )
 }
 
 export default enhance(Actors)

@@ -1,7 +1,9 @@
 // @flow
-import React from 'react'
+import React, { useCallback, useContext } from 'react'
 import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import styled from 'styled-components'
+
+import storeContext from '../../storeContext'
 
 const ToggleDraftGlyphicon = styled(Glyphicon)`
   position: absolute !important;
@@ -12,7 +14,13 @@ const ToggleDraftGlyphicon = styled(Glyphicon)`
 `
 
 export default (doc: Object) => {
-  const { onToggleDraft } = this.props
+  const store = useContext(storeContext)
+  let { toggleDraftOfActor } = store.actors
+  const onToggleDraft = useCallback((doc, event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    toggleDraftOfActor(doc)
+  })
   const glyph = doc.draft ? 'ban-circle' : 'ok-circle'
   const color = doc.draft ? 'red' : '#00D000'
 
