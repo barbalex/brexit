@@ -38,14 +38,17 @@ const MetaButton = styled(Button)`
 
 const Commentary = () => {
   const store = useContext(storeContext)
-  const { activeCommentary } = store.commentaries
-  const articleEncoded = activeCommentary.article
-  const articleDecoded = Base64.decode(articleEncoded)
+  const { editing, commentaries } = store
+  const { activeCommentary } = commentaries
+
   const [showMeta, setShowMeta] = useState(false)
   const onClickMeta = useCallback(() => setShowMeta(!showMeta), [showMeta])
   const onCloseMeta = useCallback(() => setShowMeta(false))
 
-  if (store.editing) {
+  const articleEncoded = activeCommentary.article
+  const articleDecoded = Base64.decode(articleEncoded)
+
+  if (editing) {
     return (
       <Container>
         {showMeta && <Meta doc={activeCommentary} onCloseMeta={onCloseMeta} />}

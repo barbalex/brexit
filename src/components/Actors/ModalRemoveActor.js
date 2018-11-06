@@ -7,28 +7,26 @@ import storeContext from '../../storeContext'
 
 const ModalRemoveActor = () => {
   const store = useContext(storeContext)
+  const { actorToRemove, removeActor, setActorToRemove } = store.actors
+
   const remove = useCallback(
     () => {
-      const { actorToRemove, removeActor, setActorToRemove } = store.actors
       removeActor(actorToRemove)
       setActorToRemove(null)
     },
-    [store.actors.actorToRemove],
+    [actorToRemove],
   )
-  const abort = useCallback(() => store.actors.setActorToRemove(null))
+  const abort = useCallback(() => setActorToRemove(null))
 
   return (
     <div className="static-modal">
       <Modal.Dialog>
         <Modal.Header>
-          <Modal.Title>
-            Remove actor "{store.actors.actorToRemove.category}"
-          </Modal.Title>
+          <Modal.Title>Remove actor "{actorToRemove.category}"</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p>
-            Are you sure you want to remove actor "
-            {store.actors.actorToRemove.category}
+            Are you sure you want to remove actor "{actorToRemove.category}
             "?
           </p>
         </Modal.Body>

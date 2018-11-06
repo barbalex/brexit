@@ -20,19 +20,22 @@ const ErrorAlert = styled(Alert)`
 const NewActor = () => {
   const store = useContext(storeContext)
   const { newActor, setShowNewActor } = store.actors
+
   const [category, setCategory] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
-  const onChangeCategory = useCallback(
-    (event: Object): void => setCategory(event.target.value),
+
+  const onChangeCategory = useCallback(event => setCategory(event.target.value))
+  const createNewActor = useCallback(
+    () => {
+      if (category) {
+        newActor(category)
+        setShowNewActor(false)
+      } else {
+        setErrorMessage('Please choose a category')
+      }
+    },
+    [category],
   )
-  const createNewActor = useCallback(() => {
-    if (category) {
-      newActor(category)
-      setShowNewActor(false)
-    } else {
-      setErrorMessage('Please choose a category')
-    }
-  })
   const closeNewActor = useCallback(() => setShowNewActor(false))
 
   return (

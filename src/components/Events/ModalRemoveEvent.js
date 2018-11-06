@@ -1,33 +1,22 @@
-import React, { useState, useCallback, useContext } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { Modal, Button } from 'react-bootstrap'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
-import withState from 'recompose/withState'
-import withHandlers from 'recompose/withHandlers'
+import { observer } from 'mobx-react'
 
 import storeContext from '../../storeContext'
 
-const enhance = compose(
-  inject(`store`),
-  withState('showMeta', 'changeShowMeta', false),
-  withHandlers({
-    abort: props => () => props.store.events.setEventToRemove(null),
-    remove: props => () => {
-      props.store.events.removeEvent(props.store.events.eventToRemove)
-      props.store.events.setEventToRemove(null)
-    },
-  }),
-  observer,
-)
-
-const ModalRemoveEvent = ({
-  remove,
-  abort,
-}: {
-  remove: () => void,
-  abort: () => void,
-}) => {
+const ModalRemoveEvent = () => {
   const store = useContext(storeContext)
+  const { events } = store
+  const { setEventToRemove, removeEvent, eventToRemove } = events
+
+  const abort = useCallback(() => setEventToRemove(null))
+  const remove = useCallback(
+    () => {
+      removeEvent(eventToRemove)
+      setEventToRemove(null)
+    },
+    [eventToRemove],
+  )
 
   return (
     <Modal show onHide={abort}>
@@ -55,4 +44,4 @@ const ModalRemoveEvent = ({
 
 ModalRemoveEvent.displayName = 'ModalRemoveEvent'
 
-export default enhance(ModalRemoveEvent)
+export default observer(ModalRemoveEvent)

@@ -10,7 +10,6 @@ import {
 } from 'react-bootstrap'
 import moment from 'moment'
 import { observer } from 'mobx-react'
-import compose from 'recompose/compose'
 import styled from 'styled-components'
 
 import DateInput from './DateInput'
@@ -89,8 +88,6 @@ const StyledAlert = styled(Alert)`
   margin-bottom: 10px;
 `
 
-const enhance = compose(observer)
-
 const NewEvent = () => {
   const store = useContext(storeContext)
   const { setShowNewEvent, newEvent } = store.events
@@ -99,22 +96,23 @@ const NewEvent = () => {
   const [date, changeDate] = useState(moment())
   const [error, changeError] = useState(null)
 
-  const onChangeTitle = useCallback(
-    (event: Object): void => changeTitle(event.target.value),
-  )
-  const onChangeDatePicker = useCallback(
-    (date: Date): void => changeDate(moment(date, 'DD.MM.YYYY')),
+  const onChangeTitle = useCallback(event => changeTitle(event.target.value))
+  const onChangeDatePicker = useCallback(date =>
+    changeDate(moment(date, 'DD.MM.YYYY')),
   )
   const close = useCallback(() => setShowNewEvent(false))
-  const createNewEvent = useCallback(() => {
-    if (title && date) {
-      newEvent({ date, title })
-      setShowNewEvent(false)
-    } else {
-      const error = !!title ? 'Please choose a date' : 'Please add a title'
-      changeError(error)
-    }
-  }, [])
+  const createNewEvent = useCallback(
+    () => {
+      if (title && date) {
+        newEvent({ date, title })
+        setShowNewEvent(false)
+      } else {
+        const error = !!title ? 'Please choose a date' : 'Please add a title'
+        changeError(error)
+      }
+    },
+    [title, date],
+  )
 
   return (
     <StyledModal show onHide={close} bsSize="large">
@@ -149,4 +147,4 @@ const NewEvent = () => {
 
 NewEvent.displayName = 'NewEvent'
 
-export default enhance(NewEvent)
+export default observer(NewEvent)
