@@ -1,13 +1,12 @@
 // @flow
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
 } from 'react-router-dom'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
+import { observer } from 'mobx-react'
 
 import Navbar from '../components/Navbar'
 import Header from '../components/Header'
@@ -19,10 +18,10 @@ import AsyncLogin from './AsyncLogin'
 import Errors from './Errors'
 import UpdateAvailable from './UpdateAvailable'
 import NotFound from './NotFound'
+import storeContext from '../storeContext'
 
-const enhance = compose(inject(`store`), observer)
-
-const Main = ({ store, login }: { store: Object, login: boolean }) => {
+const Main = ({ login }: { login: boolean }) => {
+  const store = useContext(storeContext)
   const { errors } = store.error
 
   return (
@@ -105,4 +104,4 @@ const Main = ({ store, login }: { store: Object, login: boolean }) => {
 
 Main.displayName = 'Main'
 
-export default enhance(Main)
+export default observer(Main)

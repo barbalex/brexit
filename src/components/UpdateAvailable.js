@@ -9,12 +9,12 @@
  * ...then triggers again some time later, passing an empty error object
  */
 
-import React from 'react'
+import React, { useContext, useCallback } from 'react'
 import { Overlay, Glyphicon } from 'react-bootstrap'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
-import withHandlers from 'recompose/withHandlers'
+import { observer } from 'mobx-react'
 import styled from 'styled-components'
+
+import storeContext from '../storeContext'
 
 const Container = styled.div`
   position: absolute;
@@ -44,47 +44,36 @@ const StyledGlyphicon = styled(Glyphicon)`
   cursor: pointer;
 `
 
-const enhance = compose(
-  inject(`store`),
-  withHandlers({
-    onClickGlyph: props => () => props.store.setUpdateAvailable(false),
-    onClickReload: props => event => {
-      event.preventDefault()
-      window.location.reload(false)
-    },
-  }),
-  observer
-)
+const UpdateAvailable = () => {
+  const store = useContext(storeContext)
+  const onClickGlyph = useCallback(() => store.setUpdateAvailable(false))
+  const onClickReload = useCallback(event => {
+    event.preventDefault()
+    window.location.reload(false)
+  })
 
-const UpdateAvailable = ({
-  store,
-  onClickGlyph,
-  onClickReload,
-}: {
-  store: Object,
-  onClickGlyph: () => void,
-  onClickReload: () => void,
-}) => (
-  <Overlay show={store.updateAvailable}>
-    <Container>
-      <StyledGlyphicon
-        glyph="remove-circle"
-        onClick={onClickGlyph}
-        alt="close"
-      />
-      <MessageContainer>
-        <span>
-          An update for brexit-chronology.ch is available.{' '}
-          <a href={'//brexit-chronology.ch'} onClick={onClickReload}>
-            Reload
-          </a>{' '}
-          to install it.
-        </span>
-      </MessageContainer>
-    </Container>
-  </Overlay>
-)
+  return (
+    <Overlay show={store.updateAvailable}>
+      <Container>
+        <StyledGlyphicon
+          glyph="remove-circle"
+          onClick={onClickGlyph}
+          alt="close"
+        />
+        <MessageContainer>
+          <span>
+            An update for brexit-chronology.ch is available.{' '}
+            <a href={'//brexit-chronology.ch'} onClick={onClickReload}>
+              Reload
+            </a>{' '}
+            to install it.
+          </span>
+        </MessageContainer>
+      </Container>
+    </Overlay>
+  )
+}
 
 UpdateAvailable.displayName = 'UpdateAvailable'
 
-export default enhance(UpdateAvailable)
+export default observer(UpdateAvailable)
