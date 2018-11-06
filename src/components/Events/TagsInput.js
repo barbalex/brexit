@@ -1,9 +1,7 @@
 // @flow
-import React, { useState, useCallback, useContext } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { Glyphicon } from 'react-bootstrap'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
-import withHandlers from 'recompose/withHandlers'
+import { observer } from 'mobx-react'
 import styled from 'styled-components'
 
 import allTags from './tags'
@@ -21,28 +19,6 @@ const StyledGlyphicon = styled(Glyphicon)`
   font-size: 1.5em;
 `
 
-const enhance = compose(
-  inject(`store`),
-  withHandlers({
-    onChangeTag: props => (tag, event) => {
-      const checked = event.target.checked
-      // DANGER: computed only recomputes when _id changes!
-      // so do not use store.events.activeEvent
-      const activeEvent = props.store.events.events.find(
-        event => event._id === props.store.events.activeEventId,
-      )
-      if (checked) {
-        activeEvent.tags.push(tag)
-        props.store.events.saveEvent(activeEvent)
-      } else {
-        activeEvent.tags = activeEvent.tags.filter(_tag => _tag !== tag)
-        props.store.events.saveEvent(activeEvent)
-      }
-    },
-  }),
-  observer,
-)
-
 const tagIcon = option => (
   <StyledGlyphicon
     glyph={option.iconText}
@@ -50,12 +26,27 @@ const tagIcon = option => (
   />
 )
 
-const EventTags = ({ onChangeTag }: { onChangeTag: () => void }) => {
+const EventTags = () => {
   const store = useContext(storeContext)
+  const { events } = store
   // DANGER: computed only recomputes when _id changes!
-  // so do not use store.events.activeEvent
-  const activeEvent = store.events.events.find(
-    event => event._id === store.events.activeEventId,
+  // so do not use events.activeEvent
+  const activeEvent = events.events.find(
+    event => event._id === events.activeEventId,
+  )
+
+  const onChangeTag = useCallback(
+    (tag, event) => {
+      const checked = event.target.checked
+      if (checked) {
+        activeEvent.tags.push(tag)
+        events.saveEvent(activeEvent)
+      } else {
+        activeEvent.tags = activeEvent.tags.filter(_tag => _tag !== tag)
+        events.saveEvent(activeEvent)
+      }
+    },
+    [activeEvent],
   )
 
   return (
@@ -83,4 +74,4 @@ const EventTags = ({ onChangeTag }: { onChangeTag: () => void }) => {
 
 EventTags.displayName = 'EventTags'
 
-export default enhance(EventTags)
+export default observer(EventTags)
