@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import { Glyphicon } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
@@ -7,8 +7,11 @@ import withHandlers from 'recompose/withHandlers'
 import styled from 'styled-components'
 
 import allTags from './tags'
+import storeContext from '../../storeContext'
 
-const Container = styled.div`margin-bottom: 20px;`
+const Container = styled.div`
+  margin-bottom: 20px;
+`
 const Label = styled.div`
   font-weight: bold;
   margin-bottom: 2px;
@@ -26,7 +29,7 @@ const enhance = compose(
       // DANGER: computed only recomputes when _id changes!
       // so do not use store.events.activeEvent
       const activeEvent = props.store.events.events.find(
-        event => event._id === props.store.events.activeEventId
+        event => event._id === props.store.events.activeEventId,
       )
       if (checked) {
         activeEvent.tags.push(tag)
@@ -37,33 +40,29 @@ const enhance = compose(
       }
     },
   }),
-  observer
+  observer,
 )
 
-const tagIcon = option =>
+const tagIcon = option => (
   <StyledGlyphicon
     glyph={option.iconText}
     data-top={option.top ? `${option.top}px` : 0}
   />
+)
 
-const EventTags = ({
-  store,
-  onChangeTag,
-}: {
-  store: Object,
-  onChangeTag: () => void,
-}) => {
+const EventTags = ({ onChangeTag }: { onChangeTag: () => void }) => {
+  const store = useContext(storeContext)
   // DANGER: computed only recomputes when _id changes!
   // so do not use store.events.activeEvent
   const activeEvent = store.events.events.find(
-    event => event._id === store.events.activeEventId
+    event => event._id === store.events.activeEventId,
   )
 
   return (
     <Container>
       <Label>Tags</Label>
       <div className="event-tags">
-        {allTags.map((option, index) =>
+        {allTags.map((option, index) => (
           <div key={index} className="form-group event-tag">
             <label>
               <input
@@ -72,10 +71,11 @@ const EventTags = ({
                 onChange={event => onChangeTag(option.tag, event)}
               />
               {option.iconText && tagIcon(option)}
-              &nbsp;{option.tag}
+              &nbsp;
+              {option.tag}
             </label>
           </div>
-        )}
+        ))}
       </div>
     </Container>
   )

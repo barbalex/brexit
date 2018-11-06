@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import { Button } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
@@ -8,6 +8,7 @@ import withHandlers from 'recompose/withHandlers'
 import DocumentTitle from 'react-document-title'
 
 import LoginForm from './LoginForm'
+import storeContext from '../../storeContext'
 
 const enhance = compose(
   inject(`store`),
@@ -17,26 +18,26 @@ const enhance = compose(
       props.store.login.logout()
     },
   }),
-  observer
+  observer,
 )
 
-const Login = ({
-  store,
-  onClickLogout,
-}: {
-  store: Object,
-  onClickLogout: () => void,
-}) =>
-  <DocumentTitle title="brexit | Login">
-    <div>
-      <h1>Login</h1>
-      {!store.login.email && <LoginForm />}
-      {store.login.email &&
-        <Button className="btn-primary" onClick={onClickLogout}>
-          log out
-        </Button>}
-    </div>
-  </DocumentTitle>
+const Login = ({ onClickLogout }: { onClickLogout: () => void }) => {
+  const store = useContext(storeContext)
+
+  return (
+    <DocumentTitle title="brexit | Login">
+      <div>
+        <h1>Login</h1>
+        {!store.login.email && <LoginForm />}
+        {store.login.email && (
+          <Button className="btn-primary" onClick={onClickLogout}>
+            log out
+          </Button>
+        )}
+      </div>
+    </DocumentTitle>
+  )
+}
 
 Login.displayName = 'Login'
 

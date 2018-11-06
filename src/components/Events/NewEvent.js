@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import {
   Modal,
   Button,
@@ -16,6 +16,7 @@ import withHandlers from 'recompose/withHandlers'
 import styled from 'styled-components'
 
 import DateInput from './DateInput'
+import storeContext from '../../storeContext'
 
 const StyledModal = styled(Modal)`
   .col-xs-1,
@@ -112,11 +113,10 @@ const enhance = compose(
       }
     },
   }),
-  observer
+  observer,
 )
 
 const NewEvent = ({
-  store,
   title,
   date,
   error,
@@ -125,7 +125,6 @@ const NewEvent = ({
   close,
   createNewEvent,
 }: {
-  store: Object,
   title: string,
   date: Date,
   error: string,
@@ -133,35 +132,39 @@ const NewEvent = ({
   onChangeDatePicker: () => void,
   close: () => void,
   createNewEvent: () => void,
-}) => (
-  <StyledModal show onHide={close} bsSize="large">
-    <Modal.Header>
-      <Modal.Title>New event</Modal.Title>
-    </Modal.Header>
+}) => {
+  const store = useContext(storeContext)
 
-    <Modal.Body>
-      <FormGroup controlId="newEventTitle">
-        <ControlLabel>Title</ControlLabel>
-        <FormControl
-          type="text"
-          value={title}
-          onChange={onChangeTitle}
-          autoFocus
-          tabIndex={1}
-        />
-      </FormGroup>
-      <DateInput date={date} onChangeDatePicker={onChangeDatePicker} />
-      {error && <StyledAlert bsStyle="danger">{error}</StyledAlert>}
-    </Modal.Body>
+  return (
+    <StyledModal show onHide={close} bsSize="large">
+      <Modal.Header>
+        <Modal.Title>New event</Modal.Title>
+      </Modal.Header>
 
-    <Modal.Footer>
-      <Button onClick={close}>discard input and close</Button>
-      <Button bsStyle="primary" onClick={createNewEvent}>
-        create new event
-      </Button>
-    </Modal.Footer>
-  </StyledModal>
-)
+      <Modal.Body>
+        <FormGroup controlId="newEventTitle">
+          <ControlLabel>Title</ControlLabel>
+          <FormControl
+            type="text"
+            value={title}
+            onChange={onChangeTitle}
+            autoFocus
+            tabIndex={1}
+          />
+        </FormGroup>
+        <DateInput date={date} onChangeDatePicker={onChangeDatePicker} />
+        {error && <StyledAlert bsStyle="danger">{error}</StyledAlert>}
+      </Modal.Body>
+
+      <Modal.Footer>
+        <Button onClick={close}>discard input and close</Button>
+        <Button bsStyle="primary" onClick={createNewEvent}>
+          create new event
+        </Button>
+      </Modal.Footer>
+    </StyledModal>
+  )
+}
 
 NewEvent.displayName = 'NewEvent'
 

@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import { Row, Col, Button } from 'react-bootstrap'
 import { observer, inject } from 'mobx-react'
 import compose from 'recompose/compose'
@@ -8,12 +8,15 @@ import withHandlers from 'recompose/withHandlers'
 import styled from 'styled-components'
 
 import EventLink from './EventLink'
+import storeContext from '../../storeContext'
 
 const Title = styled.div`
   font-weight: bold;
   margin-bottom: 5px;
 `
-const Label = styled.p`margin-bottom: 0;`
+const Label = styled.p`
+  margin-bottom: 0;
+`
 
 const enhance = compose(
   inject(`store`),
@@ -28,27 +31,23 @@ const enhance = compose(
       // DANGER: computed only recomputes when _id changes!
       // so do not use store.events.activeEvent
       const activeEvent = events.events.find(
-        event => event._id === events.activeEventId
+        event => event._id === events.activeEventId,
       )
       activeEvent.links.push(newLink)
       events.saveEvent(activeEvent)
     },
     onCloseMeta: props => () => props.changeShowMeta(false),
   }),
-  observer
+  observer,
 )
 
-const EventLinks = ({
-  store,
-  onNewLink,
-}: {
-  store: Object,
-  onNewLink: () => void,
-}) => {
+const EventLinks = ({ onNewLink }: { onNewLink: () => void }) => {
+  const store = useContext(storeContext)
+
   // DANGER: computed only recomputes when _id changes!
   // so do not use store.events.activeEvent
   const activeEvent = store.events.events.find(
-    event => event._id === store.events.activeEventId
+    event => event._id === store.events.activeEventId,
   )
 
   return (
@@ -56,25 +55,21 @@ const EventLinks = ({
       <Title>Links</Title>
       <Row>
         <Col sm={3} lg={2}>
-          <Label>
-            {activeEvent.links.length > 0 ? 'Label' : null}
-          </Label>
+          <Label>{activeEvent.links.length > 0 ? 'Label' : null}</Label>
         </Col>
         <Col sm={7} lg={8}>
-          <Label>
-            {activeEvent.links.length > 0 ? 'Url' : null}
-          </Label>
+          <Label>{activeEvent.links.length > 0 ? 'Url' : null}</Label>
         </Col>
         <Col sm={1} lg={1} />
       </Row>
-      {activeEvent.links.map((link, index) =>
+      {activeEvent.links.map((link, index) => (
         <EventLink
           link={link}
           focus={index === activeEvent.links.length - 1}
           key={index}
           index={index}
         />
-      )}
+      ))}
       <Button onClick={onNewLink}>new link</Button>
     </div>
   )
