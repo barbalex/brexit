@@ -1,9 +1,7 @@
 // @flow
-import React, { useState, useCallback, useContext } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
-import withHandlers from 'recompose/withHandlers'
+import { observer } from 'mobx-react'
 import styled from 'styled-components'
 
 import storeContext from '../../storeContext'
@@ -15,23 +13,9 @@ const StyledGlyphicon = styled(Glyphicon)`
   cursor: pointer;
 `
 
-const enhance = compose(
-  inject(`store`),
-  withHandlers({
-    onRemoveEvent: props => () =>
-      props.store.events.setEventToRemove(props.event),
-  }),
-  observer,
-)
-
-const RemoveEventGlyph = ({
-  event,
-  onRemoveEvent,
-}: {
-  event: Object,
-  onRemoveEvent: () => void,
-}) => {
+const RemoveEventGlyph = ({ event }: { event: Object }) => {
   const store = useContext(storeContext)
+  const onRemoveEvent = useCallback(() => store.events.setEventToRemove(event))
 
   return (
     <OverlayTrigger
@@ -45,4 +29,4 @@ const RemoveEventGlyph = ({
 
 RemoveEventGlyph.displayName = 'RemoveEventGlyph'
 
-export default enhance(RemoveEventGlyph)
+export default observer(RemoveEventGlyph)
