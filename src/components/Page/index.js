@@ -1,16 +1,14 @@
 // @flow
-import React from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import { Button } from 'react-bootstrap'
 import { Base64 } from 'js-base64'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
-import withHandlers from 'recompose/withHandlers'
-import withState from 'recompose/withState'
+import { observer } from 'mobx-react'
 import styled from 'styled-components'
 import DocumentTitle from 'react-document-title'
 
 import Editor from '../shared/Editor'
 import Meta from './PageMeta'
+import storeContext from '../../storeContext'
 
 const Container = styled.div`
   p,
@@ -36,33 +34,15 @@ const MetaButton = styled(Button)`
   right: 10px;
 `
 
-const enhance = compose(
-  inject(`store`),
-  withState('showMeta', 'changeShowMeta', false),
-  withHandlers({
-    onClickMeta: props => () => props.changeShowMeta(!props.showMeta),
-    onCloseMeta: props => () => props.changeShowMeta(false),
-  }),
-  observer
-)
-
-const Page = ({
-  store,
-  showMeta,
-  onClickMeta,
-  onCloseMeta,
-  changeShowMeta,
-}: {
-  store: Object,
-  showMeta: boolean,
-  onClickMeta: () => void,
-  onCloseMeta: () => void,
-  changeShowMeta: () => void,
-}) => {
+const Page = () => {
+  const store = useContext(storeContext)
   const { activePage } = store.page
   const articleEncoded = activePage.article
   const articleDecoded = Base64.decode(articleEncoded)
   let title = activePage.title ? activePage.title : activePage.category
+  const [showMeta, setShowMeta] = useState(false)
+  const onClickMeta = useCallback(() => setShowMeta(!showMeta), [showMeta])
+  const onCloseMeta = useCallback(() => setShowMeta(false))
 
   if (store.editing && activePage._id !== 'pages_actors') {
     return (
@@ -91,4 +71,4 @@ const Page = ({
 
 Page.displayName = 'Page'
 
-export default enhance(Page)
+export default observer(Page)
