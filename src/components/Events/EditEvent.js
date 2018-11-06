@@ -110,9 +110,11 @@ const EditEvent = () => {
   const activeEvent = store.events.events.find(
     event => event._id === store.events.activeEventId,
   )
+
   const [error, changeError] = useState(null)
+
   const onChangeTitle = useCallback(
-    (e: Object): void => {
+    e => {
       const title = e.target.value
       if (title) {
         activeEvent.title = title
@@ -121,10 +123,10 @@ const EditEvent = () => {
         changeError('Please add a title')
       }
     },
-    [activeEvent.title],
+    [activeEvent],
   )
   const onBlurTitle = useCallback(
-    (e: Object): void => {
+    e => {
       activeEvent.title = e.target.value
       if (activeEvent.title) {
         removeEvent(activeEvent)
@@ -135,7 +137,7 @@ const EditEvent = () => {
     [activeEvent],
   )
   const onChangeDatePicker = useCallback(
-    (date: Date): void => {
+    date => {
       const datePassed = moment(date, 'DD.MM.YYYY')
       if (datePassed) {
         removeEvent(activeEvent)
@@ -148,31 +150,27 @@ const EditEvent = () => {
     [activeEvent],
   )
   const onChangeOrder = useCallback(
-    (e: Object): void => {
+    e => {
       activeEvent.order = e.target.value
       changeError(null)
     },
     [activeEvent.order],
   )
   const onBlurOrder = useCallback(
-    (e: Object): void => {
+    e => {
       activeEvent.order = e.target.value
       saveEvent(activeEvent)
     },
-    [activeEvent.order],
+    [activeEvent],
   )
   const onChangeBold = useCallback(
-    (e: Object): void => {
+    e => {
       activeEvent.bold = !activeEvent.bold
       saveEvent(activeEvent)
     },
-    [activeEvent.bold],
+    [activeEvent],
   )
-  const close = useCallback(
-    (): void => {
-      getEvent(null)
-    },
-  )
+  const close = useCallback(() => getEvent(null))
 
   return (
     <StyledModal show onHide={close} bsSize="large">

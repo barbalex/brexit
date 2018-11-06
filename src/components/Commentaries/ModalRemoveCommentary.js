@@ -12,6 +12,7 @@ const ModalRemoveCommentary = () => {
     removeCommentary,
     setCommentaryToRemove,
   } = store.commentaries
+
   const abort = useCallback(event => setCommentaryToRemove(null))
   const remove = useCallback(
     () => {

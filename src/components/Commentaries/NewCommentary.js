@@ -22,13 +22,16 @@ const NewCommentary = () => {
   const store = useContext(storeContext)
   const { commentaries, error } = store
   const { newCommentary, toggleShowNewCommentary } = commentaries
+
   const [title, setTitle] = useState('')
   const [date, setDate] = useState(moment())
   // eslint-disable-next-line no-unused-vars
   const [errorMessage, setErrorMessage] = useState(null)
+
   const onChangeTitle = useCallback(event => setTitle(event.target.value))
-  const onChangeDate = useCallback((date: Date) =>
-    setDate(moment(date, 'DD.MM.YYYY')),
+  const onChangeDate = useCallback(
+    date => setDate(moment(date, 'DD.MM.YYYY')),
+    [date],
   )
   const createNewCommentary = useCallback(
     () => {

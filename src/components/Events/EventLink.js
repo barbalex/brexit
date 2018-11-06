@@ -37,8 +37,9 @@ const EventLink = ({
   const activeEvent = events.events.find(
     event => event._id === events.activeEventId,
   )
+
   const onChangeUrl = useCallback(
-    (e: Object): void => {
+    e => {
       // not using action because don't know
       // how to find this link in activeEvent.links...
       link.url = e.target.value
@@ -46,7 +47,7 @@ const EventLink = ({
     [link],
   )
   const onBlurUrl = useCallback(
-    (): void => {
+    () => {
       const i = activeEvent.links.findIndex(
         l => l.label === link.label && l.url === link.url,
       )
@@ -56,13 +57,13 @@ const EventLink = ({
     [link, activeEvent],
   )
   const onChangeLabel = useCallback(
-    (e: Object): void => {
+    e => {
       link.label = e.target.value
     },
     [link],
   )
   const onBlurLabel = useCallback(
-    (): void => {
+    () => {
       const i = activeEvent.links.findIndex(
         l => l.url === link.url && l.label === link.label,
       )
@@ -72,7 +73,7 @@ const EventLink = ({
     [link, activeEvent],
   )
   const onRemoveLink = useCallback(
-    (): void => {
+    () => {
       activeEvent.links = activeEvent.links.filter(
         l => l.label !== link.label && l.url !== link.url,
       )

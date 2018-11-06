@@ -61,13 +61,14 @@ const Hr = styled.hr`
 
 const Errors = () => {
   const store = useContext(storeContext)
-  const onClickGlyph = useCallback(() => store.error.showError())
+  const { errors, showError } = store.error
+  const onClickGlyph = useCallback(() => showError())
 
   return (
-    <Overlay show={store.error.errors.length > 0}>
+    <Overlay show={errors.length > 0}>
       <Container id="errors">
         <StyledGlyphicon glyph="remove-circle" onClick={onClickGlyph} />
-        {store.error.errors.map((error, index) => (
+        {errors.map((error, index) => (
           <ErrorContainer key={index} first={index === 0}>
             <Error>
               {error.title && <Title>{error.title}</Title>}
@@ -75,7 +76,7 @@ const Errors = () => {
                 <em>{error.msg}</em>
               </Message>
             </Error>
-            {index + 1 < store.error.errors.length && <Hr />}
+            {index + 1 < errors.length && <Hr />}
           </ErrorContainer>
         ))}
       </Container>

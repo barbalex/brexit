@@ -18,7 +18,7 @@ const EditEventGlyph = ({ event }: { event: Object }) => {
     () => {
       store.events.getEvent(event._id)
     },
-    [event._id],
+    [event],
   )
 
   return (
