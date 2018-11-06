@@ -1,10 +1,7 @@
 // @flow
-import React, { useState, useCallback, useContext } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { Row, Col, Button } from 'react-bootstrap'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
-import withState from 'recompose/withState'
-import withHandlers from 'recompose/withHandlers'
+import { observer } from 'mobx-react'
 import styled from 'styled-components'
 
 import EventLink from './EventLink'
@@ -18,36 +15,24 @@ const Label = styled.p`
   margin-bottom: 0;
 `
 
-const enhance = compose(
-  inject(`store`),
-  withState('showMeta', 'changeShowMeta', false),
-  withHandlers({
-    onNewLink: props => (): void => {
-      const newLink = {
+const EventLinks = () => {
+  const store = useContext(storeContext)
+  const { events } = store
+  // DANGER: computed only recomputes when _id changes!
+  // so do not use events.activeEvent
+  const activeEvent = events.events.find(
+    event => event._id === events.activeEventId,
+  )
+
+  const onNewLink = useCallback(
+    () => {
+      activeEvent.links.push({
         url: '',
         label: '',
-      }
-      const { events } = props.store
-      // DANGER: computed only recomputes when _id changes!
-      // so do not use store.events.activeEvent
-      const activeEvent = events.events.find(
-        event => event._id === events.activeEventId,
-      )
-      activeEvent.links.push(newLink)
+      })
       events.saveEvent(activeEvent)
     },
-    onCloseMeta: props => () => props.changeShowMeta(false),
-  }),
-  observer,
-)
-
-const EventLinks = ({ onNewLink }: { onNewLink: () => void }) => {
-  const store = useContext(storeContext)
-
-  // DANGER: computed only recomputes when _id changes!
-  // so do not use store.events.activeEvent
-  const activeEvent = store.events.events.find(
-    event => event._id === store.events.activeEventId,
+    [activeEvent],
   )
 
   return (
@@ -77,4 +62,4 @@ const EventLinks = ({ onNewLink }: { onNewLink: () => void }) => {
 
 EventLinks.displayName = 'EventLinks'
 
-export default enhance(EventLinks)
+export default observer(EventLinks)
