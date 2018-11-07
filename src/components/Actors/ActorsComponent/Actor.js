@@ -5,9 +5,9 @@ import { Base64 } from 'js-base64'
 import { observer } from 'mobx-react'
 import styled from 'styled-components'
 
-import Editor from '../shared/Editor'
-import Meta from '../Page/PageMeta'
-import storeContext from '../../storeContext'
+import Editor from '../../shared/Editor'
+import Meta from '../../Page/PageMeta'
+import storeContext from '../../../storeContext'
 
 //import { setConfig } from 'react-hot-loader'
 //setConfig({ pureSFC: true })

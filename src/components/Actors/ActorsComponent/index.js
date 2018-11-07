@@ -9,7 +9,7 @@ import compose from 'recompose/compose'
 
 import Actor from './Actor'
 import ToggleDraftGlyph from './ToggleDraftGlyph'
-import storeContext from '../../storeContext'
+import storeContext from '../../../storeContext'
 
 const RemoveGlyphicon = styled(Glyphicon)`
   position: absolute !important;
