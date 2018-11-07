@@ -45,14 +45,11 @@ const Actors = () => {
   const store = useContext(storeContext)
   const { activeActor, actorToRemove, showNewActor } = store.actors
 
-  //console.log('Actor', { actors: store.actors.actors })
-
   const activeActorPanel = useRef(null)
 
   useEffect(() => {
     if (activeActor) {
       window.setTimeout(() => {
-        // $FlowIssue
         const node = activeActorPanel.current
         if (node) {
           const navWrapperOffsetTop = document.getElementById('nav-wrapper')
