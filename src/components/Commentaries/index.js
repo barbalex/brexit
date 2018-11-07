@@ -1,5 +1,5 @@
 // @flow
-import React, { useEffect, useContext, useRef } from 'react'
+import React, { useEffect, useContext, useRef, useCallback } from 'react'
 import { PanelGroup } from 'react-bootstrap'
 import has from 'lodash/has'
 import { observer } from 'mobx-react'
@@ -78,23 +78,25 @@ const Commentaries = ({
 
   const activeCommentaryPanel = useRef(null)
 
-  // TODO: useCallback
-  const scrollToActivePanel = () => {
-    const node = activeCommentaryPanel.current || null
-    if (node) {
-      const navWrapperOffsetTop = document.getElementById('nav-wrapper')
-        .offsetTop
-      const reduce = navWrapperOffsetTop > 0 ? navWrapperOffsetTop - 33 : 55
-      if (node.offsetTop) {
-        window.$('html, body').animate(
-          {
-            scrollTop: node.offsetTop - reduce,
-          },
-          500,
-        )
+  const scrollToActivePanel = useCallback(
+    () => {
+      const node = activeCommentaryPanel.current || null
+      if (node) {
+        const navWrapperOffsetTop = document.getElementById('nav-wrapper')
+          .offsetTop
+        const reduce = navWrapperOffsetTop > 0 ? navWrapperOffsetTop - 33 : 55
+        if (node.offsetTop) {
+          window.$('html, body').animate(
+            {
+              scrollTop: node.offsetTop - reduce,
+            },
+            500,
+          )
+        }
       }
-    }
-  }
+    },
+    [activeCommentaryPanel.current],
+  )
 
   useEffect(() => getCommentaries(), [commentaries.length])
   useEffect(() => {

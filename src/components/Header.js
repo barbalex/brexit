@@ -1,5 +1,5 @@
 // @flow
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState, useCallback } from 'react'
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
 
@@ -60,16 +60,18 @@ const Header = ({ containerWidth }: { containerWidth: number }) => {
 
   const [flagHeight, setFlagHeight] = useState(150)
 
-  // TODO: useCallback
-  const changeFlagHeight = () => {
-    const measuredContainerWidth = container.current
-      ? container.current.clientWidth
-      : null
-    if (measuredContainerWidth && measuredContainerWidth !== containerWidth) {
-      // -2.5 corrects for padding between flags
-      setFlagHeight(measuredContainerWidth / 4 - 2.5)
-    }
-  }
+  const changeFlagHeight = useCallback(
+    () => {
+      const measuredContainerWidth = container.current
+        ? container.current.clientWidth
+        : null
+      if (measuredContainerWidth && measuredContainerWidth !== containerWidth) {
+        // -2.5 corrects for padding between flags
+        setFlagHeight(measuredContainerWidth / 4 - 2.5)
+      }
+    },
+    [container.current],
+  )
 
   useEffect(() => {
     changeFlagHeight()
