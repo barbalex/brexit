@@ -78,7 +78,7 @@ const Header = ({ containerWidth }: { containerWidth: number }) => {
     window.addEventListener('resize', debounce(changeFlagHeight, 50))
     return () =>
       window.removeEventListener('resize', debounce(changeFlagHeight, 50))
-  })
+  }, [])
 
   const titleSize = flagHeight / 5
   const titleMarginTop = -(flagHeight / 2 + 25)
