@@ -142,8 +142,7 @@ const Editor = ({
     },
     [doc, docType],
   )
-
-  console.log('editor rendering')
+  //console.log('editor rendering')
 
   return (
     <textarea id={doc._id.replace('?', '')} defaultValue={articleDecoded} />
