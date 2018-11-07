@@ -3,7 +3,7 @@ import React, { useContext, useCallback } from 'react'
 import styled from 'styled-components'
 import { withRouter } from 'react-router'
 
-import storeContext from '../../storeContext'
+import storeContext from '../../../storeContext'
 import RemoveCommentaryGlyph from './RemoveCommentaryGlyph'
 import ToggleDraftGlyph from './ToggleDraftGlyph'
 import Commentary from './Commentary'

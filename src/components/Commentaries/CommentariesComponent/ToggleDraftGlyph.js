@@ -3,7 +3,7 @@ import React, { useContext, useCallback } from 'react'
 import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import styled from 'styled-components'
 
-import storeContext from '../../storeContext'
+import storeContext from '../../../storeContext'
 
 const ToggleDraftGlyphicon = styled(Glyphicon)`
   position: absolute !important;
