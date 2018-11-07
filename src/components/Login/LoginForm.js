@@ -11,7 +11,6 @@ import {
 } from 'react-bootstrap'
 import isObject from 'lodash/isObject'
 import { observer } from 'mobx-react'
-import compose from 'recompose/compose'
 import styled from 'styled-components'
 import { withRouter } from 'react-router'
 
@@ -26,11 +25,6 @@ const ValidateDivAfterRBC = styled.div`
   margin-top: -15px;
   margin-bottom: 5px;
 `
-
-const enhance = compose(
-  withRouter,
-  observer,
-)
 
 const LoginForm = ({ history }: { history: Object }) => {
   const store = useContext(storeContext)
@@ -167,4 +161,4 @@ const LoginForm = ({ history }: { history: Object }) => {
 
 LoginForm.displayName = 'LoginForm'
 
-export default enhance(LoginForm)
+export default withRouter(observer(LoginForm))

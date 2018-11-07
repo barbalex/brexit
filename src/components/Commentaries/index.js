@@ -3,7 +3,6 @@ import React, { useEffect, useContext, useRef, useCallback } from 'react'
 import { PanelGroup } from 'react-bootstrap'
 import has from 'lodash/has'
 import { observer } from 'mobx-react'
-import compose from 'recompose/compose'
 import styled from 'styled-components'
 import DocumentTitle from 'react-document-title'
 import { withRouter } from 'react-router'
@@ -48,11 +47,6 @@ const Container = styled.div`
 const Copyright = styled.p`
   margin-top: 70px;
 `
-
-const enhance = compose(
-  withRouter,
-  observer,
-)
 
 const Commentaries = ({
   match,
@@ -132,4 +126,4 @@ const Commentaries = ({
   )
 }
 
-export default enhance(Commentaries)
+export default withRouter(observer(Commentaries))

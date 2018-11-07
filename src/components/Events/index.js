@@ -4,7 +4,6 @@ import { ButtonGroup, Button } from 'react-bootstrap'
 import moment from 'moment'
 import min from 'lodash/min'
 import { observer } from 'mobx-react'
-import compose from 'recompose/compose'
 import styled from 'styled-components'
 import DocumentTitle from 'react-document-title'
 import { withRouter } from 'react-router'
@@ -53,11 +52,6 @@ const Container = styled.div`
 const YearButtonsContainer = styled.div`
   text-align: center;
 `
-
-const enhance = compose(
-  withRouter,
-  observer,
-)
 
 const Events = () => {
   const store = useContext(storeContext)
@@ -108,4 +102,4 @@ const Events = () => {
     </DocumentTitle>
   )
 }
-export default enhance(Events)
+export default withRouter(observer(Events))

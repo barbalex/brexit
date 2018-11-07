@@ -5,7 +5,6 @@ import sortBy from 'lodash/sortBy'
 import styled from 'styled-components'
 import { withRouter } from 'react-router'
 import { observer } from 'mobx-react'
-import compose from 'recompose/compose'
 
 import Actor from './Actor'
 import ToggleDraftGlyph from './ToggleDraftGlyph'
@@ -30,11 +29,6 @@ const PanelBody = styled.div`
   max-height: ${window.innerHeight - 141}px;
   overflow-y: auto;
 `
-
-const enhance = compose(
-  withRouter,
-  observer,
-)
 
 const ActorsComponent = ({
   history,
@@ -146,4 +140,4 @@ const ActorsComponent = ({
     )
   })
 }
-export default enhance(ActorsComponent)
+export default withRouter(observer(ActorsComponent))

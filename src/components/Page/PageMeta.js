@@ -2,12 +2,9 @@
 import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import { observer } from 'mobx-react'
-import compose from 'recompose/compose'
 
 import AttachedImagesList from '../shared/AttachedImagesList'
 import AttachImages from '../shared/AttachImages'
-
-const enhance = compose(observer)
 
 const PageMeta = ({
   doc,
@@ -15,7 +12,7 @@ const PageMeta = ({
 }: {
   doc: Object,
   onCloseMeta: () => void,
-}) =>
+}) => (
   <Modal show bsSize="large">
     <Modal.Header>
       <Modal.Title>
@@ -34,7 +31,8 @@ const PageMeta = ({
       </Button>
     </Modal.Footer>
   </Modal>
+)
 
 PageMeta.displayName = 'PageMeta'
 
-export default enhance(PageMeta)
+export default observer(PageMeta)

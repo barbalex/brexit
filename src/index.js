@@ -1,7 +1,6 @@
 // @flow
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'mobx-react'
 import app from 'ampersand-app'
 import PouchDB from 'pouchdb'
 import pouchdbUpsert from 'pouchdb-upsert'
@@ -69,9 +68,7 @@ app.init()
 
 ReactDOM.render(
   <StoreContextProvider value={store}>
-    <Provider store={store}>
-      <Main />
-    </Provider>
+    <Main />
   </StoreContextProvider>,
   document.getElementById('root'),
 )

@@ -2,7 +2,6 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import { PanelGroup } from 'react-bootstrap'
 import { observer } from 'mobx-react'
-import compose from 'recompose/compose'
 import styled from 'styled-components'
 import DocumentTitle from 'react-document-title'
 import { withRouter } from 'react-router'
@@ -35,11 +34,6 @@ const Container = styled.div`
     font-weight: bold;
   }
 `
-
-const enhance = compose(
-  withRouter,
-  observer,
-)
 
 const Actors = () => {
   const store = useContext(storeContext)
@@ -86,4 +80,4 @@ const Actors = () => {
   )
 }
 
-export default enhance(Actors)
+export default withRouter(observer(Actors))

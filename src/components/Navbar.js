@@ -10,7 +10,6 @@ import {
 } from 'react-bootstrap'
 import has from 'lodash/has'
 import { observer } from 'mobx-react'
-import compose from 'recompose/compose'
 import styled from 'styled-components'
 import { withRouter } from 'react-router'
 
@@ -42,11 +41,6 @@ const isNavMobile = () => {
   const documentWidth = document.getElementById('root').clientWidth
   return documentWidth <= 750
 }
-
-const enhance = compose(
-  withRouter,
-  observer,
-)
 
 const MyNavbar = ({
   match,
@@ -242,4 +236,4 @@ const MyNavbar = ({
 
 MyNavbar.displayName = 'Navbar'
 
-export default enhance(MyNavbar)
+export default withRouter(observer(MyNavbar))
