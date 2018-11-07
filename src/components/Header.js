@@ -60,6 +60,7 @@ const Header = ({ containerWidth }: { containerWidth: number }) => {
 
   const [flagHeight, setFlagHeight] = useState(150)
 
+  // TODO: useCallback
   const changeFlagHeight = () => {
     const measuredContainerWidth = container.current
       ? container.current.clientWidth
