@@ -1,15 +1,10 @@
 // @flow
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+import React, { useRef, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import compose from 'recompose/compose'
-import withState from 'recompose/withState'
 import debounce from 'lodash/debounce'
 
 import euImage from '../images/eu.svg'
 import gbImage from '../images/gb.svg'
-
-const enhance = compose(withState('flagHeight', 'changeFlagHeight', 150))
 
 const Container = styled.div`
   margin-top: 23px;
@@ -60,69 +55,48 @@ const Title = styled.div`
   hyphens: manual;
 `
 
-class Header extends Component {
-  constructor(props) {
-    super(props)
-    this.container = React.createRef()
-  }
+const Header = ({ containerWidth }: { containerWidth: number }) => {
+  const container = useRef(null)
 
-  displayName: 'Header'
+  const [flagHeight, setFlagHeight] = useState(150)
 
-  props: {
-    flagHeight: number,
-    changeFlagHeight: () => void,
-    containerWidth: number,
-  }
-
-  componentDidMount() {
-    this.setFlagHeight()
-    window.addEventListener('resize', debounce(this.setFlagHeight, 50))
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', debounce(this.setFlagHeight, 50))
-  }
-
-  setFlagHeight = () => {
-    const { containerWidth: containerWidthOld, changeFlagHeight } = this.props
-    const containerDomNode = this.container.current
-      ? // $FlowIssue
-        ReactDOM.findDOMNode(this.container.current)
+  const changeFlagHeight = () => {
+    const measuredContainerWidth = container.current
+      ? container.current.clientWidth
       : null
-    const containerWidth = containerDomNode
-      ? containerDomNode.clientWidth
-      : null
-    if (containerWidth && containerWidth !== containerWidthOld) {
-      changeFlagHeight(containerWidth / 4)
+    if (measuredContainerWidth && measuredContainerWidth !== containerWidth) {
+      // -2.5 corrects for padding between flags
+      setFlagHeight(measuredContainerWidth / 4 - 2.5)
     }
   }
 
-  render() {
-    const { flagHeight } = this.props
-    const titleSize = flagHeight / 5
-    const titleMarginTop = -(flagHeight / 2 + 25)
+  useEffect(() => {
+    changeFlagHeight()
+    window.addEventListener('resize', debounce(changeFlagHeight, 50))
+    return () =>
+      window.removeEventListener('resize', debounce(changeFlagHeight, 50))
+  })
 
-    return (
-      <Container data-height={flagHeight} ref={this.container}>
-        <FlagRow>
-          <FlagContainerLeft className="flag">
-            <img src={gbImage} alt="gb" />
-          </FlagContainerLeft>
-          <FlagContainerRight>
-            <img src={euImage} alt="eu" />
-          </FlagContainerRight>
-        </FlagRow>
-        <TitleContainer>
-          <Title
-            data-titlesize={titleSize}
-            data-titlemargintop={titleMarginTop}
-          >
-            brexit chronology
-          </Title>
-        </TitleContainer>
-      </Container>
-    )
-  }
+  const titleSize = flagHeight / 5
+  const titleMarginTop = -(flagHeight / 2 + 25)
+
+  return (
+    <Container data-height={flagHeight} ref={container}>
+      <FlagRow>
+        <FlagContainerLeft className="flag">
+          <img src={gbImage} alt="gb" />
+        </FlagContainerLeft>
+        <FlagContainerRight>
+          <img src={euImage} alt="eu" />
+        </FlagContainerRight>
+      </FlagRow>
+      <TitleContainer>
+        <Title data-titlesize={titleSize} data-titlemargintop={titleMarginTop}>
+          brexit chronology
+        </Title>
+      </TitleContainer>
+    </Container>
+  )
 }
 
-export default enhance(Header)
+export default Header
