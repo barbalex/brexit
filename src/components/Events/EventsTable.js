@@ -1,14 +1,18 @@
 // @flow
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  useCallback,
+  useContext,
+} from 'react'
 import GeminiScrollbar from 'react-gemini-scrollbar'
-import { observer, inject } from 'mobx-react'
-import compose from 'recompose/compose'
-import withState from 'recompose/withState'
+import { observer } from 'mobx-react'
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
 
 import DateRows from './DateRows'
+import storeContext from '../../storeContext'
 
 const Container = styled.div`
   width: 100%;
@@ -67,96 +71,51 @@ const HeaderRow = styled.div`
   display: flex;
 `
 
-const enhance = compose(
-  inject(`store`),
-  withState('headerFixed', 'changeHeaderFixed', false),
-  withState('width', 'changeWidth', 0),
-  observer,
-)
-
-class EventsTable extends Component {
-  constructor(props) {
-    super(props)
-    this.container = React.createRef()
-    this.handleScroll = this.handleScroll.bind(this)
-  }
-
-  displayName: 'EventsTable'
-
-  props: {
-    store: Object,
-    headerFixed: boolean,
-    changeHeaderFixed: () => void,
-    width: number,
-    changeWidth: () => void,
-  }
-
-  componentDidMount = () => {
-    window.addEventListener('scroll', debounce(this.handleScroll, 150))
-    this.setWidth()
-    window.addEventListener('resize', debounce(this.setWidth, 50))
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
-    window.removeEventListener('resize', debounce(this.setWidth, 50))
-  }
-
-  setWidth = () => {
-    const { width: widthOld, changeWidth } = this.props
-    const containerNode = this.container.current
-      ? // $FlowIssue
-        ReactDOM.findDOMNode(this.container.current)
-      : null
-    const width = containerNode ? containerNode.clientWidth : null
-    if (width && width !== widthOld) {
-      changeWidth(width)
+const EventsTable = () => {
+  const store = useContext(storeContext)
+  const [width, setWidth] = useState(0)
+  const container = useRef(null)
+  const changeWidth = useCallback(
+    () => {
+      const newWidth = container.current ? container.current.clientWidth : null
+      if (newWidth && newWidth !== width) {
+        setWidth(newWidth)
+      }
+    },
+    [width],
+  )
+  useEffect(() => {
+    changeWidth()
+    window.addEventListener('resize', debounce(changeWidth, 50))
+    return () => {
+      window.removeEventListener('resize', debounce(changeWidth, 50))
     }
-  }
+  })
 
-  handleScroll = () => {
-    const { changeHeaderFixed } = this.props
-    // console.log('window.scrollY:', window.scrollY)
-    if (window.scrollY > 460) {
-      // console.log('should lock')
-      changeHeaderFixed(true)
-    } else if (window.scrollY < 460) {
-      // console.log('not locked')
-      changeHeaderFixed(false)
-    }
-  }
+  const bodyMarginTop =
+    store.yearsOfEvents.yearsOfEvents.length > 1 ? '77px' : '58px'
+  const bothPadding = width / 5
+  // -55 corrects for the fact that "GB & EU" uses 110px in the middle
+  // which is not the case in the rows
+  const gbEuPadding = width / 12 - 55
 
-  render() {
-    const { store, width } = this.props
-    const bodyMarginTop =
-      store.yearsOfEvents.yearsOfEvents.length > 1 ? '77px' : '58px'
-    const bothPadding = width / 5
-    // -55 corrects for the fact that "GB & EU" uses 110px in the middle
-    // which is not the case in the rows
-    const gbEuPadding = width / 12 - 55
-
-    return (
-      <Container ref={this.container}>
-        <Header className="eventsTable-header">
-          <HeaderRow>
-            <HeaderCellDay />
-            <HeaderCellGb data-padding={gbEuPadding}>
-              Great Britain
-            </HeaderCellGb>
-            <HeaderCellBoth data-padding={bothPadding}>GB & EU</HeaderCellBoth>
-            <HeaderCellEu data-padding={gbEuPadding}>
-              European Union
-            </HeaderCellEu>
-          </HeaderRow>
-        </Header>
-        <Body data-margintop={bodyMarginTop}>
-          <GeminiScrollbar id="eventsTableBody" autoshow>
-            <DateRows width={width} />
-          </GeminiScrollbar>
-        </Body>
-      </Container>
-    )
-  }
+  return (
+    <Container ref={container}>
+      <Header className="eventsTable-header">
+        <HeaderRow>
+          <HeaderCellDay />
+          <HeaderCellGb data-padding={gbEuPadding}>Great Britain</HeaderCellGb>
+          <HeaderCellBoth data-padding={bothPadding}>GB & EU</HeaderCellBoth>
+          <HeaderCellEu data-padding={gbEuPadding}>European Union</HeaderCellEu>
+        </HeaderRow>
+      </Header>
+      <Body data-margintop={bodyMarginTop}>
+        <GeminiScrollbar id="eventsTableBody" autoshow>
+          <DateRows width={width} />
+        </GeminiScrollbar>
+      </Body>
+    </Container>
+  )
 }
 
-export default enhance(EventsTable)
+export default observer(EventsTable)
