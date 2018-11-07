@@ -3,7 +3,9 @@ import React, { useContext, useCallback, useEffect } from 'react'
 import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import sortBy from 'lodash/sortBy'
 import styled from 'styled-components'
-import { toJS } from 'mobx'
+import { withRouter } from 'react-router'
+import { observer } from 'mobx-react'
+import compose from 'recompose/compose'
 
 import Actor from './Actor'
 import ToggleDraftGlyph from './ToggleDraftGlyph'
@@ -29,7 +31,12 @@ const PanelBody = styled.div`
   overflow-y: auto;
 `
 
-export default ({
+const enhance = compose(
+  withRouter,
+  observer,
+)
+
+const ActorsComponent = ({
   history,
   activeActorPanel,
 }: {
@@ -37,25 +44,22 @@ export default ({
   activeActorPanel: Object,
 }) => {
   const store = useContext(storeContext)
-  let { actors, activeActor, getActors } = store.actors
-  console.log('ActorsComponent rendering', { actors: store.actors.actors })
+  let {
+    actors,
+    activeActor,
+    getActors,
+    getActor,
+    setActorToRemove,
+  } = store.actors
 
-  useEffect(
-    () => {
-      // TODO: only on did mount?
-      console.log('ActorsComponent, useEffect, will get actors')
-      getActors()
-    },
-    [store.actors.actors],
-  )
+  useEffect(() => getActors(), [actors.length])
 
   const onClickActor = useCallback(
     (id, e) => {
-      const { activeActor } = store.actors
       // prevent higher level panels from reacting
       e.stopPropagation()
       const idToGet = !activeActor || activeActor._id !== id ? id : null
-      store.actors.getActor(idToGet, history)
+      getActor(idToGet, history)
     },
     [activeActor, history],
   )
@@ -66,12 +70,7 @@ export default ({
   const onRemoveActor = useCallback((docToRemove, event) => {
     event.preventDefault()
     event.stopPropagation()
-    actors.setActorToRemove(docToRemove)
-  })
-
-  console.log('ActorsComponent', {
-    actors,
-    actorsToJS: toJS(actors),
+    setActorToRemove(docToRemove)
   })
 
   if (actors.length === 0) return null
@@ -146,3 +145,4 @@ export default ({
     )
   })
 }
+export default enhance(ActorsComponent)
