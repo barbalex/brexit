@@ -13,7 +13,7 @@
     "js-base64": "^2.4.8",
     "local-links": "1.4.1",
     "lodash": "4.17.11",
-    "mobx": "5.5.2",
+    "mobx": "5.6.0",
     "mobx-react": "file:.yalc/mobx-react",
     "moment": "2.22.2",
     "pouchdb": "7.0.0",
