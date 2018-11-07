@@ -40,7 +40,6 @@ export default (store: Object): void => ({
           msg: error,
         })
       }
-      console.log('store, actors, getActors', { actors })
     },
   ),
 
