@@ -79,6 +79,7 @@ const ActorsComponent = ({
     if (actor.order) return actor.order
     return 100
   })
+
   return actors.map((doc, index) => {
     const isActiveActor = activeActor ? doc._id === activeActor._id : false
     const showEditingGlyphons = !!store.login.email
