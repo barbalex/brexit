@@ -7,7 +7,7 @@ import sortEvents from './sortEvents'
 
 export default async (
   store: Object,
-  years: Array<number>
+  years: Array<number>,
 ): Promise<Array<Object>> => {
   const options = {
     include_docs: true,
@@ -18,6 +18,7 @@ export default async (
     const result = await app.db.allDocs(options)
     let events = map(result.rows, 'doc')
     events = sortEvents(events)
+    console.log('getEvents', { options, result, events })
     return events
   } catch (error) {
     store.error.showError('Error fetching events:', error)
