@@ -66,12 +66,12 @@ const Events = () => {
   useEffect(() => {
     getEvents([parseInt(moment().format('YYYY'), 0)])
     getYearsOfEvents()
-  }, [])
+  })
 
   const setActiveYear = useCallback(year => {
     getEvents([year])
     setActiveEventYears([year])
-  })
+  }, [getEvents, setActiveEventYears])
 
   const showEventsTable = min(activeEventYears) > 2014
 

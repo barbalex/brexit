@@ -46,7 +46,9 @@ const ActorsComponent = ({
     setActorToRemove,
   } = store.actors
 
-  useEffect(() => getActors(), [actors.length])
+  useEffect(() => {
+    getActors()
+  }, [actors.length, getActors])
 
   const onClickActor = useCallback(
     (id, e) => {
@@ -55,7 +57,7 @@ const ActorsComponent = ({
       const idToGet = !activeActor || activeActor._id !== id ? id : null
       getActor(idToGet, history)
     },
-    [activeActor, history],
+    [activeActor, getActor, history],
   )
   const onClickActorCollapse = useCallback(event => {
     // prevent higher level panels from reacting

@@ -72,27 +72,26 @@ const Commentaries = ({
 
   const activeCommentaryPanel = useRef(null)
 
-  const scrollToActivePanel = useCallback(
-    () => {
-      const node = activeCommentaryPanel.current || null
-      if (node) {
-        const navWrapperOffsetTop = document.getElementById('nav-wrapper')
-          .offsetTop
-        const reduce = navWrapperOffsetTop > 0 ? navWrapperOffsetTop - 33 : 55
-        if (node.offsetTop) {
-          window.$('html, body').animate(
-            {
-              scrollTop: node.offsetTop - reduce,
-            },
-            500,
-          )
-        }
+  const scrollToActivePanel = useCallback(() => {
+    const node = activeCommentaryPanel.current || null
+    if (node) {
+      const navWrapperOffsetTop = document.getElementById('nav-wrapper')
+        .offsetTop
+      const reduce = navWrapperOffsetTop > 0 ? navWrapperOffsetTop - 33 : 55
+      if (node.offsetTop) {
+        window.$('html, body').animate(
+          {
+            scrollTop: node.offsetTop - reduce,
+          },
+          500,
+        )
       }
-    },
-    [activeCommentaryPanel.current],
-  )
+    }
+  }, [])
 
-  useEffect(() => getCommentaries(), [commentaries.length])
+  useEffect(() => {
+    getCommentaries()
+  }, [commentaries.length, getCommentaries])
   useEffect(() => {
     if (activeCommentary) {
       window.setTimeout(() => scrollToActivePanel(), 200)
