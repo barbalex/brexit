@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from 'react'
 import { Modal, Button } from 'react-bootstrap'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 
 import storeContext from '../../storeContext'
 

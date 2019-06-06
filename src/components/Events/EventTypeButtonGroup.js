@@ -1,7 +1,7 @@
 // @flow
 import React, { useEffect, useCallback, useContext } from 'react'
 import { ButtonGroup, Button } from 'react-bootstrap'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
 import storeContext from '../../storeContext'

@@ -2,7 +2,7 @@
 import React, { useState, useCallback, useContext } from 'react'
 import { Button } from 'react-bootstrap'
 import { Base64 } from 'js-base64'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import DocumentTitle from 'react-document-title'
 

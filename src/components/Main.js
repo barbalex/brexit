@@ -6,7 +6,7 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 
 import Navbar from '../components/Navbar'
 import Header from '../components/Header'

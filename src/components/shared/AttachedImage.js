@@ -8,7 +8,7 @@ import {
   InputGroup,
 } from 'react-bootstrap'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
 import getCouchUrl from '../../modules/getCouchUrl'

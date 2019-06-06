@@ -2,7 +2,7 @@
 import React, { useState, useCallback, useContext } from 'react'
 import { Button } from 'react-bootstrap'
 import { Base64 } from 'js-base64'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
 import Editor from '../../shared/Editor'
@@ -25,7 +25,7 @@ const Actor = () => {
   const articleDecoded = Base64.decode(articleEncoded)
   const [showMeta, setShowMeta] = useState(false)
   const onClickMeta = useCallback(() => setShowMeta(!showMeta), [showMeta])
-  const onCloseMeta = useCallback(() => setShowMeta(false))
+  const onCloseMeta = useCallback(() => setShowMeta(false), [])
 
   if (store.editing) {
     return (

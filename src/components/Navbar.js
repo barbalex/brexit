@@ -9,7 +9,7 @@ import {
   OverlayTrigger,
 } from 'react-bootstrap'
 import has from 'lodash/has'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import { withRouter } from 'react-router'
 

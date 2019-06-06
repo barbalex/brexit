@@ -2,7 +2,7 @@
 import React, { useContext } from 'react'
 import moment from 'moment'
 import ReactList from 'react-list'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
 import DateRow from './DateRow'

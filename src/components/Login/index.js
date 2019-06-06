@@ -2,7 +2,7 @@
 
 import React, { useCallback, useContext } from 'react'
 import { Button } from 'react-bootstrap'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 import DocumentTitle from 'react-document-title'
 
 import LoginForm from './LoginForm'

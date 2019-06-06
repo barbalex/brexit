@@ -7,7 +7,7 @@ import React, {
   useContext,
 } from 'react'
 import GeminiScrollbar from 'react-gemini-scrollbar'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
 

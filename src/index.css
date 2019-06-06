@@ -26,7 +26,7 @@ a:link {
 
 .btn-default:active,
 .btn-default.active,
-.open > .dropdown-toggle.btn-default {
+.open>.dropdown-toggle.btn-default {
   background-color: rgba(0, 109, 255, 0.05) !important;
 }
 
@@ -52,6 +52,7 @@ a:link {
   top: -3px;
   left: -26px;
 }
+
 .events p.event-statistics:before {
   font-family: 'Glyphicons Halflings';
   content: '\e185';
@@ -60,6 +61,7 @@ a:link {
   top: -7px;
   left: -26px;
 }
+
 .events p.event-highlighted:before {
   font-family: 'Glyphicons Halflings';
   content: '\e006';
@@ -74,30 +76,11 @@ h4.modal-title {
   font-size: 1.3em;
 }
 
-/*--------------------------------*\
-       #tinymce code editor
-\*--------------------------------*/
-
-.mce-container.mce-panel.mce-floatpanel.mce-window.mce-in {
-  left: 2vw !important;
-  top: 2vh !important;
-  height: 95vh !important;
-}
-
-.mce-container.mce-panel.mce-floatpanel.mce-window.mce-in .mce-container-body {
-  height: calc(95vh - 89px) !important;
-}
-
-.mce-container.mce-panel.mce-floatpanel.mce-window.mce-in,
-.mce-container.mce-panel.mce-floatpanel.mce-window.mce-in .mce-container-body,
-.mce-container.mce-panel.mce-floatpanel.mce-window.mce-in .mce-foot {
-  width: 96vw !important;
-}
-
 @media (min-width 786px) {
   .col400 {
     column-count: 2;
   }
+
   .modal-lg.modal-dialog {
     width: 700px;
   }
@@ -107,9 +90,11 @@ h4.modal-title {
   .col400 {
     column-count: 3;
   }
+
   .col500 {
     column-count: 2;
   }
+
   .modal-lg.modal-dialog {
     width: 950px;
   }

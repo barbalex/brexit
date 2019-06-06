@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 
 import AttachedImagesList from '../shared/AttachedImagesList'
 import AttachImages from '../shared/AttachImages'

@@ -2,7 +2,7 @@
 import React, { useEffect, useContext, useRef, useCallback } from 'react'
 import { PanelGroup } from 'react-bootstrap'
 import has from 'lodash/has'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import DocumentTitle from 'react-document-title'
 import { withRouter } from 'react-router'

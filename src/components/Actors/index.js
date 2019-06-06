@@ -1,7 +1,7 @@
 // @flow
 import React, { useContext, useEffect, useRef } from 'react'
 import { PanelGroup } from 'react-bootstrap'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import DocumentTitle from 'react-document-title'
 import { withRouter } from 'react-router'

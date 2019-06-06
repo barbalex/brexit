@@ -1,7 +1,7 @@
 // @flow
 import React, { useCallback, useContext } from 'react'
 import Dropzone from 'react-dropzone'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
 import storeContext from '../../storeContext'

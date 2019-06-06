@@ -1,7 +1,7 @@
 // @flow
 import React, { useContext } from 'react'
 import { Glyphicon } from 'react-bootstrap'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 import { toJS } from 'mobx'
 import styled from 'styled-components'
 

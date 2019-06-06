@@ -1,39 +1,12 @@
 // @flow
 import React, { useContext, useCallback, useEffect } from 'react'
 import { Base64 } from 'js-base64'
-import tinymce from 'tinymce'
-import 'tinymce/themes/modern'
-import 'tinymce/plugins/advlist'
-import 'tinymce/plugins/autolink'
-import 'tinymce/plugins/link'
-import 'tinymce/plugins/image'
-import 'tinymce/plugins/lists'
-import 'tinymce/plugins/charmap'
-import 'tinymce/plugins/print'
-import 'tinymce/plugins/hr'
-import 'tinymce/plugins/anchor'
-import 'tinymce/plugins/pagebreak'
-import 'tinymce/plugins/searchreplace'
-import 'tinymce/plugins/wordcount'
-import 'tinymce/plugins/visualblocks'
-import 'tinymce/plugins/visualchars'
-import 'tinymce/plugins/code'
-import 'tinymce/plugins/fullscreen'
-import 'tinymce/plugins/media'
-import 'tinymce/plugins/nonbreaking'
-import 'tinymce/plugins/save'
-import 'tinymce/plugins/table'
-import 'tinymce/plugins/contextmenu'
-import 'tinymce/plugins/directionality'
-import 'tinymce/plugins/template'
-import 'tinymce/plugins/paste'
-import 'tinymce/plugins/textcolor'
-import 'tinymce/plugins/autosave'
-import { observer } from 'mobx-react'
+import { Editor } from '@tinymce/tinymce-react'
+import { observer } from 'mobx-react-lite'
 
 import storeContext from '../../storeContext'
 
-const Editor = ({
+const MyEditor = ({
   doc,
   docType,
   articleDecoded,
@@ -52,56 +25,68 @@ const Editor = ({
       activePage.article = articleEncoded
       savePage(activePage)
     },
-    [activePage],
+    [activePage, savePage],
   )
   const onSaveCommentaryArticle = useCallback(
     articleEncoded => {
       activeCommentary.article = articleEncoded
       saveCommentary(activeCommentary)
     },
-    [activeCommentary],
+    [activeCommentary, saveCommentary],
   )
   const onSaveActorArticle = useCallback(
     articleEncoded => {
       activeActor.article = articleEncoded
       saveActor(activeActor)
     },
-    [activeActor],
+    [activeActor, saveActor],
   )
 
   // only on mount
-  useEffect(
-    () => {
-      // height = window - menu height - (menubar + iconbar)
-      let height = window.innerHeight - 52 - 74
-      if (['commentary', 'actor'].includes(docType)) {
-        height = window.innerHeight - 52 - 74 - 90
-      }
-      // need to add specific classes to the iframe body because my css will not apply otherwise
-      let bodyClass = ''
-      let saveFunction = () => {}
-      switch (docType) {
-        case 'page':
-          bodyClass = ''
-          saveFunction = onSavePageArticle
-          break
-        case 'commentary':
-          bodyClass = 'commentary'
-          saveFunction = onSaveCommentaryArticle
-          break
-        case 'actor':
-          bodyClass = 'actor'
-          saveFunction = onSaveActorArticle
-          break
-        default:
-          return store.error.showEdit('no or wrong docType passed to editor')
-      }
+  useEffect(() => {
+    // scroll editor to top in pages
+    if (doc.type === 'pages') {
+      window.$('html, body').animate(
+        {
+          scrollTop: 140,
+        },
+        800,
+      )
+    }
+  }, [doc.type])
 
-      // see: https://www.ephox.com/blog/how-to-integrate-react-with-tinymce
-      // add codemirror? see: https://github.com/christiaan/tinymce-codemirror
-      tinymce.init({
+  // height = window - menu height - (menubar + iconbar)
+  let height = window.innerHeight - 52 - 74
+  if (['commentary', 'actor'].includes(docType)) {
+    height = window.innerHeight - 52 - 74 - 90
+  }
+  // need to add specific classes to the iframe body because my css will not apply otherwise
+  let bodyClass = ''
+  let saveFunction = () => {}
+  switch (docType) {
+    case 'page':
+      bodyClass = ''
+      saveFunction = onSavePageArticle
+      break
+    case 'commentary':
+      bodyClass = 'commentary'
+      saveFunction = onSaveCommentaryArticle
+      break
+    case 'actor':
+      bodyClass = 'actor'
+      saveFunction = onSaveActorArticle
+      break
+    default:
+      return store.error.showEdit('no or wrong docType passed to editor')
+  }
+
+  return (
+    <Editor
+      id={doc._id.replace('?', '')}
+      apiKey="58ali3ylgj6fv1zfjv6vdjkkt32yjw36v1iypn95psmae799"
+      initialValue={articleDecoded}
+      init={{
         selector: `#${doc._id.replace('?', '')}`,
-        theme: 'modern',
         plugins: [
           'advlist autolink link image lists charmap print hr anchor pagebreak',
           'searchreplace wordcount visualblocks visualchars code fullscreen media nonbreaking',
@@ -115,46 +100,14 @@ const Editor = ({
         automatic_uploads: false,
         statusbar: false,
         body_class: bodyClass,
-        // enable auto-saving
-        setup(editor) {
-          editor.on('change undo redo', () => {
-            const articleDecoded = editor.getContent()
-            const articleEncoded = Base64.encode(articleDecoded)
-            saveFunction(articleEncoded)
-          })
-        },
-      })
-      // scroll editor to top in pages
-      if (doc.type === 'pages') {
-        window.$('html, body').animate(
-          {
-            scrollTop: 140,
-          },
-          800,
-        )
-      }
-      return () => {
-        // this is needed for correct behaviour, see
-        // http://stackoverflow.com/questions/29169158/react-html-editor-tinymce
-        const instanceSelector = `#${doc._id.replace('?', '')}`
-        tinymce.remove(instanceSelector)
-      }
-    },
-    [doc, docType],
-  )
-  //console.log('editor rendering')
-
-  return (
-    <textarea id={doc._id.replace('?', '')} defaultValue={articleDecoded} />
+      }}
+      onChange={e => {
+        const articleDecoded = e.target.getContent()
+        const articleEncoded = Base64.encode(articleDecoded)
+        saveFunction(articleEncoded)
+      }}
+    />
   )
 }
 
-// how garantee this with hooks?
-/*class Editor extends Component {
-  shouldComponentUpdate() {
-    // make sure react does not update this component
-    return false
-  }
-}*/
-
-export default observer(Editor)
+export default observer(MyEditor)

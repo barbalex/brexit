@@ -4,7 +4,7 @@ import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import sortBy from 'lodash/sortBy'
 import styled from 'styled-components'
 import { withRouter } from 'react-router'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 
 import Actor from './Actor'
 import ToggleDraftGlyph from './ToggleDraftGlyph'
