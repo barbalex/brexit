@@ -43,7 +43,7 @@ const Commentary = () => {
 
   const [showMeta, setShowMeta] = useState(false)
   const onClickMeta = useCallback(() => setShowMeta(!showMeta), [showMeta])
-  const onCloseMeta = useCallback(() => setShowMeta(false))
+  const onCloseMeta = useCallback(() => setShowMeta(false), [])
 
   const articleEncoded = activeCommentary.article
   const articleDecoded = Base64.decode(articleEncoded)

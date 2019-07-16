@@ -12,9 +12,7 @@ const Container = styled.div`
 
 const AttachedImagesList = ({ doc }: { doc: Object }) => {
   const [urlCopied, changeUrlCopied] = useState(null)
-  const onCopyUrl = useCallback(urlCopied => {
-    changeUrlCopied(urlCopied)
-  })
+  const onCopyUrl = useCallback(urlCopied => changeUrlCopied(urlCopied), [])
 
   return (
     <Container className="media">

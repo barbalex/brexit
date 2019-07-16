@@ -23,7 +23,7 @@ export default ({ doc }: { doc: Object }) => {
       event.stopPropagation()
       setCommentaryToRemove(doc)
     },
-    [doc],
+    [doc, setCommentaryToRemove],
   )
 
   return (

@@ -14,12 +14,9 @@ const StyledGlyphicon = styled(Glyphicon)`
 
 const EditEventGlyph = ({ event }: { event: Object }) => {
   const store = useContext(storeContext)
-  const onClick = useCallback(
-    () => {
-      store.events.getEvent(event._id)
-    },
-    [event],
-  )
+  const onClick = useCallback(() => {
+    store.events.getEvent(event._id)
+  }, [event._id, store.events])
 
   return (
     <OverlayTrigger

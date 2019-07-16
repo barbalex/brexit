@@ -42,7 +42,7 @@ const Page = () => {
   let title = activePage.title ? activePage.title : activePage.category
   const [showMeta, setShowMeta] = useState(false)
   const onClickMeta = useCallback(() => setShowMeta(!showMeta), [showMeta])
-  const onCloseMeta = useCallback(() => setShowMeta(false))
+  const onCloseMeta = useCallback(() => setShowMeta(false), [])
 
   if (store.editing && activePage._id !== 'pages_actors') {
     return (

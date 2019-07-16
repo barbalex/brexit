@@ -59,15 +59,13 @@ const ActorsComponent = ({
     },
     [activeActor, getActor, history],
   )
-  const onClickActorCollapse = useCallback(event => {
-    // prevent higher level panels from reacting
-    event.stopPropagation()
-  })
+  // prevent higher level panels from reacting
+  const onClickActorCollapse = useCallback(event => event.stopPropagation(), [])
   const onRemoveActor = useCallback((docToRemove, event) => {
     event.preventDefault()
     event.stopPropagation()
     setActorToRemove(docToRemove)
-  })
+  }, [setActorToRemove])
 
   if (actors.length === 0) return null
 

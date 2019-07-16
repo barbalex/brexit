@@ -36,25 +36,22 @@ const LoginForm = ({ history }: { history: Object }) => {
   const [password, changePassword] = useState('')
   const [loginError, changeLoginError] = useState('')
 
-  const validEmail = useCallback(
-    (newEmail: string): boolean => {
-      const validEmail = newEmail && validateEmail(newEmail)
-      const invalidEmail = !validEmail
-      changeInvalidEmail(invalidEmail)
-      return !!validEmail
-    },
-  )
-  const validPassword = useCallback(
-    (password: boolean): boolean => {
-      const validPassword = !!password
-      const invalidPassword = !validPassword
-      changeInvalidPassword(invalidPassword)
-      return validPassword
-    },
-  )
+  const validEmail = useCallback((newEmail: string): boolean => {
+    const validEmail = newEmail && validateEmail(newEmail)
+    const invalidEmail = !validEmail
+    changeInvalidEmail(invalidEmail)
+    return !!validEmail
+  }, [])
+  const validPassword = useCallback((password: boolean): boolean => {
+    const validPassword = !!password
+    const invalidPassword = !validPassword
+    changeInvalidPassword(invalidPassword)
+    return validPassword
+  }, [])
   const validSignin = useCallback(
     (newEmail: string, password: string): boolean =>
       validEmail(newEmail) && validPassword(password),
+    [validEmail, validPassword],
   )
   const checkSignin = useCallback(
     async (newEmail, password): Promise<void> => {
@@ -68,36 +65,50 @@ const LoginForm = ({ history }: { history: Object }) => {
         }
       }
     },
-    [history, login],
+    [history, login, validSignin],
   )
-  const onKeyDownEmail = useCallback(event => {
-    const enter = 13
-    if (event.keyCode === enter) {
-      // if enter was pressed, update the value first
+  const onKeyDownEmail = useCallback(
+    event => {
+      const enter = 13
+      if (event.keyCode === enter) {
+        // if enter was pressed, update the value first
+        const newEmail = event.target.value
+        changeNewEmail(newEmail)
+        checkSignin(newEmail, password)
+      }
+    },
+    [checkSignin, password],
+  )
+  const onKeyDownPassword = useCallback(
+    event => {
+      const enter = 13
+      if (event.keyCode === enter) {
+        // if enter was pressed, update the value first
+        const password = event.target.value
+        changePassword(password)
+        checkSignin(newEmail, password)
+      }
+    },
+    [checkSignin, newEmail],
+  )
+  const onBlurEmail = useCallback(
+    event => {
       const newEmail = event.target.value
       changeNewEmail(newEmail)
-      checkSignin(newEmail, password)
-    }
-  })
-  const onKeyDownPassword = useCallback(event => {
-    const enter = 13
-    if (event.keyCode === enter) {
-      // if enter was pressed, update the value first
-      const password = event.target.value
-      changePassword(password)
-      checkSignin(newEmail, password)
-    }
-  })
-  const onBlurEmail = useCallback(event => {
-    const newEmail = event.target.value
-    changeNewEmail(newEmail)
-    validEmail(newEmail)
-  })
-  const onBlurPassword = useCallback(event =>
-    changePassword(event.target.value),
+      validEmail(newEmail)
+    },
+    [validEmail],
   )
-  const onAlertDismiss = useCallback(() => changeLoginError(null))
-  const onClickLogin = useCallback(() => checkSignin(newEmail, password))
+  const onBlurPassword = useCallback(
+    event => changePassword(event.target.value),
+    [],
+  )
+  const onAlertDismiss = useCallback(() => changeLoginError(null), [])
+  const onClickLogin = useCallback(() => checkSignin(newEmail, password), [
+    checkSignin,
+    newEmail,
+    password,
+  ])
 
   const emailInputBsStyle = invalidEmail ? 'error' : null
   const passwordInputBsStyle = invalidPassword ? 'error' : null

@@ -134,7 +134,7 @@ const EditEvent = () => {
         newEvent(activeEvent)
       }
     },
-    [activeEvent],
+    [activeEvent, newEvent, removeEvent],
   )
   const onChangeDatePicker = useCallback(
     date => {
@@ -147,7 +147,7 @@ const EditEvent = () => {
         changeError('Please choose a date')
       }
     },
-    [activeEvent],
+    [activeEvent, newEvent, removeEvent],
   )
   const onChangeOrder = useCallback(
     e => {
@@ -161,16 +161,16 @@ const EditEvent = () => {
       activeEvent.order = e.target.value
       saveEvent(activeEvent)
     },
-    [activeEvent],
+    [activeEvent, saveEvent],
   )
   const onChangeBold = useCallback(
     e => {
       activeEvent.bold = !activeEvent.bold
       saveEvent(activeEvent)
     },
-    [activeEvent],
+    [activeEvent, saveEvent],
   )
-  const close = useCallback(() => getEvent(null))
+  const close = useCallback(() => getEvent(null), [getEvent])
 
   return (
     <StyledModal show onHide={close} bsSize="large">

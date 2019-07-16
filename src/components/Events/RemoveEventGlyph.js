@@ -15,7 +15,8 @@ const StyledGlyphicon = styled(Glyphicon)`
 
 const RemoveEventGlyph = ({ event }: { event: Object }) => {
   const store = useContext(storeContext)
-  const onRemoveEvent = useCallback(() => store.events.setEventToRemove(event))
+  const { setEventToRemove } = store.events
+  const onRemoveEvent = useCallback(() => setEventToRemove(event), [event, setEventToRemove])
 
   return (
     <OverlayTrigger

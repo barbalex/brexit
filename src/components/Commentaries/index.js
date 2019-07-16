@@ -96,7 +96,7 @@ const Commentaries = ({
     if (activeCommentary) {
       window.setTimeout(() => scrollToActivePanel(), 200)
     }
-  })
+  }, [activeCommentary, scrollToActivePanel])
 
   const activeCommentaryId = has(activeCommentary, '_id')
     ? activeCommentary._id

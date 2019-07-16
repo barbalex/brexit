@@ -13,14 +13,11 @@ const ModalRemoveCommentary = () => {
     setCommentaryToRemove,
   } = store.commentaries
 
-  const abort = useCallback(event => setCommentaryToRemove(null))
-  const remove = useCallback(
-    () => {
-      removeCommentary(commentaryToRemove)
-      setCommentaryToRemove(null)
-    },
-    [commentaryToRemove],
-  )
+  const abort = useCallback(event => setCommentaryToRemove(null), [setCommentaryToRemove])
+  const remove = useCallback(() => {
+    removeCommentary(commentaryToRemove)
+    setCommentaryToRemove(null)
+  }, [commentaryToRemove, removeCommentary, setCommentaryToRemove])
 
   return (
     <div className="static-modal">

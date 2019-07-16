@@ -24,16 +24,13 @@ const EventLinks = () => {
     event => event._id === events.activeEventId,
   )
 
-  const onNewLink = useCallback(
-    () => {
-      activeEvent.links.push({
-        url: '',
-        label: '',
-      })
-      events.saveEvent(activeEvent)
-    },
-    [activeEvent],
-  )
+  const onNewLink = useCallback(() => {
+    activeEvent.links.push({
+      url: '',
+      label: '',
+    })
+    events.saveEvent(activeEvent)
+  }, [activeEvent, events])
 
   return (
     <div>

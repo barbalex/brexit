@@ -75,22 +75,19 @@ const EventsTable = () => {
   const store = useContext(storeContext)
   const [width, setWidth] = useState(0)
   const container = useRef(null)
-  const changeWidth = useCallback(
-    () => {
-      const newWidth = container.current ? container.current.clientWidth : null
-      if (newWidth && newWidth !== width) {
-        setWidth(newWidth)
-      }
-    },
-    [width],
-  )
+  const changeWidth = useCallback(() => {
+    const newWidth = container.current ? container.current.clientWidth : null
+    if (newWidth && newWidth !== width) {
+      setWidth(newWidth)
+    }
+  }, [width])
   useEffect(() => {
     changeWidth()
     window.addEventListener('resize', debounce(changeWidth, 50))
     return () => {
       window.removeEventListener('resize', debounce(changeWidth, 50))
     }
-  })
+  }, [changeWidth])
 
   const bodyMarginTop =
     store.yearsOfEvents.yearsOfEvents.length > 1 ? '77px' : '58px'

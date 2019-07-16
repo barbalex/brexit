@@ -61,6 +61,8 @@ const MyNavbar = ({
     editing,
     toggleEditing,
   } = store
+  const { setShowNewEvent } = events
+  const { setShowNewActor } = actors
   const { activePage } = page
   const { activeActor } = actors
   const { activeCommentary } = commentaries
@@ -83,65 +85,51 @@ const MyNavbar = ({
     const navIsMobile = isNavMobile()
     // toggle only if nav is in mobile mode
     if (navIsMobile) setNavExpanded(!navExpanded)
-  })
-  const onClickEvents = useCallback(
-    () => {
-      page.getPage('pages_events')
-      history.push('/')
-      // if home was clicked, do not toggle nav
-    },
-    [page],
-  )
-  const onClickCommentaries = useCallback(
-    () => {
-      page.getPage('pages_commentaries')
-      history.push('/commentaries')
-      onToggleNav()
-    },
-    [page],
-  )
-  const onClickActors = useCallback(
-    () => {
-      page.getPage('pages_actors')
-      history.push('/actors')
-      onToggleNav()
-    },
-    [page],
-  )
-  const onClickLinks = useCallback(
-    () => {
-      page.getPage('pages_links')
-      history.push('/links')
-      onToggleNav()
-    },
-    [page],
-  )
-  const onClickAboutUs = useCallback(
-    () => {
-      page.getPage('pages_aboutUs')
-      history.push('/aboutUs')
-      onToggleNav()
-    },
-    [page],
-  )
+  }, [navExpanded])
+  const onClickEvents = useCallback(() => {
+    page.getPage('pages_events')
+    history.push('/')
+    // if home was clicked, do not toggle nav
+  }, [history, page])
+  const onClickCommentaries = useCallback(() => {
+    page.getPage('pages_commentaries')
+    history.push('/commentaries')
+    onToggleNav()
+  }, [history, onToggleNav, page])
+  const onClickActors = useCallback(() => {
+    page.getPage('pages_actors')
+    history.push('/actors')
+    onToggleNav()
+  }, [history, onToggleNav, page])
+  const onClickLinks = useCallback(() => {
+    page.getPage('pages_links')
+    history.push('/links')
+    onToggleNav()
+  }, [history, onToggleNav, page])
+  const onClickAboutUs = useCallback(() => {
+    page.getPage('pages_aboutUs')
+    history.push('/aboutUs')
+    onToggleNav()
+  }, [history, onToggleNav, page])
   const onClickEdit = useCallback(() => {
     toggleEditing()
     onToggleNav()
-  })
-  const onClickLogout = useCallback(
-    () => {
-      login.logout()
-      onToggleNav()
-      // need to force update
-    },
-    [login],
-  )
+  }, [onToggleNav, toggleEditing])
+  const onClickLogout = useCallback(() => {
+    login.logout()
+    onToggleNav()
+    // need to force update
+  }, [login, onToggleNav])
   const onClickNewCommentary = useCallback(
     () => commentaries.toggleShowNewCommentary(),
     [commentaries],
   )
-  const onClickNewEvent = useCallback(() => events.setShowNewEvent(true))
-  const onClickNewActor = useCallback(() => actors.setShowNewActor(true))
+  const onClickNewEvent = useCallback(() => setShowNewEvent(true), [
+    setShowNewEvent,
+  ])
+  const onClickNewActor = useCallback(() => actors.setShowNewActor(true), [
+    actors,
+  ])
 
   return (
     <StyledNavbar

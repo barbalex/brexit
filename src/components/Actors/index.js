@@ -60,7 +60,7 @@ const Actors = () => {
         }
       }, 200)
     }
-  })
+  }, [activeActor])
 
   const activeId = activeActor ? activeActor._id : null
 

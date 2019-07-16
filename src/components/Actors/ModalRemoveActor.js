@@ -9,14 +9,11 @@ const ModalRemoveActor = () => {
   const store = useContext(storeContext)
   const { actorToRemove, removeActor, setActorToRemove } = store.actors
 
-  const remove = useCallback(
-    () => {
-      removeActor(actorToRemove)
-      setActorToRemove(null)
-    },
-    [actorToRemove],
-  )
-  const abort = useCallback(() => setActorToRemove(null))
+  const remove = useCallback(() => {
+    removeActor(actorToRemove)
+    setActorToRemove(null)
+  }, [actorToRemove, removeActor, setActorToRemove])
+  const abort = useCallback(() => setActorToRemove(null), [setActorToRemove])
 
   return (
     <div className="static-modal">

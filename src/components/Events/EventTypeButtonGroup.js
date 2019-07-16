@@ -26,15 +26,12 @@ const EventTypeButtonGroup = () => {
       activeEvent.eventType = eventType
       saveEvent(activeEvent)
     },
-    [activeEvent],
+    [activeEvent, saveEvent],
   )
 
-  useEffect(
-    () => {
-      if (!activeEvent.eventType) changeEventType('gb')
-    },
-    [activeEvent],
-  )
+  useEffect(() => {
+    if (!activeEvent.eventType) changeEventType('gb')
+  }, [activeEvent, changeEventType])
 
   const eventType = activeEvent.eventType
 

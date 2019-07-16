@@ -46,7 +46,7 @@ const EventTags = () => {
         events.saveEvent(activeEvent)
       }
     },
-    [activeEvent],
+    [activeEvent, events],
   )
 
   return (

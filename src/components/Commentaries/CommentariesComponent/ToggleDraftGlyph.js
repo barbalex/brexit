@@ -23,7 +23,7 @@ const ToggleDraftGlyph = ({ doc }: { doc: Object }) => {
       event.stopPropagation()
       toggleDraftOfCommentary(doc)
     },
-    [doc],
+    [doc, toggleDraftOfCommentary],
   )
 
   const glyph = doc.draft ? 'ban-circle' : 'ok-circle'

@@ -60,7 +60,7 @@ const AttachImages = ({ doc }: { doc: Object }) => {
 
       store.page.addPageAttachments(doc, attachments)
     },
-    [store.page],
+    [doc, store.page],
   )
 
   return (

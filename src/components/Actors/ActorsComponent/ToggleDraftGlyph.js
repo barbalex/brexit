@@ -16,11 +16,14 @@ const ToggleDraftGlyphicon = styled(Glyphicon)`
 export default (doc: Object) => {
   const store = useContext(storeContext)
   let { toggleDraftOfActor } = store.actors
-  const onToggleDraft = useCallback((doc, event) => {
-    event.preventDefault()
-    event.stopPropagation()
-    toggleDraftOfActor(doc)
-  })
+  const onToggleDraft = useCallback(
+    (doc, event) => {
+      event.preventDefault()
+      event.stopPropagation()
+      toggleDraftOfActor(doc)
+    },
+    [toggleDraftOfActor],
+  )
   const glyph = doc.draft ? 'ban-circle' : 'ok-circle'
   const color = doc.draft ? 'red' : '#00D000'
 

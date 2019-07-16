@@ -9,14 +9,11 @@ const ModalRemoveEvent = () => {
   const { events } = store
   const { setEventToRemove, removeEvent, eventToRemove } = events
 
-  const abort = useCallback(() => setEventToRemove(null))
-  const remove = useCallback(
-    () => {
-      removeEvent(eventToRemove)
-      setEventToRemove(null)
-    },
-    [eventToRemove],
-  )
+  const abort = useCallback(() => setEventToRemove(null), [setEventToRemove])
+  const remove = useCallback(() => {
+    removeEvent(eventToRemove)
+    setEventToRemove(null)
+  }, [eventToRemove, removeEvent, setEventToRemove])
 
   return (
     <Modal show onHide={abort}>

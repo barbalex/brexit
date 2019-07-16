@@ -62,7 +62,7 @@ const Hr = styled.hr`
 const Errors = () => {
   const store = useContext(storeContext)
   const { errors, showError } = store.error
-  const onClickGlyph = useCallback(() => showError())
+  const onClickGlyph = useCallback(() => showError(), [showError])
 
   return (
     <Overlay show={errors.length > 0}>

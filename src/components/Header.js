@@ -60,25 +60,22 @@ const Header = ({ containerWidth }: { containerWidth: number }) => {
 
   const [flagHeight, setFlagHeight] = useState(150)
 
-  const changeFlagHeight = useCallback(
-    () => {
-      const measuredContainerWidth = container.current
-        ? container.current.clientWidth
-        : null
-      if (measuredContainerWidth && measuredContainerWidth !== containerWidth) {
-        // -2.5 corrects for padding between flags
-        setFlagHeight(measuredContainerWidth / 4 - 2.5)
-      }
-    },
-    [container.current],
-  )
+  const changeFlagHeight = useCallback(() => {
+    const measuredContainerWidth = container.current
+      ? container.current.clientWidth
+      : null
+    if (measuredContainerWidth && measuredContainerWidth !== containerWidth) {
+      // -2.5 corrects for padding between flags
+      setFlagHeight(measuredContainerWidth / 4 - 2.5)
+    }
+  }, [containerWidth])
 
   useEffect(() => {
     changeFlagHeight()
     window.addEventListener('resize', debounce(changeFlagHeight, 50))
     return () =>
       window.removeEventListener('resize', debounce(changeFlagHeight, 50))
-  }, [])
+  }, [changeFlagHeight])
 
   const titleSize = flagHeight / 5
   const titleMarginTop = -(flagHeight / 2 + 25)

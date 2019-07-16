@@ -46,41 +46,32 @@ const EventLink = ({
     },
     [link],
   )
-  const onBlurUrl = useCallback(
-    () => {
-      const i = activeEvent.links.findIndex(
-        l => l.label === link.label && l.url === link.url,
-      )
-      activeEvent.links[i] = { ...link }
-      saveEvent(activeEvent)
-    },
-    [link, activeEvent],
-  )
+  const onBlurUrl = useCallback(() => {
+    const i = activeEvent.links.findIndex(
+      l => l.label === link.label && l.url === link.url,
+    )
+    activeEvent.links[i] = { ...link }
+    saveEvent(activeEvent)
+  }, [activeEvent, link, saveEvent])
   const onChangeLabel = useCallback(
     e => {
       link.label = e.target.value
     },
     [link],
   )
-  const onBlurLabel = useCallback(
-    () => {
-      const i = activeEvent.links.findIndex(
-        l => l.url === link.url && l.label === link.label,
-      )
-      activeEvent.links[i] = { ...link }
-      saveEvent(activeEvent)
-    },
-    [link, activeEvent],
-  )
-  const onRemoveLink = useCallback(
-    () => {
-      activeEvent.links = activeEvent.links.filter(
-        l => l.label !== link.label && l.url !== link.url,
-      )
-      saveEvent(activeEvent)
-    },
-    [link],
-  )
+  const onBlurLabel = useCallback(() => {
+    const i = activeEvent.links.findIndex(
+      l => l.url === link.url && l.label === link.label,
+    )
+    activeEvent.links[i] = { ...link }
+    saveEvent(activeEvent)
+  }, [activeEvent, link, saveEvent])
+  const onRemoveLink = useCallback(() => {
+    activeEvent.links = activeEvent.links.filter(
+      l => l.label !== link.label && l.url !== link.url,
+    )
+    saveEvent(activeEvent)
+  }, [activeEvent, link.label, link.url, saveEvent])
 
   return (
     <Row key={index}>

@@ -96,23 +96,24 @@ const NewEvent = () => {
   const [date, changeDate] = useState(moment())
   const [error, changeError] = useState(null)
 
-  const onChangeTitle = useCallback(event => changeTitle(event.target.value))
-  const onChangeDatePicker = useCallback(date =>
-    changeDate(moment(date, 'DD.MM.YYYY')),
+  const onChangeTitle = useCallback(
+    event => changeTitle(event.target.value),
+    [],
   )
-  const close = useCallback(() => setShowNewEvent(false))
-  const createNewEvent = useCallback(
-    () => {
-      if (title && date) {
-        newEvent({ date, title })
-        setShowNewEvent(false)
-      } else {
-        const error = !!title ? 'Please choose a date' : 'Please add a title'
-        changeError(error)
-      }
-    },
-    [title, date],
+  const onChangeDatePicker = useCallback(
+    date => changeDate(moment(date, 'DD.MM.YYYY')),
+    [],
   )
+  const close = useCallback(() => setShowNewEvent(false), [setShowNewEvent])
+  const createNewEvent = useCallback(() => {
+    if (title && date) {
+      newEvent({ date, title })
+      setShowNewEvent(false)
+    } else {
+      const error = !!title ? 'Please choose a date' : 'Please add a title'
+      changeError(error)
+    }
+  }, [title, date, newEvent, setShowNewEvent])
 
   return (
     <StyledModal show onHide={close} bsSize="large">

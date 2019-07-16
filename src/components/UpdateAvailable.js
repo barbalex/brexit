@@ -46,11 +46,12 @@ const StyledGlyphicon = styled(Glyphicon)`
 
 const UpdateAvailable = () => {
   const store = useContext(storeContext)
-  const onClickGlyph = useCallback(() => store.setUpdateAvailable(false))
+  const { setUpdateAvailable } = store
+  const onClickGlyph = useCallback(() => setUpdateAvailable(false), [setUpdateAvailable])
   const onClickReload = useCallback(event => {
     event.preventDefault()
     window.location.reload(false)
-  })
+  }, [])
 
   return (
     <Overlay show={store.updateAvailable}>

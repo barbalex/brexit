@@ -28,19 +28,20 @@ export default (store: Object): Object => ({
   getEvents: action(
     'getEvents',
     async (years: Array<number>): Promise<void> => {
+      let events
       try {
-        const events = await getEvents(store, years)
-        console.log('store, getEvents', { events })
-        store.events.events = events
-        if (store.events.getEventsCallback) {
-          store.events.getEventsCallback()
-          store.events.getEventsCallback = null
-        }
+        events = await getEvents(store, years)
       } catch (error) {
         console.log('store, getEvents', { error })
         store.error.showError({
           msg: error,
         })
+      }
+      console.log('store, getEvents', { events })
+      store.events.events = events
+      if (store.events.getEventsCallback) {
+        store.events.getEventsCallback()
+        store.events.getEventsCallback = null
       }
     },
   ),

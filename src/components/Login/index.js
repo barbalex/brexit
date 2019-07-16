@@ -10,19 +10,18 @@ import storeContext from '../../storeContext'
 
 const Login = () => {
   const store = useContext(storeContext)
-  const onClickLogout = useCallback(
-    (): void => {
-      console.log('log out clicked')
-      store.login.logout()
-    },
-  )
+  const { logout, email } = store.login
+  const onClickLogout = useCallback((): void => {
+    console.log('log out clicked')
+    logout()
+  }, [logout])
 
   return (
     <DocumentTitle title="brexit | Login">
       <div>
         <h1>Login</h1>
-        {!store.login.email && <LoginForm />}
-        {store.login.email && (
+        {!email && <LoginForm />}
+        {email && (
           <Button className="btn-primary" onClick={onClickLogout}>
             log out
           </Button>

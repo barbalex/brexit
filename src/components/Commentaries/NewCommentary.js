@@ -28,25 +28,22 @@ const NewCommentary = () => {
   // eslint-disable-next-line no-unused-vars
   const [errorMessage, setErrorMessage] = useState(null)
 
-  const onChangeTitle = useCallback(event => setTitle(event.target.value))
+  const onChangeTitle = useCallback(event => setTitle(event.target.value), [])
   const onChangeDate = useCallback(
     date => setDate(moment(date, 'DD.MM.YYYY')),
-    [date],
+    [],
   )
-  const createNewCommentary = useCallback(
-    () => {
-      if (title && date) {
-        newCommentary(title, date)
-        toggleShowNewCommentary()
-      } else {
-        let errorMessage = 'Please choose a date'
-        if (!title) errorMessage = 'Please add a title'
-        error.showError({ error: errorMessage })
-      }
-    },
-    [title, date],
-  )
-  const onCloseNewCommentary = useCallback(() => toggleShowNewCommentary())
+  const createNewCommentary = useCallback(() => {
+    if (title && date) {
+      newCommentary(title, date)
+      toggleShowNewCommentary()
+    } else {
+      let errorMessage = 'Please choose a date'
+      if (!title) errorMessage = 'Please add a title'
+      error.showError({ error: errorMessage })
+    }
+  }, [title, date, newCommentary, toggleShowNewCommentary, error])
+  const onCloseNewCommentary = useCallback(() => toggleShowNewCommentary(), [toggleShowNewCommentary])
 
   return (
     <Modal show bsSize="large">

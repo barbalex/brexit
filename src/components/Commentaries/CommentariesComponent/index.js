@@ -34,8 +34,9 @@ const CommentariesComponent = ({
   const { commentaries, activeCommentary, getCommentary } = store.commentaries
 
   // prevent higher level panels from reacting
-  const onClickCommentaryCollapse = useCallback(event =>
-    event.stopPropagation(),
+  const onClickCommentaryCollapse = useCallback(
+    event => event.stopPropagation(),
+    [],
   )
   const onClickCommentary = useCallback(
     (id, e) => {
@@ -45,7 +46,7 @@ const CommentariesComponent = ({
         !activeCommentary || activeCommentary._id !== id ? id : null
       getCommentary(idToGet, history)
     },
-    [activeCommentary],
+    [activeCommentary, getCommentary, history],
   )
 
   if (commentaries.length > 0) {
