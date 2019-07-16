@@ -127,8 +127,8 @@ const MyNavbar = ({
   const onClickNewEvent = useCallback(() => setShowNewEvent(true), [
     setShowNewEvent,
   ])
-  const onClickNewActor = useCallback(() => actors.setShowNewActor(true), [
-    actors,
+  const onClickNewActor = useCallback(() => setShowNewActor(true), [
+    setShowNewActor,
   ])
 
   return (
