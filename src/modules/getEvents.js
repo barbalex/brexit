@@ -14,14 +14,14 @@ export default async (
     startkey: `events_${min(years)}`,
     endkey: `events_${max(years)}_\uffff`,
   }
+  let result
   try {
-    const result = await app.db.allDocs(options)
-    let events = map(result.rows, 'doc')
-    events = sortEvents(events)
-    console.log('getEvents', { options, result, events })
-    return events
+    result = await app.db.allDocs(options)
   } catch (error) {
     store.error.showError('Error fetching events:', error)
     return []
   }
+  let events = map(result.rows, 'doc')
+  events = sortEvents(events)
+  return events
 }

@@ -37,7 +37,6 @@ export default (store: Object): Object => ({
           msg: error,
         })
       }
-      console.log('store, getEvents', { events })
       store.events.events = events
       if (store.events.getEventsCallback) {
         store.events.getEventsCallback()
