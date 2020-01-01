@@ -38,7 +38,7 @@ const Page = () => {
   const store = useContext(storeContext)
   const { activePage } = store.page
   const articleEncoded = activePage.article
-  const articleDecoded = Base64.decode(articleEncoded)
+  const articleDecoded = articleEncoded ? Base64.decode(articleEncoded) : null
   let title = activePage.title ? activePage.title : activePage.category
   const [showMeta, setShowMeta] = useState(false)
   const onClickMeta = useCallback(() => setShowMeta(!showMeta), [showMeta])

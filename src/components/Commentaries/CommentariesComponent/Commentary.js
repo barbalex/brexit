@@ -46,7 +46,7 @@ const Commentary = () => {
   const onCloseMeta = useCallback(() => setShowMeta(false), [])
 
   const articleEncoded = activeCommentary.article
-  const articleDecoded = Base64.decode(articleEncoded)
+  const articleDecoded = articleEncoded ? Base64.decode(articleEncoded) : null
 
   if (editing) {
     return (

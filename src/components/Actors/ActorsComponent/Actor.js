@@ -22,7 +22,7 @@ const Actor = () => {
   const store = useContext(storeContext)
   const { activeActor } = store.actors
   const articleEncoded = activeActor.article
-  const articleDecoded = Base64.decode(articleEncoded)
+  const articleDecoded = articleEncoded ? Base64.decode(articleEncoded) : null
   const [showMeta, setShowMeta] = useState(false)
   const onClickMeta = useCallback(() => setShowMeta(!showMeta), [showMeta])
   const onCloseMeta = useCallback(() => setShowMeta(false), [])
