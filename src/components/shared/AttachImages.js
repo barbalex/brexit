@@ -65,36 +65,34 @@ const AttachImages = ({ doc }: { doc: Object }) => {
 
   return (
     <Container>
-      <Dropzone onDrop={onDrop} accept="image/*">
-        <StyledDropzone onDrop={onDrop} accept="image/*">
-          {({ getRootProps, getInputProps, isDragActive, isDragReject }) => {
-            if (isDragActive) {
-              return (
-                <DropzoneInnerDiv {...getRootProps()}>
-                  <div>drop now...</div>
-                </DropzoneInnerDiv>
-              )
-            }
-            if (isDragReject) {
-              return (
-                <DropzoneInnerDiv {...getRootProps()}>
-                  <div>Oh no. Something went wrong :-(</div>
-                </DropzoneInnerDiv>
-              )
-            }
+      <StyledDropzone onDrop={onDrop} accept="image/*">
+        {({ getRootProps, getInputProps, isDragActive, isDragReject }) => {
+          if (isDragActive) {
             return (
               <DropzoneInnerDiv {...getRootProps()}>
-                <input {...getInputProps()} style={{ width: 0, height: 0 }} />
-                <div>
-                  Drop some images here...
-                  <br />
-                  ...or click to select.
-                </div>
+                <div>drop now...</div>
               </DropzoneInnerDiv>
             )
-          }}
-        </StyledDropzone>
-      </Dropzone>
+          }
+          if (isDragReject) {
+            return (
+              <DropzoneInnerDiv {...getRootProps()}>
+                <div>Oh no. Something went wrong :-(</div>
+              </DropzoneInnerDiv>
+            )
+          }
+          return (
+            <DropzoneInnerDiv {...getRootProps()}>
+              <input {...getInputProps()} style={{ width: 0, height: 0 }} />
+              <div>
+                Drop some images here...
+                <br />
+                ...or click to select.
+              </div>
+            </DropzoneInnerDiv>
+          )
+        }}
+      </StyledDropzone>
     </Container>
   )
 }
