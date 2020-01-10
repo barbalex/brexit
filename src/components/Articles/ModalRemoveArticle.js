@@ -5,32 +5,27 @@ import { observer } from 'mobx-react-lite'
 
 import storeContext from '../../storeContext'
 
-const ModalRemoveCommentary = () => {
+const ModalRemoveArticle = () => {
   const store = useContext(storeContext)
-  const {
-    commentaryToRemove,
-    removeCommentary,
-    setCommentaryToRemove,
-  } = store.commentaries
+  const { articleToRemove, removeArticle, setArticleToRemove } = store.articles
 
-  const abort = useCallback(event => setCommentaryToRemove(null), [setCommentaryToRemove])
+  const abort = useCallback(event => setArticleToRemove(null), [
+    setArticleToRemove,
+  ])
   const remove = useCallback(() => {
-    removeCommentary(commentaryToRemove)
-    setCommentaryToRemove(null)
-  }, [commentaryToRemove, removeCommentary, setCommentaryToRemove])
+    removeArticle(articleToRemove)
+    setArticleToRemove(null)
+  }, [articleToRemove, removeArticle, setArticleToRemove])
 
   return (
     <div className="static-modal">
       <Modal.Dialog>
         <Modal.Header>
-          <Modal.Title>
-            Remove commentary "{commentaryToRemove.title}"
-          </Modal.Title>
+          <Modal.Title>Remove article "{articleToRemove.title}"</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p>
-            Are you sure you want to remove commentary "
-            {commentaryToRemove.title}
+            Are you sure you want to remove article "{articleToRemove.title}
             "?
           </p>
         </Modal.Body>
@@ -45,6 +40,6 @@ const ModalRemoveCommentary = () => {
   )
 }
 
-ModalRemoveCommentary.displayName = 'ModalRemoveCommentary'
+ModalRemoveArticle.displayName = 'ModalRemoveArticle'
 
-export default observer(ModalRemoveCommentary)
+export default observer(ModalRemoveArticle)

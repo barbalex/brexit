@@ -7,12 +7,12 @@ import styled from 'styled-components'
 import DocumentTitle from 'react-document-title'
 import { withRouter } from 'react-router'
 
-import NewCommentary from './NewCommentary'
-import ModalRemoveCommentary from './ModalRemoveCommentary'
+import NewArticle from './NewArticle'
+import ModalRemoveArticle from './ModalRemoveArticle'
 import SwallowPanelGroupProps from '../shared/SwallowPanelGroupProps'
 import constants from '../../modules/constants'
 import storeContext from '../../storeContext'
-import CommentariesComponent from './CommentariesComponent'
+import ArticlesComponent from './ArticlesComponent'
 
 const Container = styled.div`
   p,
@@ -48,32 +48,32 @@ const Copyright = styled.p`
   margin-top: 70px;
 `
 
-const Commentaries = ({
+const Articles = ({
   match,
   location,
   history,
-  onClickCommentary,
-  onClickCommentaryCollapse,
+  onClickArticle,
+  onClickArticleCollapse,
 }: {
   match: Object,
   location: Object,
   history: Object,
-  onClickCommentary: () => void,
-  onClickCommentaryCollapse: () => void,
+  onClickArticle: () => void,
+  onClickArticleCollapse: () => void,
 }) => {
   const store = useContext(storeContext)
   const {
-    getCommentaries,
-    commentaries,
-    activeCommentary,
-    showNewCommentary,
-    commentaryToRemove,
-  } = store.commentaries
+    getArticles,
+    articles,
+    activeArticle,
+    showNewArticle,
+    articleToRemove,
+  } = store.articles
 
-  const activeCommentaryPanel = useRef(null)
+  const activeArticlePanel = useRef(null)
 
   const scrollToActivePanel = useCallback(() => {
-    const node = activeCommentaryPanel.current || null
+    const node = activeArticlePanel.current || null
     if (node) {
       const navWrapperOffsetTop = document.getElementById('nav-wrapper')
         .offsetTop
@@ -90,39 +90,35 @@ const Commentaries = ({
   }, [])
 
   useEffect(() => {
-    getCommentaries()
-  }, [commentaries.length, getCommentaries])
+    getArticles()
+  }, [articles.length, getArticles])
   useEffect(() => {
-    if (activeCommentary) {
+    if (activeArticle) {
       window.setTimeout(() => scrollToActivePanel(), 200)
     }
-  }, [activeCommentary, scrollToActivePanel])
+  }, [activeArticle, scrollToActivePanel])
 
-  const activeCommentaryId = has(activeCommentary, '_id')
-    ? activeCommentary._id
-    : null
+  const activeArticleId = has(activeArticle, '_id') ? activeArticle._id : null
 
   return (
-    <DocumentTitle title="brexit | Commentary">
+    <DocumentTitle title="brexit | Article">
       <Container>
-        <h1>Commentary</h1>
+        <h1>Articles</h1>
         <PanelGroup
-          defaultActiveKey={activeCommentaryId}
-          id="commentariesAccordion"
+          defaultActiveKey={activeArticleId}
+          id="articlesAccordion"
           accordion
         >
           <SwallowPanelGroupProps>
-            <CommentariesComponent
-              activeCommentaryPanel={activeCommentaryPanel}
-            />
+            <ArticlesComponent activeArticlePanel={activeArticlePanel} />
           </SwallowPanelGroupProps>
         </PanelGroup>
-        {showNewCommentary && <NewCommentary />}
-        {commentaryToRemove && <ModalRemoveCommentary />}
+        {showNewArticle && <NewArticle />}
+        {articleToRemove && <ModalRemoveArticle />}
         <Copyright>© Jürg Martin Gabriel. All Rights Reserved.</Copyright>
       </Container>
     </DocumentTitle>
   )
 }
 
-export default withRouter(observer(Commentaries))
+export default withRouter(observer(Articles))

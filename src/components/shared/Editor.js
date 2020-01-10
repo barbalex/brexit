@@ -17,7 +17,7 @@ const MyEditor = ({
 }) => {
   const store = useContext(storeContext)
   const { activePage, savePage } = store.page
-  const { activeCommentary, saveCommentary } = store.commentaries
+  const { activeArticle, saveArticle } = store.articles
   const { activeActor, saveActor } = store.actors
 
   const onSavePageArticle = useCallback(
@@ -27,12 +27,12 @@ const MyEditor = ({
     },
     [activePage, savePage],
   )
-  const onSaveCommentaryArticle = useCallback(
+  const onSaveArticleArticle = useCallback(
     articleEncoded => {
-      activeCommentary.article = articleEncoded
-      saveCommentary(activeCommentary)
+      activeArticle.article = articleEncoded
+      saveArticle(activeArticle)
     },
-    [activeCommentary, saveCommentary],
+    [activeArticle, saveArticle],
   )
   const onSaveActorArticle = useCallback(
     articleEncoded => {
@@ -57,7 +57,7 @@ const MyEditor = ({
 
   // height = window - menu height - (menubar + iconbar)
   let height = window.innerHeight - 52 - 74
-  if (['commentary', 'actor'].includes(docType)) {
+  if (['article', 'actor'].includes(docType)) {
     height = window.innerHeight - 52 - 74 - 90
   }
   // need to add specific classes to the iframe body because my css will not apply otherwise
@@ -68,9 +68,9 @@ const MyEditor = ({
       bodyClass = ''
       saveFunction = onSavePageArticle
       break
-    case 'commentary':
-      bodyClass = 'commentary'
-      saveFunction = onSaveCommentaryArticle
+    case 'article':
+      bodyClass = 'article'
+      saveFunction = onSaveArticleArticle
       break
     case 'actor':
       bodyClass = 'actor'

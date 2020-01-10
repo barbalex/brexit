@@ -4,7 +4,7 @@ import { observable, extendObservable } from 'mobx'
 import yearsOfEvents from './yearsOfEvents'
 import page from './page'
 import events from './events'
-import commentaries from './commentaries'
+import articles from './articles'
 import actors from './actors'
 import login from './login'
 import error from './error'
@@ -15,7 +15,7 @@ function Store(): void {
   this.page = observable(page(this))
   this.yearsOfEvents = observable(yearsOfEvents(this))
   this.events = observable(events(this))
-  this.commentaries = observable(commentaries(this))
+  this.articles = observable(articles(this))
   this.actors = observable(actors(this))
   this.login = observable(login(this))
   this.error = observable(error(this))

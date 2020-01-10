@@ -54,7 +54,7 @@ const MyNavbar = ({
   const store = useContext(storeContext)
   const {
     page,
-    commentaries,
+    articles,
     actors,
     events,
     login,
@@ -65,7 +65,7 @@ const MyNavbar = ({
   const { setShowNewActor } = actors
   const { activePage } = page
   const { activeActor } = actors
-  const { activeCommentary } = commentaries
+  const { activeArticle } = articles
   const email = login.email
   const glyph = editing ? 'eye-open' : 'pencil'
   const id = activePage && activePage._id ? activePage._id : null
@@ -73,13 +73,13 @@ const MyNavbar = ({
   const showEdit =
     email &&
     (!nonEditableIds.includes(id) ||
-      has(activeCommentary, '_id') ||
+      has(activeArticle, '_id') ||
       has(activeActor, '_id'))
-  const showAddCommentary = email && activePage._id === 'pages_commentaries'
+  const showAddArticle = email && activePage._id === 'pages_commentaries'
   const showAddEvent = email && activePage._id === 'pages_events'
   const showAddActor = email && activePage._id === 'pages_actors'
   const showNavbarRight =
-    email || showEdit || showAddCommentary || showAddEvent || showAddActor
+    email || showEdit || showAddArticle || showAddEvent || showAddActor
   const [navExpanded, setNavExpanded] = useState(false)
   const onToggleNav = useCallback(() => {
     const navIsMobile = isNavMobile()
@@ -91,9 +91,9 @@ const MyNavbar = ({
     history.push('/')
     // if home was clicked, do not toggle nav
   }, [history, page])
-  const onClickCommentaries = useCallback(() => {
+  const onClickArticles = useCallback(() => {
     page.getPage('pages_commentaries')
-    history.push('/commentaries')
+    history.push('/articles')
     onToggleNav()
   }, [history, onToggleNav, page])
   const onClickActors = useCallback(() => {
@@ -120,10 +120,9 @@ const MyNavbar = ({
     onToggleNav()
     // need to force update
   }, [login, onToggleNav])
-  const onClickNewCommentary = useCallback(
-    () => commentaries.toggleShowNewCommentary(),
-    [commentaries],
-  )
+  const onClickNewArticle = useCallback(() => articles.toggleShowNewArticle(), [
+    articles,
+  ])
   const onClickNewEvent = useCallback(() => setShowNewEvent(true), [
     setShowNewEvent,
   ])
@@ -147,9 +146,9 @@ const MyNavbar = ({
         <Nav>
           <NavItem
             active={id === 'pages_commentaries'}
-            onClick={onClickCommentaries}
+            onClick={onClickArticles}
           >
-            Commentary
+            My Articles
           </NavItem>
           <NavItem active={id === 'pages_actors'} onClick={onClickActors}>
             Actors
@@ -177,12 +176,12 @@ const MyNavbar = ({
                 </NavItem>
               </OverlayTrigger>
             )}
-            {showAddCommentary && (
+            {showAddArticle && (
               <OverlayTrigger
                 placement="bottom"
-                overlay={<Tooltip id="newCommentary">new commentary</Tooltip>}
+                overlay={<Tooltip id="newArticle">new article</Tooltip>}
               >
-                <NavItem onClick={onClickNewCommentary}>
+                <NavItem onClick={onClickNewArticle}>
                   <Glyphicon glyph="plus" />
                 </NavItem>
               </OverlayTrigger>

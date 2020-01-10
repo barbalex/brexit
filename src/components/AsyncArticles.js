@@ -3,9 +3,9 @@ import Loadable from 'react-loadable'
 
 import LoadingComponent from './LoadingComponent'
 
-const AsyncCommentaries = Loadable({
-  loader: () => import('./Commentaries'),
+const AsyncArticles = Loadable({
+  loader: () => import('./Articles'),
   loading: LoadingComponent,
 })
 
-export default AsyncCommentaries
+export default AsyncArticles

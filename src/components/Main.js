@@ -12,7 +12,7 @@ import Navbar from '../components/Navbar'
 import Header from '../components/Header'
 import AsyncPage from './AsyncPage'
 import AsyncEvents from './AsyncEvents'
-import AsyncCommentaries from './AsyncCommentaries'
+import AsyncArticles from './AsyncArticles'
 import AsyncActors from './AsyncActors'
 import AsyncLogin from './AsyncLogin'
 import Errors from './Errors'
@@ -46,16 +46,16 @@ const Main = ({ login }: { login: boolean }) => {
               let { year, month, day, title } = match.params
               title = decodeURIComponent(title)
               store.page.getPage('pages_commentaries')
-              store.commentaries.activeCommentaryId = `commentaries_${year}_${month}_${day}_${title}`
-              return <AsyncCommentaries />
+              store.articles.activeArticleId = `commentaries_${year}_${month}_${day}_${title}`
+              return <AsyncArticles />
             }}
           />
           <Route
-            path="/commentaries"
+            path="/articles"
             exact
             render={() => {
               store.page.getPage('pages_commentaries')
-              return <AsyncCommentaries />
+              return <AsyncArticles />
             }}
           />
           <Route

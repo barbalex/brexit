@@ -4,17 +4,15 @@ import styled from 'styled-components'
 import { withRouter } from 'react-router'
 
 import storeContext from '../../../storeContext'
-import RemoveCommentaryGlyph from './RemoveCommentaryGlyph'
+import RemoveArticleGlyph from './RemoveArticleGlyph'
 import ToggleDraftGlyph from './ToggleDraftGlyph'
-import Commentary from './Commentary'
+import Article from './Article'
 
 const PanelHeading = styled.div`
   position: relative;
   cursor: pointer;
-  border-bottom-right-radius: ${props =>
-    !props.isActiveCommentary ? '3px' : 0};
-  border-bottom-left-radius: ${props =>
-    !props.isActiveCommentary ? '3px' : 0};
+  border-bottom-right-radius: ${props => (!props.isActiveArticle ? '3px' : 0)};
+  border-bottom-left-radius: ${props => (!props.isActiveArticle ? '3px' : 0)};
 `
 const PanelBody = styled.div`
   margin-top: ${props => props['data-panelbodymargintop']};
@@ -23,38 +21,35 @@ const PanelBody = styled.div`
   overflow-y: auto;
 `
 
-const CommentariesComponent = ({
+const ArticlesComponent = ({
   history,
-  activeCommentaryPanel,
+  activeArticlePanel,
 }: {
   history: Object,
-  activeCommentaryPanel: Object,
+  activeArticlePanel: Object,
 }) => {
   const store = useContext(storeContext)
-  const { commentaries, activeCommentary, getCommentary } = store.commentaries
+  const { articles, activeArticle, getArticle } = store.articles
 
   // prevent higher level panels from reacting
-  const onClickCommentaryCollapse = useCallback(
+  const onClickArticleCollapse = useCallback(
     event => event.stopPropagation(),
     [],
   )
-  const onClickCommentary = useCallback(
+  const onClickArticle = useCallback(
     (id, e) => {
       // prevent higher level panels from reacting
       e.stopPropagation()
-      const idToGet =
-        !activeCommentary || activeCommentary._id !== id ? id : null
-      getCommentary(idToGet, history)
+      const idToGet = !activeArticle || activeArticle._id !== id ? id : null
+      getArticle(idToGet, history)
     },
-    [activeCommentary, getCommentary, history],
+    [activeArticle, getArticle, history],
   )
 
-  if (commentaries.length > 0) {
-    return commentaries.map((doc, index) => {
-      const isCommentary = !!activeCommentary
-      const isActiveCommentary = isCommentary
-        ? doc._id === activeCommentary._id
-        : false
+  if (articles.length > 0) {
+    return articles.map((doc, index) => {
+      const isArticle = !!activeArticle
+      const isActiveArticle = isArticle ? doc._id === activeArticle._id : false
       const showEditingGlyphons = !!store.login.email
       const panelbodypadding = store.editing ? '0 !important' : '15px'
       const panelbodymargintop = store.editing ? '-1px' : 0
@@ -64,20 +59,20 @@ const CommentariesComponent = ({
       return (
         <div
           key={doc._id}
-          ref={activeCommentaryPanel || null}
+          ref={activeArticlePanel || null}
           className="panel panel-default"
         >
           <PanelHeading
             className="panel-heading"
             role="tab"
             id={`heading${index}`}
-            onClick={e => onClickCommentary(doc._id, e)}
+            onClick={e => onClickArticle(doc._id, e)}
           >
             <h4 className="panel-title">
               <a
                 role="button"
                 data-toggle="collapse"
-                data-parent="#commentariesAccordion"
+                data-parent="#articlesAccordion"
                 href={`#collapse${index}`}
                 aria-expanded="false"
                 aria-controls={`#collapse${index}`}
@@ -86,22 +81,22 @@ const CommentariesComponent = ({
               </a>
             </h4>
             {showEditingGlyphons && <ToggleDraftGlyph doc={doc} />}
-            {showEditingGlyphons && <RemoveCommentaryGlyph doc={doc} />}
+            {showEditingGlyphons && <RemoveArticleGlyph doc={doc} />}
           </PanelHeading>
-          {isActiveCommentary && (
+          {isActiveArticle && (
             <div
               id={`#collapse${index}`}
               className="panel-collapse collapse in"
               role="tabpanel"
               aria-labelledby={`heading${index}`}
-              onClick={onClickCommentaryCollapse}
+              onClick={onClickArticleCollapse}
             >
               <PanelBody
                 className="panel-body"
                 data-panelbodypadding={panelbodypadding}
                 data-panelbodymargintop={panelbodymargintop}
               >
-                <Commentary />
+                <Article />
               </PanelBody>
             </div>
           )}
@@ -112,4 +107,4 @@ const CommentariesComponent = ({
   return null
 }
 
-export default withRouter(CommentariesComponent)
+export default withRouter(ArticlesComponent)

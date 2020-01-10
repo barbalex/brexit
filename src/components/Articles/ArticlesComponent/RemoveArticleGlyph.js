@@ -15,23 +15,23 @@ const RemoveGlyphicon = styled(Glyphicon)`
 
 export default ({ doc }: { doc: Object }) => {
   const store = useContext(storeContext)
-  const { setCommentaryToRemove } = store.commentaries
+  const { setArticleToRemove } = store.articles
 
-  const onRemoveCommentary = useCallback(
+  const onRemoveArticle = useCallback(
     event => {
       event.preventDefault()
       event.stopPropagation()
-      setCommentaryToRemove(doc)
+      setArticleToRemove(doc)
     },
-    [doc, setCommentaryToRemove],
+    [doc, setArticleToRemove],
   )
 
   return (
     <OverlayTrigger
       placement="top"
-      overlay={<Tooltip id="removeThisCommentary">remove</Tooltip>}
+      overlay={<Tooltip id="removeThisArticle">remove</Tooltip>}
     >
-      <RemoveGlyphicon glyph="remove-circle" onClick={onRemoveCommentary} />
+      <RemoveGlyphicon glyph="remove-circle" onClick={onRemoveArticle} />
     </OverlayTrigger>
   )
 }

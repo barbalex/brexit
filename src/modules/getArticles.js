@@ -1,7 +1,7 @@
 // @flow
 import app from 'ampersand-app'
 import map from 'lodash/map'
-import sortCommentaries from './sortCommentaries'
+import sortArticles from './sortArticles'
 
 const options = {
   include_docs: true,
@@ -12,11 +12,11 @@ const options = {
 export default async (store: Object): Promise<Array<Object>> => {
   try {
     const result = await app.db.allDocs(options)
-    let commentaries = map(result.rows, 'doc')
-    commentaries = sortCommentaries(commentaries)
-    return commentaries
+    let articles = map(result.rows, 'doc')
+    articles = sortArticles(articles)
+    return articles
   } catch (error) {
-    store.error.showError('Error fetching commentaries:', error)
+    store.error.showError('Error fetching articles:', error)
     return []
   }
 }

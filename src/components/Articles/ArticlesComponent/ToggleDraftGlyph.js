@@ -15,15 +15,15 @@ const ToggleDraftGlyphicon = styled(Glyphicon)`
 
 const ToggleDraftGlyph = ({ doc }: { doc: Object }) => {
   const store = useContext(storeContext)
-  const { toggleDraftOfCommentary } = store.commentaries
+  const { toggleDraftOfArticle } = store.articles
 
   const onToggleDraft = useCallback(
     event => {
       event.preventDefault()
       event.stopPropagation()
-      toggleDraftOfCommentary(doc)
+      toggleDraftOfArticle(doc)
     },
-    [doc, toggleDraftOfCommentary],
+    [doc, toggleDraftOfArticle],
   )
 
   const glyph = doc.draft ? 'ban-circle' : 'ok-circle'
