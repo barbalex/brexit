@@ -37,7 +37,7 @@
     "styled-components": "4.4.1"
   },
   "devDependencies": {
-    "flow-bin": "0.114.0",
+    "flow-bin": "0.115.0",
     "react-scripts": "3.3.0"
   },
   "scripts": {
