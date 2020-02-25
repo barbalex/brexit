@@ -1,4 +1,4 @@
-//      
+//
 import React, { useContext, useEffect, useRef } from 'react'
 import { PanelGroup } from 'react-bootstrap'
 import { observer } from 'mobx-react-lite'
@@ -42,7 +42,7 @@ const Actors = () => {
   const activeActorPanel = useRef(null)
 
   useEffect(() => {
-    if (activeActor) {
+    if (activeActor && typeof window !== `undefined`) {
       window.setTimeout(() => {
         const node = activeActorPanel.current
         if (node) {

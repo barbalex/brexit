@@ -1,4 +1,4 @@
-//      
+//
 import React, { useEffect, useContext, useRef, useCallback } from 'react'
 import { PanelGroup } from 'react-bootstrap'
 import has from 'lodash/has'
@@ -54,13 +54,7 @@ const Articles = ({
   history,
   onClickArticle,
   onClickArticleCollapse,
-}   
-                
-                   
-                  
-                             
-                                     
- ) => {
+}) => {
   const store = useContext(storeContext)
   const {
     getArticles,
@@ -78,7 +72,7 @@ const Articles = ({
       const navWrapperOffsetTop = document.getElementById('nav-wrapper')
         .offsetTop
       const reduce = navWrapperOffsetTop > 0 ? navWrapperOffsetTop - 33 : 55
-      if (node.offsetTop) {
+      if (node.offsetTop && typeof window !== `undefined`) {
         window.$('html, body').animate(
           {
             scrollTop: node.offsetTop - reduce,
@@ -93,7 +87,7 @@ const Articles = ({
     getArticles()
   }, [articles.length, getArticles])
   useEffect(() => {
-    if (activeArticle) {
+    if (activeArticle && typeof window !== `undefined`) {
       window.setTimeout(() => scrollToActivePanel(), 200)
     }
   }, [activeArticle, scrollToActivePanel])

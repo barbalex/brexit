@@ -1,4 +1,4 @@
-//      
+//
 import React, { useContext, useCallback } from 'react'
 import styled from 'styled-components'
 import { withRouter } from 'react-router'
@@ -17,17 +17,11 @@ const PanelHeading = styled.div`
 const PanelBody = styled.div`
   margin-top: ${props => props['data-panelbodymargintop']};
   padding: ${props => props['data-panelbodypadding']};
-  max-height: ${window.innerHeight - 141}px;
+  max-height: ${typeof window !== `undefined` ? window.innerHeight - 141 : 1}px;
   overflow-y: auto;
 `
 
-const ArticlesComponent = ({
-  history,
-  activeArticlePanel,
-}   
-                  
-                             
- ) => {
+const ArticlesComponent = ({ history, activeArticlePanel }) => {
   const store = useContext(storeContext)
   const { articles, activeArticle, getArticle } = store.articles
 

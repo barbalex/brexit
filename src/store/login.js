@@ -1,34 +1,38 @@
-//      
+//
 /*
-  * contains email of logged in user
-  * well, it is saved in localStorage as window.localStorage.email
-  * app.js sets default email (null) if not exists on app start
-  */
+ * contains email of logged in user
+ * well, it is saved in localStorage as window.localStorage.email
+ * app.js sets default email (null) if not exists on app start
+ */
 import { action } from 'mobx'
 
-export default (store        )         => ({
-  getLogin: action('getLogin', ()          => window.localStorage.email),
+export default store => {
+  if (typeof window === `undefined`) return {}
 
-  email: window.localStorage.email,
+  return {
+    getLogin: action('getLogin', () => window.localStorage.email),
 
-  login: action('login', (email        , history        )       => {
-    // change email only if it was passed
-    const changeEmail = email !== undefined
-    let lsEmail = window.localStorage.email
-    if ((changeEmail && lsEmail !== email) || !email) {
-      if (changeEmail) {
-        lsEmail = email
-      } else {
-        email = lsEmail
+    email: window.localStorage.email,
+
+    login: action('login', (email, history) => {
+      // change email only if it was passed
+      const changeEmail = email !== undefined
+      let lsEmail = window.localStorage.email
+      if ((changeEmail && lsEmail !== email) || !email) {
+        if (changeEmail) {
+          lsEmail = email
+        } else {
+          email = lsEmail
+        }
+        window.localStorage.email = email
+        store.login.email = email
+        history.push('/')
       }
-      window.localStorage.email = email
-      store.login.email = email
-      history.push('/')
-    }
-  }),
+    }),
 
-  logout: action('logout', () => {
-    delete window.localStorage.email
-    store.login.email = ''
-  }),
-})
+    logout: action('logout', () => {
+      delete window.localStorage.email
+      store.login.email = ''
+    }),
+  }
+}

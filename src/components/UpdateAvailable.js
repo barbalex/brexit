@@ -1,4 +1,4 @@
-//      
+//
 /*
  * receives an object with two keys: title, msg
  * displays it while the object is present
@@ -47,9 +47,12 @@ const StyledGlyphicon = styled(Glyphicon)`
 const UpdateAvailable = () => {
   const store = useContext(storeContext)
   const { setUpdateAvailable } = store
-  const onClickGlyph = useCallback(() => setUpdateAvailable(false), [setUpdateAvailable])
+  const onClickGlyph = useCallback(() => setUpdateAvailable(false), [
+    setUpdateAvailable,
+  ])
   const onClickReload = useCallback(event => {
     event.preventDefault()
+    if (typeof window === `undefined`) return
     window.location.reload(false)
   }, [])
 

@@ -1,4 +1,4 @@
-//      
+//
 import React, { useRef, useEffect, useState, useCallback } from 'react'
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
@@ -55,7 +55,7 @@ const Title = styled.div`
   hyphens: manual;
 `
 
-const Header = ({ containerWidth }                            ) => {
+const Header = ({ containerWidth }) => {
   const container = useRef(null)
 
   const [flagHeight, setFlagHeight] = useState(150)
@@ -72,6 +72,7 @@ const Header = ({ containerWidth }                            ) => {
 
   useEffect(() => {
     changeFlagHeight()
+    if (typeof window === `undefined`) return
     window.addEventListener('resize', debounce(changeFlagHeight, 50))
     return () =>
       window.removeEventListener('resize', debounce(changeFlagHeight, 50))

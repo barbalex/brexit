@@ -1,4 +1,4 @@
-//      
+//
 import React, {
   useRef,
   useEffect,
@@ -26,7 +26,11 @@ const Header = styled.div`
   font-weight: bold;
 `
 const HeaderCell = styled.div`
-  font-size: ${window.innerWidth < 500 ? 20 : 24}px !important;
+  font-size: ${typeof window !== `undefined`
+    ? window.innerWidth < 500
+      ? 20
+      : 24
+    : 1}px !important;
   padding: 5px;
   flex: 1;
   display: flex;
@@ -83,6 +87,7 @@ const EventsTable = () => {
   }, [width])
   useEffect(() => {
     changeWidth()
+    if (typeof window === `undefined`) return
     window.addEventListener('resize', debounce(changeWidth, 50))
     return () => {
       window.removeEventListener('resize', debounce(changeWidth, 50))

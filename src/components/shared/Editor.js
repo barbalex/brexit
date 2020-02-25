@@ -1,4 +1,4 @@
-//      
+//
 import React, { useContext, useCallback, useEffect } from 'react'
 import { Base64 } from 'js-base64'
 import { Editor } from '@tinymce/tinymce-react'
@@ -6,15 +6,7 @@ import { observer } from 'mobx-react-lite'
 
 import storeContext from '../../storeContext'
 
-const MyEditor = ({
-  doc,
-  docType,
-  articleDecoded,
-}   
-              
-                  
-                         
- ) => {
+const MyEditor = ({ doc, docType, articleDecoded }) => {
   const store = useContext(storeContext)
   const { activePage, savePage } = store.page
   const { activeArticle, saveArticle } = store.articles
@@ -45,7 +37,7 @@ const MyEditor = ({
   // only on mount
   useEffect(() => {
     // scroll editor to top in pages
-    if (doc.type === 'pages') {
+    if (doc.type === 'pages' && typeof window !== `undefined`) {
       window.$('html, body').animate(
         {
           scrollTop: 140,
@@ -56,9 +48,10 @@ const MyEditor = ({
   }, [doc.type])
 
   // height = window - menu height - (menubar + iconbar)
-  let height = window.innerHeight - 52 - 74
+  let height = typeof window !== `undefined` ? window.innerHeight - 52 - 74 : 1
   if (['article', 'actor'].includes(docType)) {
-    height = window.innerHeight - 52 - 74 - 90
+    height =
+      typeof window !== `undefined` ? window.innerHeight - 52 - 74 - 90 : 1
   }
   // need to add specific classes to the iframe body because my css will not apply otherwise
   let bodyClass = ''

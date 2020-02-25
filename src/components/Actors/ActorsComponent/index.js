@@ -1,4 +1,4 @@
-//      
+//
 import React, { useContext, useCallback, useEffect } from 'react'
 import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import sortBy from 'lodash/sortBy'
@@ -26,17 +26,11 @@ const PanelHeading = styled.div`
 const PanelBody = styled.div`
   padding: ${props => props['data-panelbodypadding']};
   margin-top: ${props => props['data-panelbodymargintop']};
-  max-height: ${window.innerHeight - 141}px;
+  max-height: ${typeof window !== `undefined` ? window.innerHeight - 141 : 1}px;
   overflow-y: auto;
 `
 
-const ActorsComponent = ({
-  history,
-  activeActorPanel,
-}   
-                  
-                           
- ) => {
+const ActorsComponent = ({ history, activeActorPanel }) => {
   const store = useContext(storeContext)
   let {
     actors,
@@ -61,11 +55,14 @@ const ActorsComponent = ({
   )
   // prevent higher level panels from reacting
   const onClickActorCollapse = useCallback(event => event.stopPropagation(), [])
-  const onRemoveActor = useCallback((docToRemove, event) => {
-    event.preventDefault()
-    event.stopPropagation()
-    setActorToRemove(docToRemove)
-  }, [setActorToRemove])
+  const onRemoveActor = useCallback(
+    (docToRemove, event) => {
+      event.preventDefault()
+      event.stopPropagation()
+      setActorToRemove(docToRemove)
+    },
+    [setActorToRemove],
+  )
 
   if (actors.length === 0) return null
 

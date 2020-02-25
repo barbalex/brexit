@@ -1,4 +1,4 @@
-//      
+//
 import React from 'react'
 import ReactDOM from 'react-dom'
 import app from 'ampersand-app'
@@ -24,7 +24,7 @@ registerServiceWorker(store)
 // some old browsers can't deal with ArrayBuffer
 // pouchdb needs it
 // give the users an explanation instead of an empty page
-if (!window.ArrayBuffer) {
+if (typeof window !== `undefined` && !window.ArrayBuffer) {
   window.alert(
     `brexit-chronology.ch nutzt moderne Technologien, welche von Ihrem Browser nicht unterstützt werden.
 
@@ -47,12 +47,12 @@ PouchDB.plugin(pouchdbAuthentication)
  * expose 'app' to the browser console
  * this is handy to call actions and stores in the browser console
  */
-window.app = app
+if (typeof window !== `undefined`) window.app = app
 /**
  * enable pouch inspector in chrome
  * (https://chrome.google.com/webstore/detail/pouchdb-inspector/hbhhpaojmpfimakffndmpmpndcmonkfa)
  */
-window.PouchDB = PouchDB
+if (typeof window !== `undefined`) window.PouchDB = PouchDB
 
 /**
  * ampersand-app is extended with app methods (=singleton)
