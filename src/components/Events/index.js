@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useContext, useEffect, useCallback } from 'react'
 import { ButtonGroup, Button } from 'react-bootstrap'
 import moment from 'moment'

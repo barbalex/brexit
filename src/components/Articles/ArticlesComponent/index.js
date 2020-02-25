@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useContext, useCallback } from 'react'
 import styled from 'styled-components'
 import { withRouter } from 'react-router'
@@ -24,10 +24,10 @@ const PanelBody = styled.div`
 const ArticlesComponent = ({
   history,
   activeArticlePanel,
-}: {
-  history: Object,
-  activeArticlePanel: Object,
-}) => {
+}   
+                  
+                             
+ ) => {
   const store = useContext(storeContext)
   const { articles, activeArticle, getArticle } = store.articles
 

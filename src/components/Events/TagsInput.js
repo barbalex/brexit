@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useCallback, useContext } from 'react'
 import { Glyphicon } from 'react-bootstrap'
 import { observer } from 'mobx-react-lite'

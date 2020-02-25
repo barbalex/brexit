@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useContext } from 'react'
 import { Glyphicon } from 'react-bootstrap'
 import { observer } from 'mobx-react-lite'
@@ -21,7 +21,7 @@ const OuterSpan = styled.span`
   padding-left: 5px;
 `
 
-const Event = ({ event: evPassed }: { event: Object }) => {
+const Event = ({ event: evPassed }                   ) => {
   const store = useContext(storeContext)
   const event = toJS(evPassed)
   const showEditingGlyphons = !!store.login.email

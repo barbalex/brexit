@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useCallback, useContext } from 'react'
 import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import styled from 'styled-components'
@@ -13,7 +13,7 @@ const ToggleDraftGlyphicon = styled(Glyphicon)`
   color: ${props => props['data-color']};
 `
 
-export default (doc: Object) => {
+export default (doc        ) => {
   const store = useContext(storeContext)
   let { toggleDraftOfActor } = store.actors
   const onToggleDraft = useCallback(

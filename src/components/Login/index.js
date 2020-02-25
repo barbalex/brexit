@@ -1,4 +1,4 @@
-// @flow
+//      
 
 import React, { useCallback, useContext } from 'react'
 import { Button } from 'react-bootstrap'
@@ -11,7 +11,7 @@ import storeContext from '../../storeContext'
 const Login = () => {
   const store = useContext(storeContext)
   const { logout, email } = store.login
-  const onClickLogout = useCallback((): void => {
+  const onClickLogout = useCallback(()       => {
     console.log('log out clicked')
     logout()
   }, [logout])

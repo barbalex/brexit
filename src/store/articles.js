@@ -1,4 +1,4 @@
-// @flow
+//      
 import { action } from 'mobx'
 import app from 'ampersand-app'
 import moment from 'moment'
@@ -9,7 +9,7 @@ import getPathFromDocId from '../modules/getPathFromDocId'
 import sortArticles from '../modules/sortArticles'
 import slugOptions from '../modules/slugOptions'
 
-export default (store: Object): Object => ({
+export default (store        )         => ({
   articles: [],
 
   // cache the id, not the entire doc
@@ -25,7 +25,7 @@ export default (store: Object): Object => ({
 
   getArticlesCallback: null,
 
-  getArticles: action('getArticles', async (): Promise<void> => {
+  getArticles: action('getArticles', async ()                => {
     try {
       const articles = await getArticles(store)
       store.articles.articles = articles
@@ -44,11 +44,11 @@ export default (store: Object): Object => ({
 
   toggleShowNewArticle: action(
     'toggleShowNewArticle',
-    (): void =>
+    ()       =>
       (store.articles.showNewArticle = !store.articles.showNewArticle),
   ),
 
-  newArticle: action('newArticle', (title: string, date: Date): void => {
+  newArticle: action('newArticle', (title        , date      )       => {
     const year = moment(date).year()
     const month = moment(date).format('MM')
     const day = moment(date).format('DD')
@@ -61,7 +61,7 @@ export default (store: Object): Object => ({
     store.articles.saveArticle(articleO)
   }),
 
-  getArticle: action('getArticle', (id: ?string, history: Object): void => {
+  getArticle: action('getArticle', (id         , history        )       => {
     if (!id) {
       history.push('/articles')
       store.articles.activeArticleId = null
@@ -74,7 +74,7 @@ export default (store: Object): Object => ({
 
   updateArticlesInCache: action(
     'updateArticlesInCache',
-    (article: Object): void => {
+    (article        )       => {
       // first update the article in store.articles.articles
       store.articles.articles = store.articles.articles.filter(
         c => c._id !== article._id,
@@ -86,13 +86,13 @@ export default (store: Object): Object => ({
 
   revertCache: action(
     'revertCache',
-    (oldArticles: Object, oldActiveArticleId: string): void => {
+    (oldArticles        , oldActiveArticleId        )       => {
       store.articles.articles = oldArticles
       store.articles.activeArticleId = oldActiveArticleId
     },
   ),
 
-  saveArticle: action('saveArticle', async (article: Object): Promise<void> => {
+  saveArticle: action('saveArticle', async (article        )                => {
     // keep old cache in case of error
     const oldArticles = store.articles.articles
     const oldActiveArticleId = store.articles.activeArticleId
@@ -115,7 +115,7 @@ export default (store: Object): Object => ({
 
   removeArticleFromCache: action(
     'removeArticleFromCache',
-    (article: Object): void => {
+    (article        )       => {
       // first update the article in store.articles.articles
       store.articles.articles = store.articles.articles.filter(
         thisArticle => thisArticle._id !== article._id,
@@ -127,7 +127,7 @@ export default (store: Object): Object => ({
     },
   ),
 
-  removeArticle: action('removeArticle', (article: Object): void => {
+  removeArticle: action('removeArticle', (article        )       => {
     // keep old cache in case of error
     const oldArticles = store.articles.articles
     const oldActiveArticleId = store.articles.activeArticleId
@@ -145,13 +145,13 @@ export default (store: Object): Object => ({
 
   articleToRemove: null,
 
-  setArticleToRemove: action('setArticleToRemove', (article: Object): void => {
+  setArticleToRemove: action('setArticleToRemove', (article        )       => {
     store.articles.articleToRemove = article
   }),
 
   toggleDraftOfArticle: action(
     'toggleDraftOfArticle',
-    (article: Object): void => {
+    (article        )       => {
       if (article.draft === true) {
         delete article.draft
       } else {

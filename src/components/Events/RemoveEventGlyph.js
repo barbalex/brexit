@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useCallback, useContext } from 'react'
 import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { observer } from 'mobx-react-lite'
@@ -13,7 +13,7 @@ const StyledGlyphicon = styled(Glyphicon)`
   cursor: pointer;
 `
 
-const RemoveEventGlyph = ({ event }: { event: Object }) => {
+const RemoveEventGlyph = ({ event }                   ) => {
   const store = useContext(storeContext)
   const { setEventToRemove } = store.events
   const onRemoveEvent = useCallback(() => setEventToRemove(event), [event, setEventToRemove])

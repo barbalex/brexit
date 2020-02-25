@@ -1,4 +1,4 @@
-// @flow
+//      
 import React from 'react'
 import styled from 'styled-components'
 
@@ -53,14 +53,14 @@ const BodyRow = styled.div`
   }
 `
 
-const mapEventComponents = (events: Array<Object>) =>
+const mapEventComponents = (events               ) =>
   events.map((event, key) => <Event key={key} event={event} />)
 
 const MonthlyStatisticsRow = ({
   dateRowObject: dRO,
-}: {
-  dateRowObject: Object,
-}) => {
+}   
+                        
+ ) => {
   const migrationEvents = mapEventComponents(dRO.migrationEvents)
   const politicsEvents = mapEventComponents(dRO.politicsEvents)
   const dayWithEvents = migrationEvents.length > 0 || politicsEvents.length > 0

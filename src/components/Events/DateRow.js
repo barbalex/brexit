@@ -1,4 +1,4 @@
-// @flow
+//      
 import React from 'react'
 import moment from 'moment'
 import { observer } from 'mobx-react-lite'
@@ -92,10 +92,10 @@ const mapBothEventComponents = events =>
 const DateRow = ({
   width,
   dateRowObject: dRO,
-}: {
-  width: number,
-  dateRowObject: Object,
-}) => {
+}   
+                
+                        
+ ) => {
   const day = moment(dRO.date).format('D')
   const gbEvents = mapEventComponents(dRO.gbEvents)
   const euEvents = mapEventComponents(dRO.euEvents)

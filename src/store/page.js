@@ -1,12 +1,12 @@
-// @flow
+//      
 import { action } from 'mobx'
 import app from 'ampersand-app'
 
-export default (store: Object): Object => ({
+export default (store        )         => ({
   activePage: {},
   editing: false,
   showMeta: false,
-  getPage: action('getPage', async (id: string): Promise<void> => {
+  getPage: action('getPage', async (id        )                => {
     const get =
       !store.page.activePage._id ||
       (store.page.activePage._id && store.page.activePage._id !== id)
@@ -22,7 +22,7 @@ export default (store: Object): Object => ({
       }
     }
   }),
-  savePage: action('savePage', async (doc: Object): Promise<void> => {
+  savePage: action('savePage', async (doc        )                => {
     try {
       const resp = await app.db.put(doc)
       // resp.rev is new rev
@@ -41,7 +41,7 @@ export default (store: Object): Object => ({
   // see: http://pouchdb.com/api.html#save_attachment > Save many attachments at once
   addPageAttachments: action(
     'addPageAttachments',
-    (doc: Object, attachments: Object): void => {
+    (doc        , attachments        )       => {
       if (!doc._attachments) doc._attachments = {}
       doc._attachments = { ...doc._attachments, ...attachments }
       store.page.savePage(doc)
@@ -49,7 +49,7 @@ export default (store: Object): Object => ({
   ),
   removePageAttachment: action(
     'removePageAttachment',
-    (doc: Object, attachmentId: string): void => {
+    (doc        , attachmentId        )       => {
       delete doc._attachments[attachmentId]
       store.page.savePage(doc)
     }

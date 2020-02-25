@@ -1,7 +1,7 @@
-// @flow
+//      
 import last from 'lodash/last'
 
-export default (id: string): string => {
+export default (id        )         => {
   let path = id
   if (path.startsWith('pages_')) path = path.slice(6)
   // last el may contain ?

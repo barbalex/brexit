@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useEffect, useContext, useRef, useCallback } from 'react'
 import { PanelGroup } from 'react-bootstrap'
 import has from 'lodash/has'
@@ -54,13 +54,13 @@ const Articles = ({
   history,
   onClickArticle,
   onClickArticleCollapse,
-}: {
-  match: Object,
-  location: Object,
-  history: Object,
-  onClickArticle: () => void,
-  onClickArticleCollapse: () => void,
-}) => {
+}   
+                
+                   
+                  
+                             
+                                     
+ ) => {
   const store = useContext(storeContext)
   const {
     getArticles,

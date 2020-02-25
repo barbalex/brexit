@@ -1,4 +1,4 @@
-// @flow
+//      
 import React from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
@@ -36,7 +36,7 @@ const BodyCell = styled.div`
   padding-left: 10px;
 `
 
-const MonthRow = ({ dateRowObject: dRO }: { dateRowObject: Object }) => {
+const MonthRow = ({ dateRowObject: dRO }                           ) => {
   const year = parseInt(moment(dRO.date).format('YYYY'), 0)
   const month = moment(dRO.date).format('MMMM')
   const text = `${month} ${year}`

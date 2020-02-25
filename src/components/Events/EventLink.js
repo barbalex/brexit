@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useCallback, useContext } from 'react'
 import {
   Row,
@@ -24,11 +24,11 @@ const EventLink = ({
   link,
   focus,
   index,
-}: {
-  link: Object,
-  focus: boolean,
-  index: number,
-}) => {
+}   
+               
+                 
+                
+ ) => {
   const store = useContext(storeContext)
   const { events } = store
   const { saveEvent } = events

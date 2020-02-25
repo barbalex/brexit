@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useContext, useCallback, useEffect } from 'react'
 import { Base64 } from 'js-base64'
 import { Editor } from '@tinymce/tinymce-react'
@@ -10,11 +10,11 @@ const MyEditor = ({
   doc,
   docType,
   articleDecoded,
-}: {
-  doc: Object,
-  docType: string,
-  articleDecoded: string,
-}) => {
+}   
+              
+                  
+                         
+ ) => {
   const store = useContext(storeContext)
   const { activePage, savePage } = store.page
   const { activeArticle, saveArticle } = store.articles

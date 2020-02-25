@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useState, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
@@ -10,7 +10,7 @@ const Container = styled.div`
   max-height: 500px !important;
 `
 
-const AttachedImagesList = ({ doc }: { doc: Object }) => {
+const AttachedImagesList = ({ doc }                 ) => {
   const [urlCopied, changeUrlCopied] = useState(null)
   const onCopyUrl = useCallback(urlCopied => changeUrlCopied(urlCopied), [])
 

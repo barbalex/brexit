@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, {
   useRef,
   useEffect,

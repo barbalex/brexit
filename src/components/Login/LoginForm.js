@@ -1,4 +1,4 @@
-// @flow
+//
 
 import app from 'ampersand-app'
 import React, { useState, useCallback, useContext } from 'react'
@@ -26,7 +26,7 @@ const ValidateDivAfterRBC = styled.div`
   margin-bottom: 5px;
 `
 
-const LoginForm = ({ history }: { history: Object }) => {
+const LoginForm = ({ history }) => {
   const store = useContext(storeContext)
   const { login } = store
 
@@ -36,25 +36,24 @@ const LoginForm = ({ history }: { history: Object }) => {
   const [password, changePassword] = useState('')
   const [loginError, changeLoginError] = useState('')
 
-  const validEmail = useCallback((newEmail: string): boolean => {
+  const validEmail = useCallback(newEmail => {
     const validEmail = newEmail && validateEmail(newEmail)
     const invalidEmail = !validEmail
     changeInvalidEmail(invalidEmail)
     return !!validEmail
   }, [])
-  const validPassword = useCallback((password: boolean): boolean => {
+  const validPassword = useCallback(password => {
     const validPassword = !!password
     const invalidPassword = !validPassword
     changeInvalidPassword(invalidPassword)
     return validPassword
   }, [])
   const validSignin = useCallback(
-    (newEmail: string, password: string): boolean =>
-      validEmail(newEmail) && validPassword(password),
+    (newEmail, password) => validEmail(newEmail) && validPassword(password),
     [validEmail, validPassword],
   )
   const checkSignin = useCallback(
-    async (newEmail, password): Promise<void> => {
+    async (newEmail, password) => {
       if (validSignin(newEmail, password)) {
         try {
           await app.db.login(newEmail, password)
@@ -114,7 +113,6 @@ const LoginForm = ({ history }: { history: Object }) => {
   const passwordInputBsStyle = invalidPassword ? 'error' : null
   let error = loginError
   if (isObject(loginError)) {
-    // $FlowIssue
     error = loginError.message
   }
   const isError = error && error.length > 0

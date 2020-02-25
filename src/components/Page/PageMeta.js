@@ -1,4 +1,4 @@
-// @flow
+//      
 import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import { observer } from 'mobx-react-lite'
@@ -9,10 +9,10 @@ import AttachImages from '../shared/AttachImages'
 const PageMeta = ({
   doc,
   onCloseMeta,
-}: {
-  doc: Object,
-  onCloseMeta: () => void,
-}) => (
+}   
+              
+                          
+ ) => (
   <Modal show bsSize="large">
     <Modal.Header>
       <Modal.Title>

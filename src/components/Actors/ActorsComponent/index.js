@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useContext, useCallback, useEffect } from 'react'
 import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import sortBy from 'lodash/sortBy'
@@ -33,10 +33,10 @@ const PanelBody = styled.div`
 const ActorsComponent = ({
   history,
   activeActorPanel,
-}: {
-  history: Object,
-  activeActorPanel: Object,
-}) => {
+}   
+                  
+                           
+ ) => {
   const store = useContext(storeContext)
   let {
     actors,

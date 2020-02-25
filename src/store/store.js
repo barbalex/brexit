@@ -1,7 +1,7 @@
-// @flow
+//      
 import { action } from 'mobx'
 
-export default (store: Object): Object => ({
+export default (store        )         => ({
   editing: false,
   toggleEditing: action('toggleEditing', () => {
     store.editing = !store.editing
@@ -9,7 +9,7 @@ export default (store: Object): Object => ({
   updateAvailable: false,
   setUpdateAvailable: action(
     'setUpdateAvailable',
-    (updateAvailable: boolean) => {
+    (updateAvailable         ) => {
       if (updateAvailable) {
         store.updateAvailable = true
         setTimeout(() => {

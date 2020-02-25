@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useContext, useCallback } from 'react'
 import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import styled from 'styled-components'
@@ -13,7 +13,7 @@ const RemoveGlyphicon = styled(Glyphicon)`
   color: #edf4f8;
 `
 
-export default ({ doc }: { doc: Object }) => {
+export default ({ doc }                 ) => {
   const store = useContext(storeContext)
   const { setArticleToRemove } = store.articles
 

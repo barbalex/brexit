@@ -1,4 +1,4 @@
-// @flow
+//      
 /*
  * receives an object with two keys: title, msg
  * displays it while the object is present

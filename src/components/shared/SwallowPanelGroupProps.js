@@ -1,4 +1,4 @@
-// @flow
+//      
 /*
  * swallows the props that PanelGroup
  * passes down
@@ -10,7 +10,7 @@
 
 import React from 'react'
 
-const SwallowPanelGroupProps = (props: Object) => {
+const SwallowPanelGroupProps = (props        ) => {
   const {
     bsStyle,
     headerRole,

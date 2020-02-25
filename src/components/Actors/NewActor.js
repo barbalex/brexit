@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useState, useCallback, useContext } from 'react'
 import {
   Modal,

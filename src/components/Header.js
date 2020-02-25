@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useRef, useEffect, useState, useCallback } from 'react'
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
@@ -55,7 +55,7 @@ const Title = styled.div`
   hyphens: manual;
 `
 
-const Header = ({ containerWidth }: { containerWidth: number }) => {
+const Header = ({ containerWidth }                            ) => {
   const container = useRef(null)
 
   const [flagHeight, setFlagHeight] = useState(150)

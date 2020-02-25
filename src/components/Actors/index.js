@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useContext, useEffect, useRef } from 'react'
 import { PanelGroup } from 'react-bootstrap'
 import { observer } from 'mobx-react-lite'

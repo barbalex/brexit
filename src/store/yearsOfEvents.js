@@ -1,13 +1,13 @@
-// @flow
+//      
 import { action } from 'mobx'
 import moment from 'moment'
 
 import getYearsOfEvents from '../modules/getYearsOfEvents'
 
-export default (store: Object): Object => ({
+export default (store        )         => ({
   yearsOfEvents: [parseInt(moment().format('YYYY'), 0)],
 
-  getYearsOfEvents: action('getYearsOfEvents', async (): Promise<void> => {
+  getYearsOfEvents: action('getYearsOfEvents', async ()                => {
     try {
       const years = await getYearsOfEvents(store)
       store.yearsOfEvents.yearsOfEvents = years

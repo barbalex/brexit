@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useEffect, useCallback, useContext } from 'react'
 import { ButtonGroup, Button } from 'react-bootstrap'
 import { observer } from 'mobx-react-lite'

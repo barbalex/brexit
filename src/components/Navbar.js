@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useState, useCallback, useContext } from 'react'
 import {
   Navbar,
@@ -46,11 +46,11 @@ const MyNavbar = ({
   match,
   location,
   history,
-}: {
-  match: Object,
-  location: Object,
-  history: Object,
-}) => {
+}   
+                
+                   
+                  
+ ) => {
   const store = useContext(storeContext)
   const {
     page,

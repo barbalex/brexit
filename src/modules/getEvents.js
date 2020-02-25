@@ -1,4 +1,4 @@
-// @flow
+//      
 import app from 'ampersand-app'
 import map from 'lodash/map'
 import min from 'lodash/min'
@@ -6,9 +6,9 @@ import max from 'lodash/max'
 import sortEvents from './sortEvents'
 
 export default async (
-  store: Object,
-  years: Array<number>,
-): Promise<Array<Object>> => {
+  store        ,
+  years               ,
+)                         => {
   const options = {
     include_docs: true,
     startkey: `events_${min(years)}`,

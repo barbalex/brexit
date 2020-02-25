@@ -1,4 +1,4 @@
-// @flow
+//      
 export default {
   '01': 'January',
   '02': 'February',

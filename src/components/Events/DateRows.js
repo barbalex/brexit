@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useContext } from 'react'
 import moment from 'moment'
 import ReactList from 'react-list'
@@ -25,7 +25,7 @@ const BodyCell = styled.div`
   padding-left: 10px;
 `
 
-const DateRows = ({ width }: { width: number }) => {
+const DateRows = ({ width }                   ) => {
   const store = useContext(storeContext)
   const dateRowObjects = getDaterowObjectsSinceOldestEvent(
     store.events.events,

@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useContext } from 'react'
 import {
   BrowserRouter as Router,
@@ -20,7 +20,7 @@ import UpdateAvailable from './UpdateAvailable'
 import NotFound from './NotFound'
 import storeContext from '../storeContext'
 
-const Main = ({ login }: { login: boolean }) => {
+const Main = ({ login }                    ) => {
   const store = useContext(storeContext)
   const { errors } = store.error
 

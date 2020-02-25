@@ -1,4 +1,4 @@
-// @flow
+//      
 import React from 'react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
@@ -50,10 +50,10 @@ const dateFormat = [
 const EventDate = ({
   date,
   onChangeDatePicker,
-}: {
-  date: Date,
-  onChangeDatePicker: () => void,
-}) => {
+}   
+             
+                                 
+ ) => {
   const selected = moment(date, 'DD.MM.YYYY').isValid()
     ? new Date(moment(date, 'DD.MM.YYYY').toDate())
     : null

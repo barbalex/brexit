@@ -1,5 +1,5 @@
-// @flow
-module.exports = (): string => {
+//      
+module.exports = ()         => {
   const isDev = process.env.NODE_ENV !== 'production'
   const jsPath = isDev ? '/app' : '/bb.1.0.0'
   const cssPath = isDev ? '' : '/bb.1.0.0.css'

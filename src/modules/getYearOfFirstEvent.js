@@ -1,4 +1,4 @@
-// @flow
+//      
 import app from 'ampersand-app'
 import getYearFromEventId from './getYearFromEventId'
 
@@ -10,7 +10,7 @@ const options = {
   limit: 1,
 }
 
-export default async (store: Object): Promise<number> => {
+export default async (store        )                  => {
   try {
     const result = await app.db.allDocs(options)
     const id = result.rows[0].id

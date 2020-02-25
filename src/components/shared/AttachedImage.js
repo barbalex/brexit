@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useContext } from 'react'
 import {
   Button,
@@ -37,12 +37,12 @@ const AttachedImage = ({
   attName,
   urlCopied,
   onCopyUrl,
-}: {
-  doc: Object,
-  attName: string,
-  urlCopied: string,
-  onCopyUrl: () => void,
-}) => {
+}   
+              
+                  
+                    
+                        
+ ) => {
   const store = useContext(storeContext)
   const id = doc._id
   const url = `${getCouchUrl()}/${id}/${attName}`

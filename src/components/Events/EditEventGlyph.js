@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useCallback, useContext } from 'react'
 import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { observer } from 'mobx-react-lite'
@@ -12,7 +12,7 @@ const StyledGlyphicon = styled(Glyphicon)`
   cursor: pointer;
 `
 
-const EditEventGlyph = ({ event }: { event: Object }) => {
+const EditEventGlyph = ({ event }                   ) => {
   const store = useContext(storeContext)
   const onClick = useCallback(() => {
     store.events.getEvent(event._id)

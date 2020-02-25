@@ -1,4 +1,4 @@
-// @flow
+//      
 /*
   * contains email of logged in user
   * well, it is saved in localStorage as window.localStorage.email
@@ -6,12 +6,12 @@
   */
 import { action } from 'mobx'
 
-export default (store: Object): Object => ({
-  getLogin: action('getLogin', (): ?string => window.localStorage.email),
+export default (store        )         => ({
+  getLogin: action('getLogin', ()          => window.localStorage.email),
 
   email: window.localStorage.email,
 
-  login: action('login', (email: string, history: Object): void => {
+  login: action('login', (email        , history        )       => {
     // change email only if it was passed
     const changeEmail = email !== undefined
     let lsEmail = window.localStorage.email

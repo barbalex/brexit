@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useState, useCallback, useContext } from 'react'
 import { Button } from 'react-bootstrap'
 import { Base64 } from 'js-base64'

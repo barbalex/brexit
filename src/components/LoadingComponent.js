@@ -1,13 +1,13 @@
-// @flow
+//      
 import React from 'react'
 
 const LoadingComponent = ({
   isLoading,
   error,
-}: {
-  isLoading: Boolean,
-  error: Object,
-}) => {
+}   
+                     
+                
+ ) => {
   // Handle the loading state
   if (isLoading) {
     return <div>Loading...</div>

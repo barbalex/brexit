@@ -1,4 +1,4 @@
-// @flow
+//      
 import React, { useContext, useCallback } from 'react'
 import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import styled from 'styled-components'
@@ -13,7 +13,7 @@ const ToggleDraftGlyphicon = styled(Glyphicon)`
   color: ${props => props['data-color']};
 `
 
-const ToggleDraftGlyph = ({ doc }: { doc: Object }) => {
+const ToggleDraftGlyph = ({ doc }                 ) => {
   const store = useContext(storeContext)
   const { toggleDraftOfArticle } = store.articles
 
