@@ -9,7 +9,6 @@ import { withRouter } from 'react-router'
 import NewActor from './NewActor'
 import ModalRemoveActor from './ModalRemoveActor'
 import ActorsComponent from './ActorsComponent'
-import SwallowPanelGroupProps from '../shared/SwallowPanelGroupProps'
 import constants from '../../modules/constants'
 import storeContext from '../../storeContext'
 
@@ -69,9 +68,7 @@ const Actors = () => {
       <Container>
         <h1>Actors</h1>
         <PanelGroup defaultActiveKey={activeId} id="actorsAccordion" accordion>
-          <SwallowPanelGroupProps>
-            <ActorsComponent activeActorPanel={activeActorPanel} />
-          </SwallowPanelGroupProps>
+          <ActorsComponent activeActorPanel={activeActorPanel} />
         </PanelGroup>
         {showNewActor && <NewActor />}
         {actorToRemove && <ModalRemoveActor />}

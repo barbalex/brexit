@@ -9,7 +9,6 @@ import { withRouter } from 'react-router'
 
 import NewArticle from './NewArticle'
 import ModalRemoveArticle from './ModalRemoveArticle'
-import SwallowPanelGroupProps from '../shared/SwallowPanelGroupProps'
 import constants from '../../modules/constants'
 import storeContext from '../../storeContext'
 import ArticlesComponent from './ArticlesComponent'
@@ -103,9 +102,7 @@ const Articles = ({
           id="articlesAccordion"
           accordion
         >
-          <SwallowPanelGroupProps>
-            <ArticlesComponent activeArticlePanel={activeArticlePanel} />
-          </SwallowPanelGroupProps>
+          <ArticlesComponent activeArticlePanel={activeArticlePanel} />
         </PanelGroup>
         {showNewArticle && <NewArticle />}
         {articleToRemove && <ModalRemoveArticle />}
