@@ -1,0 +1,51 @@
+version: '3.7'
+services:
+  db:
+    # specify container name to make it easier to run commands.
+    # for example, you could run docker exec -i postgres psql -U postgres postgres < schema.sql to run an SQL file against the Postgres database
+    container_name: brexit_db
+    restart: always
+    image: db
+    build:
+      context: ./db
+    env_file:
+      - ./.env
+    networks:
+      - network
+    expose:
+      - '5984'
+      - '4369'
+      - '9100'
+    ports:
+      - '5984:5984'
+    volumes:
+      - db_data:/opt/couchdb/data
+      - db_config_data:/opt/couchdb/etc/local.d
+  caddy:
+    build:
+      context: ./caddy
+    container_name: brexit_caddy
+    networks:
+      - network
+    depends_on:
+      - db
+    restart: always
+    # original image downgrades user but that seems not to work
+    # see: https://caddy.community/t/basic-docker-compose-setup-failing/6892/7?u=alexander_gabriel
+    user: root
+    ports:
+      - '80:80'
+      - '443:443'
+    env_file:
+      - ./.env
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_certs:/root/.local/share/caddy
+      - caddy_config:/root/.config/caddy
+volumes:
+  db_data:
+  db_config_data:
+  caddy_certs:
+  caddy_config:
+networks:
+  network:

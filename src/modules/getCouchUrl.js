@@ -7,7 +7,7 @@ export default () => {
 
   const hostname = isDev
     ? `${window.location.hostname}:5984/brexit`
-    : `${window.location.hostname}/api/brexit`
+    : `api.${window.location.hostname}/brexit`
 
   return `${window.location.protocol}//${hostname}`
 }

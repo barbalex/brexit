@@ -1,0 +1,25 @@
+{
+  email alex.barbalex@gmail.com
+  #acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+}
+
+ortinfo.ch, www.ortinfo.ch {
+  root * /html
+  encode gzip
+  file_server
+}
+
+api.ortinfo.ch {
+  reverse_proxy bb_db:5984 {
+    # unfortunately the transparent shorthand does not seem to exist (yet)
+    # https://caddy.community/t/v2-reverse-proxy-transparent/6480/8
+    #transparent
+    header_down Access-Control-Allow-Origin https://ortinfo.ch
+    header_down Access-Control-Allow-Credentials=true
+    header_up Host {http.request.host}
+    header_up X-Real-IP {http.request.remote}
+    header_up X-Forwarded-For {http.request.remote}
+    header_up X-Forwarded-Port {http.request.port}
+    header_up X-Forwarded-Proto {http.request.scheme}
+  }
+}
