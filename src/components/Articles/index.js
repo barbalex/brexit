@@ -1,5 +1,5 @@
 //
-import React, { useEffect, useContext, useRef, useCallback } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { PanelGroup } from 'react-bootstrap'
 import has from 'lodash/has'
 import { observer } from 'mobx-react-lite'
@@ -11,7 +11,7 @@ import NewArticle from './NewArticle'
 import ModalRemoveArticle from './ModalRemoveArticle'
 import constants from '../../modules/constants'
 import storeContext from '../../storeContext'
-import ArticlesComponent from './ArticlesComponent'
+import Article from './Article'
 
 const Container = styled.div`
   p,
@@ -63,33 +63,9 @@ const Articles = ({
     articleToRemove,
   } = store.articles
 
-  const activeArticlePanel = useRef(null)
-
-  const scrollToActivePanel = useCallback(() => {
-    const node = activeArticlePanel.current || null
-    if (node) {
-      const navWrapperOffsetTop = document.getElementById('nav-wrapper')
-        .offsetTop
-      const reduce = navWrapperOffsetTop > 0 ? navWrapperOffsetTop - 33 : 55
-      if (node.offsetTop && typeof window !== `undefined`) {
-        window.$('html, body').animate(
-          {
-            scrollTop: node.offsetTop - reduce,
-          },
-          500,
-        )
-      }
-    }
-  }, [])
-
   useEffect(() => {
     getArticles()
   }, [articles.length, getArticles])
-  useEffect(() => {
-    if (activeArticle && typeof window !== `undefined`) {
-      window.setTimeout(() => scrollToActivePanel(), 200)
-    }
-  }, [activeArticle, scrollToActivePanel])
 
   const activeArticleId = has(activeArticle, '_id') ? activeArticle._id : null
 
@@ -102,7 +78,9 @@ const Articles = ({
           id="articlesAccordion"
           accordion
         >
-          <ArticlesComponent activeArticlePanel={activeArticlePanel} />
+          {articles.map(doc => (
+            <Article key={doc._id} doc={doc} />
+          ))}
         </PanelGroup>
         {showNewArticle && <NewArticle />}
         {articleToRemove && <ModalRemoveArticle />}
