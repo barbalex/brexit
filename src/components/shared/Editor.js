@@ -1,5 +1,5 @@
 //
-import React, { useContext, useCallback, useEffect } from 'react'
+import React, { useContext, useCallback } from 'react'
 import { Base64 } from 'js-base64'
 import { Editor } from '@tinymce/tinymce-react'
 import { observer } from 'mobx-react-lite'
