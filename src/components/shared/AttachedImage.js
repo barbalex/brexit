@@ -1,4 +1,4 @@
-//      
+// no more used, 3.2020
 import React, { useContext } from 'react'
 import {
   Button,
@@ -32,17 +32,7 @@ const MediaLeft = styled.div`
   position: relative;
 `
 
-const AttachedImage = ({
-  doc,
-  attName,
-  urlCopied,
-  onCopyUrl,
-}   
-              
-                  
-                    
-                        
- ) => {
+const AttachedImage = ({ doc, attName, urlCopied, onCopyUrl }) => {
   const store = useContext(storeContext)
   const id = doc._id
   const url = `${getCouchUrl()}/${id}/${attName}`

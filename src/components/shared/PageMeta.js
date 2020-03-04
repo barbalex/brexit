@@ -1,4 +1,4 @@
-//      
+// no more used, 3.2020
 import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import { observer } from 'mobx-react-lite'
@@ -6,13 +6,7 @@ import { observer } from 'mobx-react-lite'
 import AttachedImagesList from '../shared/AttachedImagesList'
 import AttachImages from '../shared/AttachImages'
 
-const PageMeta = ({
-  doc,
-  onCloseMeta,
-}   
-              
-                          
- ) => (
+const PageMeta = ({ doc, onCloseMeta }) => (
   <Modal show bsSize="large">
     <Modal.Header>
       <Modal.Title>

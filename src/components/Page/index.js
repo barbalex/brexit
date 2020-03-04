@@ -1,13 +1,11 @@
-//      
-import React, { useState, useCallback, useContext } from 'react'
-import { Button } from 'react-bootstrap'
+//
+import React, { useContext } from 'react'
 import { Base64 } from 'js-base64'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import DocumentTitle from 'react-document-title'
 
 import Editor from '../shared/Editor'
-import Meta from './PageMeta'
 import storeContext from '../../storeContext'
 
 const Container = styled.div`
@@ -28,11 +26,6 @@ const Container = styled.div`
     font-weight: 700;
   }
 `
-const MetaButton = styled(Button)`
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-`
 
 const Page = () => {
   const store = useContext(storeContext)
@@ -40,20 +33,15 @@ const Page = () => {
   const articleEncoded = activePage.article
   const articleDecoded = articleEncoded ? Base64.decode(articleEncoded) : null
   let title = activePage.title ? activePage.title : activePage.category
-  const [showMeta, setShowMeta] = useState(false)
-  const onClickMeta = useCallback(() => setShowMeta(!showMeta), [showMeta])
-  const onCloseMeta = useCallback(() => setShowMeta(false), [])
 
   if (store.editing && activePage._id !== 'pages_actors') {
     return (
       <div className="page">
-        {showMeta && <Meta doc={activePage} onCloseMeta={onCloseMeta} />}
         <Editor
           docType="page"
           doc={activePage}
           articleDecoded={articleDecoded}
         />
-        <MetaButton onClick={onClickMeta}>images</MetaButton>
       </div>
     )
   }

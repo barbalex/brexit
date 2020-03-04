@@ -1,4 +1,4 @@
-//      
+// no more used, 3.2020
 import React, { useCallback, useContext } from 'react'
 import Dropzone from 'react-dropzone'
 import { observer } from 'mobx-react-lite'
@@ -28,7 +28,7 @@ const DropzoneInnerDiv = styled.div`
   border-radius: 5px;
 `
 
-const AttachImages = ({ doc }                 ) => {
+const AttachImages = ({ doc }) => {
   const store = useContext(storeContext)
   const onDrop = useCallback(
     files => {

@@ -1,12 +1,10 @@
-//      
-import React, { useState, useCallback, useContext } from 'react'
-import { Button } from 'react-bootstrap'
+//
+import React, { useContext } from 'react'
 import { Base64 } from 'js-base64'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
 import Editor from '../../shared/Editor'
-import Meta from '../../Page/PageMeta'
 import storeContext from '../../../storeContext'
 
 const Container = styled.div`
@@ -30,20 +28,11 @@ const Container = styled.div`
     margin-bottom: 20px;
   }
 `
-const MetaButton = styled(Button)`
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-`
 
 const Article = () => {
   const store = useContext(storeContext)
   const { editing, articles } = store
   const { activeArticle } = articles
-
-  const [showMeta, setShowMeta] = useState(false)
-  const onClickMeta = useCallback(() => setShowMeta(!showMeta), [showMeta])
-  const onCloseMeta = useCallback(() => setShowMeta(false), [])
 
   const articleEncoded = activeArticle.article
   const articleDecoded = articleEncoded ? Base64.decode(articleEncoded) : null
@@ -51,13 +40,11 @@ const Article = () => {
   if (editing) {
     return (
       <Container>
-        {showMeta && <Meta doc={activeArticle} onCloseMeta={onCloseMeta} />}
         <Editor
           docType="article"
           doc={activeArticle}
           articleDecoded={articleDecoded}
         />
-        <MetaButton onClick={onClickMeta}>images</MetaButton>
       </Container>
     )
   }
