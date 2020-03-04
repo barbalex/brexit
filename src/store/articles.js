@@ -1,15 +1,16 @@
-//      
+//
 import { action } from 'mobx'
 import app from 'ampersand-app'
 import moment from 'moment'
 import slug from 'speakingurl'
+import { navigate } from '@reach/router'
 
 import getArticles from '../modules/getArticles'
 import getPathFromDocId from '../modules/getPathFromDocId'
 import sortArticles from '../modules/sortArticles'
 import slugOptions from '../modules/slugOptions'
 
-export default (store        )         => ({
+export default store => ({
   articles: [],
 
   // cache the id, not the entire doc
@@ -25,7 +26,7 @@ export default (store        )         => ({
 
   getArticlesCallback: null,
 
-  getArticles: action('getArticles', async ()                => {
+  getArticles: action('getArticles', async () => {
     try {
       const articles = await getArticles(store)
       store.articles.articles = articles
@@ -44,11 +45,10 @@ export default (store        )         => ({
 
   toggleShowNewArticle: action(
     'toggleShowNewArticle',
-    ()       =>
-      (store.articles.showNewArticle = !store.articles.showNewArticle),
+    () => (store.articles.showNewArticle = !store.articles.showNewArticle),
   ),
 
-  newArticle: action('newArticle', (title        , date      )       => {
+  newArticle: action('newArticle', (title, date) => {
     const year = moment(date).year()
     const month = moment(date).format('MM')
     const day = moment(date).format('DD')
@@ -61,38 +61,32 @@ export default (store        )         => ({
     store.articles.saveArticle(articleO)
   }),
 
-  getArticle: action('getArticle', (id         , history        )       => {
+  getArticle: action('getArticle', id => {
     if (!id) {
-      history.push('/articles')
+      navigate('/articles')
       store.articles.activeArticleId = null
     } else {
       store.articles.activeArticleId = id
       const path = getPathFromDocId(id)
-      history.push(`/${path}`)
+      navigate(`/${path}`)
     }
   }),
 
-  updateArticlesInCache: action(
-    'updateArticlesInCache',
-    (article        )       => {
-      // first update the article in store.articles.articles
-      store.articles.articles = store.articles.articles.filter(
-        c => c._id !== article._id,
-      )
-      store.articles.articles.push(article)
-      store.articles.articles = sortArticles(store.articles.articles)
-    },
-  ),
+  updateArticlesInCache: action('updateArticlesInCache', article => {
+    // first update the article in store.articles.articles
+    store.articles.articles = store.articles.articles.filter(
+      c => c._id !== article._id,
+    )
+    store.articles.articles.push(article)
+    store.articles.articles = sortArticles(store.articles.articles)
+  }),
 
-  revertCache: action(
-    'revertCache',
-    (oldArticles        , oldActiveArticleId        )       => {
-      store.articles.articles = oldArticles
-      store.articles.activeArticleId = oldActiveArticleId
-    },
-  ),
+  revertCache: action('revertCache', (oldArticles, oldActiveArticleId) => {
+    store.articles.articles = oldArticles
+    store.articles.activeArticleId = oldActiveArticleId
+  }),
 
-  saveArticle: action('saveArticle', async (article        )                => {
+  saveArticle: action('saveArticle', async article => {
     // keep old cache in case of error
     const oldArticles = store.articles.articles
     const oldActiveArticleId = store.articles.activeArticleId
@@ -113,21 +107,18 @@ export default (store        )         => ({
     }
   }),
 
-  removeArticleFromCache: action(
-    'removeArticleFromCache',
-    (article        )       => {
-      // first update the article in store.articles.articles
-      store.articles.articles = store.articles.articles.filter(
-        thisArticle => thisArticle._id !== article._id,
-      )
-      store.articles.articles = sortArticles(store.articles.articles)
-      // now update store.articles.activeArticleId if it is the active article's _id
-      const isActiveArticle = store.articles.activeArticleId === article._id
-      if (isActiveArticle) store.articles.activeArticleId = null
-    },
-  ),
+  removeArticleFromCache: action('removeArticleFromCache', article => {
+    // first update the article in store.articles.articles
+    store.articles.articles = store.articles.articles.filter(
+      thisArticle => thisArticle._id !== article._id,
+    )
+    store.articles.articles = sortArticles(store.articles.articles)
+    // now update store.articles.activeArticleId if it is the active article's _id
+    const isActiveArticle = store.articles.activeArticleId === article._id
+    if (isActiveArticle) store.articles.activeArticleId = null
+  }),
 
-  removeArticle: action('removeArticle', (article        )       => {
+  removeArticle: action('removeArticle', article => {
     // keep old cache in case of error
     const oldArticles = store.articles.articles
     const oldActiveArticleId = store.articles.activeArticleId
@@ -145,19 +136,16 @@ export default (store        )         => ({
 
   articleToRemove: null,
 
-  setArticleToRemove: action('setArticleToRemove', (article        )       => {
+  setArticleToRemove: action('setArticleToRemove', article => {
     store.articles.articleToRemove = article
   }),
 
-  toggleDraftOfArticle: action(
-    'toggleDraftOfArticle',
-    (article        )       => {
-      if (article.draft === true) {
-        delete article.draft
-      } else {
-        article.draft = true
-      }
-      store.articles.saveArticle(article)
-    },
-  ),
+  toggleDraftOfArticle: action('toggleDraftOfArticle', article => {
+    if (article.draft === true) {
+      delete article.draft
+    } else {
+      article.draft = true
+    }
+    store.articles.saveArticle(article)
+  }),
 })

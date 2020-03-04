@@ -12,7 +12,6 @@ import {
 import isObject from 'lodash/isObject'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
-import { withRouter } from 'react-router'
 
 import validateEmail from './validateEmail'
 import storeContext from '../../storeContext'
@@ -26,7 +25,7 @@ const ValidateDivAfterRBC = styled.div`
   margin-bottom: 5px;
 `
 
-const LoginForm = ({ history }) => {
+const LoginForm = () => {
   const store = useContext(storeContext)
   const { login } = store
 
@@ -57,14 +56,14 @@ const LoginForm = ({ history }) => {
       if (validSignin(newEmail, password)) {
         try {
           await app.db.login(newEmail, password)
-          login.login(newEmail, history)
+          login.login(newEmail)
         } catch (error) {
           changeNewEmail(null)
           changeLoginError(error)
         }
       }
     },
-    [history, login, validSignin],
+    [login, validSignin],
   )
   const onKeyDownEmail = useCallback(
     event => {
@@ -170,4 +169,4 @@ const LoginForm = ({ history }) => {
 
 LoginForm.displayName = 'LoginForm'
 
-export default withRouter(observer(LoginForm))
+export default observer(LoginForm)

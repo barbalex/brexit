@@ -5,7 +5,6 @@ import has from 'lodash/has'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import DocumentTitle from 'react-document-title'
-import { withRouter } from 'react-router'
 
 import NewArticle from './NewArticle'
 import ModalRemoveArticle from './ModalRemoveArticle'
@@ -50,7 +49,6 @@ const Copyright = styled.p`
 const Articles = ({
   match,
   location,
-  history,
   onClickArticle,
   onClickArticleCollapse,
 }) => {
@@ -90,4 +88,4 @@ const Articles = ({
   )
 }
 
-export default withRouter(observer(Articles))
+export default observer(Articles)

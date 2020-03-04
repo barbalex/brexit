@@ -4,11 +4,11 @@ import { PanelGroup } from 'react-bootstrap'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import DocumentTitle from 'react-document-title'
-import { withRouter } from 'react-router'
+import sortBy from 'lodash/sortBy'
 
 import NewActor from './NewActor'
 import ModalRemoveActor from './ModalRemoveActor'
-import ActorsComponent from './ActorsComponent'
+import ActorsComponent from './Actor'
 import constants from '../../modules/constants'
 import storeContext from '../../storeContext'
 
@@ -36,7 +36,7 @@ const Container = styled.div`
 
 const Actors = () => {
   const store = useContext(storeContext)
-  const { activeActor, actorToRemove, showNewActor } = store.actors
+  const { actors, activeActor, actorToRemove, showNewActor } = store.actors
 
   const activeActorPanel = useRef(null)
 
@@ -68,7 +68,12 @@ const Actors = () => {
       <Container>
         <h1>Actors</h1>
         <PanelGroup defaultActiveKey={activeId} id="actorsAccordion" accordion>
-          <ActorsComponent activeActorPanel={activeActorPanel} />
+          {sortBy(actors, actor => {
+            if (actor.order) return actor.order
+            return 100
+          }).map(doc => (
+            <ActorsComponent key={doc._id} doc={doc} />
+          ))}
         </PanelGroup>
         {showNewActor && <NewActor />}
         {actorToRemove && <ModalRemoveActor />}
@@ -77,4 +82,4 @@ const Actors = () => {
   )
 }
 
-export default withRouter(observer(Actors))
+export default observer(Actors)

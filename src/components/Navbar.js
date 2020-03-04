@@ -1,4 +1,4 @@
-//      
+//
 import React, { useState, useCallback, useContext } from 'react'
 import {
   Navbar,
@@ -11,7 +11,7 @@ import {
 import has from 'lodash/has'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
-import { withRouter } from 'react-router'
+import { navigate } from '@reach/router'
 
 import constants from '../modules/constants'
 import storeContext from '../storeContext'
@@ -42,15 +42,7 @@ const isNavMobile = () => {
   return documentWidth <= 750
 }
 
-const MyNavbar = ({
-  match,
-  location,
-  history,
-}   
-                
-                   
-                  
- ) => {
+const MyNavbar = ({ match, location }) => {
   const store = useContext(storeContext)
   const {
     page,
@@ -88,29 +80,29 @@ const MyNavbar = ({
   }, [navExpanded])
   const onClickEvents = useCallback(() => {
     page.getPage('pages_events')
-    history.push('/')
+    navigate('/')
     // if home was clicked, do not toggle nav
-  }, [history, page])
+  }, [page])
   const onClickArticles = useCallback(() => {
     page.getPage('pages_commentaries')
-    history.push('/articles')
+    navigate('/articles')
     onToggleNav()
-  }, [history, onToggleNav, page])
+  }, [onToggleNav, page])
   const onClickActors = useCallback(() => {
     page.getPage('pages_actors')
-    history.push('/actors')
+    navigate('/actors')
     onToggleNav()
-  }, [history, onToggleNav, page])
+  }, [onToggleNav, page])
   const onClickLinks = useCallback(() => {
     page.getPage('pages_links')
-    history.push('/links')
+    navigate('/links')
     onToggleNav()
-  }, [history, onToggleNav, page])
+  }, [onToggleNav, page])
   const onClickAboutUs = useCallback(() => {
     page.getPage('pages_aboutUs')
-    history.push('/aboutUs')
+    navigate('/aboutUs')
     onToggleNav()
-  }, [history, onToggleNav, page])
+  }, [onToggleNav, page])
   const onClickEdit = useCallback(() => {
     toggleEditing()
     onToggleNav()
@@ -223,4 +215,4 @@ const MyNavbar = ({
 
 MyNavbar.displayName = 'Navbar'
 
-export default withRouter(observer(MyNavbar))
+export default observer(MyNavbar)

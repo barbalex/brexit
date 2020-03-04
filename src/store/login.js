@@ -5,6 +5,7 @@
  * app.js sets default email (null) if not exists on app start
  */
 import { action } from 'mobx'
+import { navigate } from '@reach/router'
 
 export default store => {
   if (typeof window === `undefined`) return {}
@@ -14,7 +15,7 @@ export default store => {
 
     email: window.localStorage.email,
 
-    login: action('login', (email, history) => {
+    login: action('login', email => {
       // change email only if it was passed
       const changeEmail = email !== undefined
       let lsEmail = window.localStorage.email
@@ -26,7 +27,7 @@ export default store => {
         }
         window.localStorage.email = email
         store.login.email = email
-        history.push('/')
+        navigate('/')
       }
     }),
 

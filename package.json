@@ -68,5 +68,8 @@
     "not dead",
     "not ie > 0",
     "not op_mini all"
-  ]
+  ],
+  "peerDependencies": {
+    "@reach/router": "^1.3.3"
+  }
 }

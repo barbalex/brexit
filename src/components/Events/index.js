@@ -1,4 +1,4 @@
-//      
+//
 import React, { useContext, useEffect, useCallback } from 'react'
 import { ButtonGroup, Button } from 'react-bootstrap'
 import moment from 'moment'
@@ -6,7 +6,6 @@ import min from 'lodash/min'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import DocumentTitle from 'react-document-title'
-import { withRouter } from 'react-router'
 
 import IntroJumbotron from './IntroJumbotron'
 import NewEvent from './NewEvent'
@@ -105,4 +104,4 @@ const Events = () => {
     </DocumentTitle>
   )
 }
-export default withRouter(observer(Events))
+export default observer(Events)
