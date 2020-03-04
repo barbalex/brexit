@@ -1,7 +1,7 @@
-//      
+//
 import last from 'lodash/last'
 
-export default (id        )         => {
+export default id => {
   let path = id
   if (path.startsWith('pages_')) path = path.slice(6)
   // last el may contain ?
@@ -10,5 +10,5 @@ export default (id        )         => {
   const lastEl = last(pathArray)
   pathArray.pop()
   const newPathArray = [...pathArray, encodeURIComponent(lastEl)]
-  return newPathArray.join('/')
+  return newPathArray.join('/').replace('commentaries', 'articles')
 }

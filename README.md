@@ -17,5 +17,6 @@ This project was built based on [blue-borders](//github.com/barbalex/bb2), [http
 - [React](//facebook.github.io/react):
   - declarative user interface is a function of state
   - built from components
-- [react router 4](//reacttraining.com/react-router) with [react-loadable](//github.com/thejameskyle/react-loadable)
-  - splitting code to accelerate first load
+- [gatsby](https://www.gatsbyjs.org/)
+  - make it load fast
+

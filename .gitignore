@@ -3,6 +3,12 @@
 # dependencies
 /node_modules
 
+# gatsby files
+.cache
+/.cache
+/.cache/*
+public
+
 # testing
 /coverage
 
@@ -11,7 +17,7 @@
 
 # misc
 .DS_Store
-.env
+.env*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -20,3 +26,5 @@ sftpPass.json
 couchPass.json
 git_stats.txt
 git_stats.csv
+
+/backend/caddy/html/*

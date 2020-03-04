@@ -1,7 +1,6 @@
 //
 import React, { useEffect, useContext } from 'react'
 import { PanelGroup } from 'react-bootstrap'
-import has from 'lodash/has'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import DocumentTitle from 'react-document-title'
@@ -46,26 +45,29 @@ const Copyright = styled.p`
   margin-top: 70px;
 `
 
-const Articles = ({
-  match,
-  location,
-  onClickArticle,
-  onClickArticleCollapse,
-}) => {
+const Articles = ({ year, month, day, title }) => {
   const store = useContext(storeContext)
   const {
     getArticles,
     articles,
-    activeArticle,
+    activeArticleId,
     showNewArticle,
     articleToRemove,
   } = store.articles
 
   useEffect(() => {
+    store.page.getPage('pages_commentaries')
     getArticles()
-  }, [articles.length, getArticles])
-
-  const activeArticleId = has(activeArticle, '_id') ? activeArticle._id : null
+  }, [getArticles, store.page])
+  useEffect(() => {
+    if (!!year && !!month && !!day && !!title) {
+      store.articles.activeArticleId = `commentaries_${year}_${month}_${day}_${decodeURIComponent(
+        title,
+      )}`
+    } else {
+      store.articles.activeArticleId = null
+    }
+  }, [year, month, day, title, store.articles.activeArticleId])
 
   return (
     <DocumentTitle title="brexit | Article">

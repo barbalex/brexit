@@ -34,19 +34,6 @@ const MyEditor = ({ doc, docType, articleDecoded }) => {
     [activeActor, saveActor],
   )
 
-  // only on mount
-  useEffect(() => {
-    // scroll editor to top in pages
-    if (doc.type === 'pages' && typeof window !== `undefined`) {
-      window.$('html, body').animate(
-        {
-          scrollTop: 140,
-        },
-        800,
-      )
-    }
-  }, [doc.type])
-
   // height = window - menu height - (menubar + iconbar)
   let height = typeof window !== `undefined` ? window.innerHeight - 52 - 74 : 1
   if (['article', 'actor'].includes(docType)) {

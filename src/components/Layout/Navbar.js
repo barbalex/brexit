@@ -13,8 +13,8 @@ import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import { navigate } from '@reach/router'
 
-import constants from '../modules/constants'
-import storeContext from '../storeContext'
+import constants from '../../modules/constants'
+import storeContext from '../../storeContext'
 
 const StyledNavbar = styled(Navbar)`
   margin-bottom: 0 !important;
@@ -38,7 +38,8 @@ const StyledNavbar = styled(Navbar)`
 `
 
 const isNavMobile = () => {
-  const documentWidth = document.getElementById('root').clientWidth
+  if (typeof window === `undefined`) return 750
+  const documentWidth = document.getElementById('___gatsby').clientWidth
   return documentWidth <= 750
 }
 
@@ -100,7 +101,7 @@ const MyNavbar = ({ match, location }) => {
   }, [onToggleNav, page])
   const onClickAboutUs = useCallback(() => {
     page.getPage('pages_aboutUs')
-    navigate('/aboutUs')
+    navigate('/about-us')
     onToggleNav()
   }, [onToggleNav, page])
   const onClickEdit = useCallback(() => {

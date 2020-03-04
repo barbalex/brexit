@@ -3,8 +3,8 @@ import React, { useRef, useEffect, useState, useCallback } from 'react'
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
 
-import euImage from '../images/eu.svg'
-import gbImage from '../images/gb.svg'
+import euImage from '../../images/eu.svg'
+import gbImage from '../../images/gb.svg'
 
 const Container = styled.div`
   margin-top: 23px;

@@ -63,9 +63,10 @@ const Events = () => {
   } = store.yearsOfEvents
 
   useEffect(() => {
+    store.page.getPage('pages_events')
     getEvents([parseInt(moment().format('YYYY'), 0)])
     getYearsOfEvents()
-  }, [getEvents, getYearsOfEvents])
+  }, [getEvents, getYearsOfEvents, store.page])
 
   const setActiveYear = useCallback(
     year => {

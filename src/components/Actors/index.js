@@ -34,12 +34,29 @@ const Container = styled.div`
   }
 `
 
-const Actors = () => {
+const Actors = ({ category }) => {
   const store = useContext(storeContext)
-  const { actors, activeActor, actorToRemove, showNewActor } = store.actors
+  const {
+    actors,
+    activeActor,
+    actorToRemove,
+    showNewActor,
+    getActors,
+  } = store.actors
+
+  useEffect(() => {
+    store.page.getPage('pages_actors')
+    getActors()
+  }, [getActors, store.page])
+  useEffect(() => {
+    if (!!category) {
+      store.actors.activeActorId = `actors_${category}`
+    } else {
+      store.actors.activeActorId = null
+    }
+  }, [category, store.actors.activeActorId])
 
   const activeActorPanel = useRef(null)
-
   useEffect(() => {
     if (activeActor && typeof window !== `undefined`) {
       window.setTimeout(() => {
