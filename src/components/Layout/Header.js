@@ -7,7 +7,7 @@ import euImage from '../../images/eu.svg'
 import gbImage from '../../images/gb.svg'
 
 const Container = styled.div`
-  margin-top: 23px;
+  margin-top: 74px;
   display: flex;
   flex-direction: column;
   min-height: ${props => props['data-height']}px;
