@@ -10,7 +10,7 @@ ortinfo.ch, www.ortinfo.ch {
 }
 
 api.ortinfo.ch {
-  reverse_proxy bb_db:5984 {
+  reverse_proxy brexit_db:5984 {
     # unfortunately the transparent shorthand does not seem to exist (yet)
     # https://caddy.community/t/v2-reverse-proxy-transparent/6480/8
     #transparent
