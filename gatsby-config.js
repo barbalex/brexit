@@ -1,6 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: 'mediterranean migration',
+    title: 'brexit',
+    siteUrl: `https://brexit-chronology.ch`,
   },
   plugins: [
     {
@@ -64,5 +65,6 @@ module.exports = {
         cookieDomain: 'brexit-chronology.ch',
       },
     },
+    'gatsby-plugin-sitemap',
   ],
 }
