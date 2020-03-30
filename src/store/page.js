@@ -1,12 +1,12 @@
-//      
+//
 import { action } from 'mobx'
 import app from 'ampersand-app'
 
-export default (store        )         => ({
+export default store => ({
   activePage: {},
   editing: false,
   showMeta: false,
-  getPage: action('getPage', async (id        )                => {
+  getPage: action('getPage', async id => {
     const get =
       !store.page.activePage._id ||
       (store.page.activePage._id && store.page.activePage._id !== id)
@@ -22,7 +22,7 @@ export default (store        )         => ({
       }
     }
   }),
-  savePage: action('savePage', async (doc        )                => {
+  savePage: action('savePage', async doc => {
     try {
       const resp = await app.db.put(doc)
       // resp.rev is new rev
@@ -39,19 +39,13 @@ export default (store        )         => ({
     }
   }),
   // see: http://pouchdb.com/api.html#save_attachment > Save many attachments at once
-  addPageAttachments: action(
-    'addPageAttachments',
-    (doc        , attachments        )       => {
-      if (!doc._attachments) doc._attachments = {}
-      doc._attachments = { ...doc._attachments, ...attachments }
-      store.page.savePage(doc)
-    }
-  ),
-  removePageAttachment: action(
-    'removePageAttachment',
-    (doc        , attachmentId        )       => {
-      delete doc._attachments[attachmentId]
-      store.page.savePage(doc)
-    }
-  ),
+  addPageAttachments: action('addPageAttachments', (doc, attachments) => {
+    if (!doc._attachments) doc._attachments = {}
+    doc._attachments = { ...doc._attachments, ...attachments }
+    store.page.savePage(doc)
+  }),
+  removePageAttachment: action('removePageAttachment', (doc, attachmentId) => {
+    delete doc._attachments[attachmentId]
+    store.page.savePage(doc)
+  }),
 })
