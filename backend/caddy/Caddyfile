@@ -7,15 +7,22 @@ brexit-chronology.ch, www.brexit-chronology.ch {
   root * /html
   encode zstd gzip
   file_server
+  
+  reverse_proxy /brexit/* {
+    to bb_db:5984
+  }
+  
+  # need to add this because it us used by couchdb when logging in
+  reverse_proxy /_session {
+    to bb_db:5984
+  }
 }
 
+# BEWARE: this does not work, cors-errors
 api.brexit-chronology.ch {
   reverse_proxy brexit_db:5984 {
-    # unfortunately the transparent shorthand does not seem to exist (yet)
-    # https://caddy.community/t/v2-reverse-proxy-transparent/6480/8
-    #transparent
     header_down Access-Control-Allow-Origin https://brexit-chronology.ch
-    header_down Access-Control-Allow-Credentials=true
+    header_down Access-Control-Allow-Credentials true
     header_up Host {http.request.host}
     header_up X-Real-IP {http.request.remote}
     header_up X-Forwarded-For {http.request.remote}
