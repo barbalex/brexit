@@ -3,7 +3,6 @@ import React from 'react'
 import app from 'ampersand-app'
 import pouchdbUpsert from 'pouchdb-upsert'
 import pouchdbAuthentication from 'pouchdb-authentication'
-import { Redirect } from '@reach/router'
 
 import store from './store'
 import couchUrl from './modules/getCouchUrl'
@@ -67,11 +66,13 @@ if (typeof window !== `undefined`) {
 
 const { errors } = store.error
 
+// BEWARE: The redirect caused the app to ALWAYS redirect when it was refreshed
+// and also when it was opened at a sub-route like /login
 const App = ({ element }) => (
   <StoreContextProvider value={store}>
     <div className="container">
       <Layout>
-        <Redirect from="/chronology" exact to="/" noThrow />
+        {/*<Redirect from="/chronology" exact to="/" noThrow />*/}
         {element}
         {errors && errors.length > 0 && <Errors />}
       </Layout>
