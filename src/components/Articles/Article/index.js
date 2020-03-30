@@ -59,7 +59,6 @@ const ArticlesComponent = ({ doc }) => {
       e.stopPropagation()
       const idToGet =
         !activeArticle || activeArticle._id !== doc._id ? doc._id : null
-      console.log('Article, onClick, idToGet:', idToGet)
       getArticle(idToGet)
     },
     [activeArticle, doc._id, getArticle],
