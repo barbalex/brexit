@@ -1,6 +1,7 @@
 {
   email alex.barbalex@gmail.com
   #acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+  #debug
 }
 
 brexit-chronology.ch, www.brexit-chronology.ch {
@@ -9,12 +10,12 @@ brexit-chronology.ch, www.brexit-chronology.ch {
   file_server
   
   reverse_proxy /brexit/* {
-    to bb_db:5984
+    to brexit_db:5984
   }
   
   # need to add this because it us used by couchdb when logging in
   reverse_proxy /_session {
-    to bb_db:5984
+    to brexit_db:5984
   }
 }
 
