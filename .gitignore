@@ -28,3 +28,6 @@ git_stats.txt
 git_stats.csv
 
 /backend/caddy/html/*
+
+brexit.json
+users.json
