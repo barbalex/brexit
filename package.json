@@ -1,6 +1,6 @@
 {
   "name": "brexit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Brexit is a complex topic difficult to grasp. The present website is meant to help. It is a simple chronology based on a handful of publicly available sources and focusing on the negotiation dynamics between the two sides",
   "private": true,
   "scripts": {
