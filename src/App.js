@@ -3,7 +3,6 @@ import React from 'react'
 import app from 'ampersand-app'
 import pouchdbUpsert from 'pouchdb-upsert'
 import pouchdbAuthentication from 'pouchdb-authentication'
-import 'mobx-react-lite/batchingForReactDom'
 
 import store from './store'
 import couchUrl from './modules/getCouchUrl'
