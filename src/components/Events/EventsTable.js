@@ -49,12 +49,12 @@ const HeaderCellGb = styled(HeaderCell)`
   flex: 1;
   justify-content: center;
   word-wrap: break-word;
-  padding-right: ${props => props['data-padding']}px;
+  padding-right: ${(props) => props['data-padding']}px;
 `
 const HeaderCellEu = styled(HeaderCell)`
   flex: 1;
   word-wrap: break-word;
-  padding-left: ${props => props['data-padding']}px;
+  padding-left: ${(props) => props['data-padding']}px;
 `
 const HeaderCellBoth = styled(HeaderCell)`
   flex-basis: 75px;
@@ -66,7 +66,7 @@ const Body = styled.div`
   overflow-x: visible;
   overflow-y: auto;
   height: calc(100vh - 94px);
-  margin-top: ${props => props['data-margintop']};
+  margin-top: ${(props) => props['data-margintop']};
   border-top: 1px solid #ececec;
   border-bottom: 1px solid #ececec;
   width: 100%;

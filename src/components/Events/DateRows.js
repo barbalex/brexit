@@ -1,4 +1,4 @@
-//      
+//
 import React, { useContext } from 'react'
 import moment from 'moment'
 import ReactList from 'react-list'
@@ -25,42 +25,41 @@ const BodyCell = styled.div`
   padding-left: 10px;
 `
 
-const DateRows = ({ width }                   ) => {
+const DateRows = ({ width }) => {
   const store = useContext(storeContext)
   const dateRowObjects = getDaterowObjectsSinceOldestEvent(
     store.events.events,
     store.yearsOfEvents.activeEventYears,
   )
+  console.log('DateRows, events:', store.events.events)
   const dateRows = []
   if (dateRowObjects.length > 0) {
     let lastEndOfMonth
     dateRowObjects.forEach((dRO, index) => {
       const day = moment(dRO.date).format('D')
-      const endOfMonth = moment(dRO.date)
-        .endOf('month')
-        .format('MM.DD')
+      const endOfMonth = moment(dRO.date).endOf('month').format('MM.DD')
       const dROForDateRow = {
         date: dRO.date,
         gbEvents: dRO.gbEvents.filter(
-          event => !event.tags || !event.tags.includes('monthlyStatistics'),
+          (event) => !event.tags || !event.tags.includes('monthlyStatistics'),
         ),
         euEvents: dRO.euEvents.filter(
-          event => !event.tags || !event.tags.includes('monthlyStatistics'),
+          (event) => !event.tags || !event.tags.includes('monthlyStatistics'),
         ),
         bothEvents: dRO.bothEvents.filter(
-          event => !event.tags || !event.tags.includes('monthlyStatistics'),
+          (event) => !event.tags || !event.tags.includes('monthlyStatistics'),
         ),
       }
       const dROForMonthlyStatsRow = {
         date: dRO.date,
         gbEvents: dRO.gbEvents.filter(
-          event => event.tags && event.tags.includes('monthlyStatistics'),
+          (event) => event.tags && event.tags.includes('monthlyStatistics'),
         ),
         euEvents: dRO.euEvents.filter(
-          event => event.tags && event.tags.includes('monthlyStatistics'),
+          (event) => event.tags && event.tags.includes('monthlyStatistics'),
         ),
         bothEvents: dRO.bothEvents.filter(
-          event => event.tags && event.tags.includes('monthlyStatistics'),
+          (event) => event.tags && event.tags.includes('monthlyStatistics'),
         ),
       }
       const dROForMonthlyStatsHasEvents =
