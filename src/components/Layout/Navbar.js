@@ -14,6 +14,7 @@ import styled from 'styled-components'
 import { navigate } from '@reach/router'
 
 import constants from '../../modules/constants'
+import downloadEvents from '../../modules/downloadEvents'
 import storeContext from '../../storeContext'
 
 const StyledNavbar = styled(Navbar)`
@@ -113,6 +114,10 @@ const MyNavbar = ({ match, location }) => {
     onToggleNav()
     // need to force update
   }, [login, onToggleNav])
+  const onClickDownloadEvents = useCallback(() => {
+    downloadEvents(store)
+    onToggleNav()
+  }, [onToggleNav, store])
   const onClickNewArticle = useCallback(() => articles.toggleShowNewArticle(), [
     articles,
   ])
@@ -205,6 +210,14 @@ const MyNavbar = ({ match, location }) => {
             >
               <NavItem onClick={onClickLogout}>
                 <Glyphicon glyph="log-out" />
+              </NavItem>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement="bottom"
+              overlay={<Tooltip id="downloadevents">download events</Tooltip>}
+            >
+              <NavItem onClick={onClickDownloadEvents}>
+                <Glyphicon glyph="save" />
               </NavItem>
             </OverlayTrigger>
           </Nav>

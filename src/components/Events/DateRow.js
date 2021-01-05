@@ -1,4 +1,4 @@
-//      
+//
 import React from 'react'
 import moment from 'moment'
 import { observer } from 'mobx-react-lite'
@@ -34,21 +34,21 @@ const Gb = styled(BodyCell)`
   width: 50%;
   max-width: 50%;
   word-wrap: break-word;
-  padding: 5px ${props => props['data-padding']}px 5px 0;
+  padding: 5px ${(props) => props['data-padding']}px 5px 0;
 `
 const Eu = styled(BodyCell)`
   width: 50%;
   max-width: 50%;
   word-wrap: break-word;
-  padding: 5px 0 5px ${props => props['data-padding']}px;
+  padding: 5px 0 5px ${(props) => props['data-padding']}px;
 `
 const Both = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 130px;
   padding-right: 130px;
-  padding-left: ${props => props['data-padding']}px;
-  padding-right: ${props => props['data-padding']}px;
+  padding-left: ${(props) => props['data-padding']}px;
+  padding-right: ${(props) => props['data-padding']}px;
   ul {
     padding: 5px;
     align-self: center;
@@ -80,22 +80,16 @@ const BodyRow = styled.div`
   }
 `
 
-const mapEventComponents = events =>
+const mapEventComponents = (events) =>
   events.map((event, key) => <Event key={key} event={event} />)
-const mapBothEventComponents = events =>
+const mapBothEventComponents = (events) =>
   events.map((event, key) => (
     <ul key={key}>
       <Event event={event} />
     </ul>
   ))
 
-const DateRow = ({
-  width,
-  dateRowObject: dRO,
-}   
-                
-                        
- ) => {
+const DateRow = ({ width, dateRowObject: dRO }) => {
   const day = moment(dRO.date).format('D')
   const gbEvents = mapEventComponents(dRO.gbEvents)
   const euEvents = mapEventComponents(dRO.euEvents)

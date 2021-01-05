@@ -31,7 +31,7 @@ const DateRows = ({ width }) => {
     store.events.events,
     store.yearsOfEvents.activeEventYears,
   )
-  console.log('DateRows, events:', store.events.events)
+  //console.log('DateRows, events:', store.events.events.toJS())
   const dateRows = []
   if (dateRowObjects.length > 0) {
     let lastEndOfMonth

@@ -1,18 +1,15 @@
-//      
+//
 import moment from 'moment'
 import max from 'lodash/max'
 import getDateFromEventId from './getDateFromEventId'
 
-export default (
-  events               ,
-  activeEventYears               
-)                => {
+export default (events, activeEventYears) => {
   const oldestEvent = events[events.length - 1]
   if (oldestEvent) {
     const oldestDate = getDateFromEventId(oldestEvent._id)
     const daterowObjects = []
     const activeYearIsCurrentYear = activeEventYears.includes(
-      parseInt(moment().format('YYYY'), 0)
+      parseInt(moment().format('YYYY'), 0),
     )
     let date = activeYearIsCurrentYear
       ? moment()
@@ -22,19 +19,19 @@ export default (
       const month = moment(date).format('MM')
       const day = moment(date).format('DD')
       const gbEvents = events.filter(
-        event =>
+        (event) =>
           event._id.startsWith(`events_${year}_${month}_${day}`) &&
-          event.eventType === 'gb'
+          event.eventType === 'gb',
       )
       const euEvents = events.filter(
-        event =>
+        (event) =>
           event._id.startsWith(`events_${year}_${month}_${day}`) &&
-          event.eventType === 'eu'
+          event.eventType === 'eu',
       )
       const bothEvents = events.filter(
-        event =>
+        (event) =>
           event._id.startsWith(`events_${year}_${month}_${day}`) &&
-          event.eventType === 'both'
+          event.eventType === 'both',
       )
       // order
       gbEvents.sort((a, b) => (a.order || 99) - (b.order || 99))
