@@ -77,15 +77,17 @@ const Events = () => {
     getYearsOfEvents()
   }, [getEvents, getYearsOfEvents, store.page])
 
-  const setActiveYear = useCallback(
-    (year) => {
-      getEvents([year])
-      setActiveEventYears([year])
+  const setActiveYears = useCallback(
+    (years) => {
+      getEvents(years)
+      setActiveEventYears(years)
     },
     [getEvents, setActiveEventYears],
   )
 
   const showEventsTable = min(activeEventYears) > 2014
+
+  const yearsOfEventsForButton = yearsOfEvents.filter((year) => year < 2021)
 
   return (
     <DocumentTitle title="brexit-chronology">
@@ -94,13 +96,18 @@ const Events = () => {
         {yearsOfEvents.length > 1 && (
           <YearButtonsContainer>
             <ButtonGroup>
-              {yearsOfEvents.map((year, index) => (
+              {yearsOfEventsForButton.map((year, index) => (
                 <Button
                   key={index}
                   active={activeEventYears.includes(year)}
-                  onClick={() => setActiveYear(year)}
+                  onClick={() => {
+                    if (year <= 2019) {
+                      setActiveYears([year])
+                    }
+                    setActiveYears(years)
+                  }}
                 >
-                  {year}
+                  {year === 2020 ? '2020+' : year}
                 </Button>
               ))}
             </ButtonGroup>
