@@ -52,6 +52,15 @@ const YearButtonsContainer = styled.div`
   text-align: center;
 `
 
+const thisYear = parseInt(moment().format('YYYY'), 0)
+// create array of years between this and oldest
+const years = []
+let year = thisYear
+while (year >= 2020) {
+  years.push(year)
+  year--
+}
+
 const Events = () => {
   const store = useContext(storeContext)
   const { getEvents, activeEvent, showNewEvent } = store.events
@@ -64,12 +73,12 @@ const Events = () => {
 
   useEffect(() => {
     store.page.getPage('pages_events')
-    getEvents([parseInt(moment().format('YYYY'), 0)])
+    getEvents(years)
     getYearsOfEvents()
   }, [getEvents, getYearsOfEvents, store.page])
 
   const setActiveYear = useCallback(
-    year => {
+    (year) => {
       getEvents([year])
       setActiveEventYears([year])
     },

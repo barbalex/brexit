@@ -1,8 +1,8 @@
-//      
+//
 import moment from 'moment'
 import getYearOfFirstEvent from './getYearOfFirstEvent'
 
-export default async (store        )                         => {
+export default async (store) => {
   try {
     const oldestYear = await getYearOfFirstEvent(store)
     const thisYear = parseInt(moment().format('YYYY'), 0)

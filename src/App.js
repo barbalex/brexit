@@ -1,4 +1,3 @@
-//
 import React from 'react'
 import app from 'ampersand-app'
 import pouchdbUpsert from 'pouchdb-upsert'
